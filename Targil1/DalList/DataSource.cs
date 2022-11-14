@@ -107,12 +107,12 @@ static internal class DataSource
 
         for (int i = 0; i < 10; i++)
         {
-            int price = (int)_random.Next(50, 700);
-            int amount = (int)_random.NextInt64(1,25);
-            int id = (int)_random.NextInt64(100000, 999999);
+            int price = Convert.ToInt32(_random.Next(50,700));
+            int amount =Convert.ToInt32(_random.Next(1,25));
+            int id = Convert.ToInt32(_random.Next(100000,999999));
             while(IsExsist(id))
             {
-                id = (int)_random.NextInt64(100000, 999999);
+                id = Convert.ToInt32(_random.Next(100000,999999));
             }
             DO.Product product = new DO.Product { ID = id, Name = products1[i].Item1, Category = products1[i].Item2, Price = price, amount= amount };
             AddProduct(product);
@@ -143,8 +143,8 @@ static internal class DataSource
         {
             DateTime date1 = DateTime.MinValue;
             DateTime date2 = DateTime.MinValue;
-            int daySend = (int)_random.NextInt64(5, 10);
-            int dayGet = (int)_random.NextInt64(5, 10);
+            int daySend = Convert.ToInt32(_random.Next(5,10));
+            int dayGet = Convert.ToInt32(_random.Next(5,10));
             TimeSpan dateSend = new TimeSpan(daySend, 0, 0, 0);
             TimeSpan dateGet = new TimeSpan(dayGet, 0, 0, 0);
             DO.Orders order = new DO.Orders { ID = Config.Order, CustomerName = orders1[i].Item1, CustomerEmail = orders1[i].Item2, CustomerAdress = orders1[i].Item3, OrderDate = date1, ShipDate = date1.Add(dateSend), DeliveryDate = date2.Add(dateGet) };
@@ -152,8 +152,8 @@ static internal class DataSource
         }
         for (int i = 0; i < 40; i++)
         {
-            int idOrder = (int)_random.NextInt64(Config.amountOrder);
-            int idProduct = (int)_random.NextInt64(100000, Config.amountProducts);
+            int idOrder = Convert.ToInt32(_random.Next(Config.amountOrder));
+            int idProduct = Convert.ToInt32(_random.Next(100000, Config.amountProducts));
             DO.OrderItem itemInOrder = new DO.OrderItem { ID = Config.ItemInOrder, OrderID = orders[idOrder].ID, ProductID = products[idProduct].ID, Price = products[idProduct].Price };
             AddOrederItem(itemInOrder);
         }

@@ -23,7 +23,7 @@ public class DalProduct
         if (isExsist)
         { 
             Console.WriteLine("The object is exsist");
-        throw new Exception("The object is exsist");
+            throw new Exception("The object is exsist");
     }
         int index = DataSource.Config.amountProducts;
         DataSource.products[index] = p;

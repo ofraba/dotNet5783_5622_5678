@@ -72,7 +72,7 @@ namespace DalTest
                         };
                         try
                         {
-                            dProduct.Create(newProduct);
+                            int id=dProduct.Create(newProduct);
                         }
                         catch (Exception exception)
                         {
