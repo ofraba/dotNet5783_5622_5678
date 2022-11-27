@@ -10,6 +10,7 @@ using Dal;
 using DalApi;
 using DO;
 
+
 namespace BlImplementation;
 
 internal class BlProduct : BLApi.IProduct
@@ -18,23 +19,57 @@ internal class BlProduct : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetAll()
     {
         IEnumerable<BO.ProductForList> productList = null;
-        //
-        //public static List<DO.Product> tm = Dal.Product.GetAll();
-        IEnumerable<DO.Product> products = Dal.Product.GetAll();
-        foreach (DO.Product product in products)
-        {
-            BO.ProductForList productInList = new BO.ProductForList();
-            productInList.ID = product.ID;
-            productInList.Name = product.Name;
-            productInList.Price = product.Price;
-            //productList.Category = product.Category; //לא עובד כנראה יש בעיה עם הenum
-            productList.ToList().Add(productInList);
+        try {
+            IEnumerable<DO.Product> products = Dal.Product.GetAll();
+            foreach (DO.Product product in products)
+            {
+                BO.ProductForList productInList = new BO.ProductForList();
+                productInList.ID = product.ID;
+                productInList.Name = product.Name;
+                productInList.Price = product.Price;
+                //productList.Category = product.Category; //לא עובד כנראה יש בעיה עם הenum
+                productList.ToList().Add(productInList);
 
+            }
         }
+        catch (ExceptionFromDal e)
+        {
+            throw new BO.ExceptionFromDal(e);
+        }
+
         return productList;
     }
 
-
+    public IEnumerable<ProductItem> GetForCatalog()
+    {
+        IEnumerable<BO.ProductItem> productList = null;
+        try
+        {
+            IEnumerable<DO.Product> products = Dal.Product.GetAll();
+            foreach (DO.Product product in products)
+            {
+                ProductItem productItem = new ProductItem();
+                productItem.ID = product.ID;
+                productItem.Name = product.Name;
+                productItem.Price = product.Price;
+                productItem.Amount = product.Amount;
+                //productItem.Category = product.Category;
+                if (product.Amount > 0)
+                {
+                    productItem.InStock = true;
+                }
+                else
+                {
+                    productItem.InStock = false;
+                }
+            }
+        }
+        catch (ExceptionFromDal e)
+        {
+            throw new BO.ExceptionFromDal(e);
+        }
+        return productList;
+    }
     public BO.Product GetForManegar(int idProduct) {
         BO.Product bproduct = new BO.Product();
         if (idProduct > 0) { 
@@ -49,9 +84,9 @@ internal class BlProduct : BLApi.IProduct
                 bproduct.InStock = dproduct.Amount;
 
             }
-            catch
+            catch (ExceptionFromDal e)
             {
-                //לזרוק חריגה
+                throw new BO.ExceptionFromDal(e);
             }
         }
         return bproduct;
@@ -78,13 +113,15 @@ internal class BlProduct : BLApi.IProduct
                 else
                     bproductItem.InStock = false;
             }
-            catch
+            catch (ExceptionFromDal e)
             {
-                //לזרוק חריגה
+                throw new BO.ExceptionFromDal(e);
             }
         }
         return bproductItem;
     }
+    
+    
     public void Add(BO.Product p)
     {
         if(p.ID>0 && p.Name !=" " && p.Price>0 && p.InStock>0)
@@ -100,9 +137,14 @@ internal class BlProduct : BLApi.IProduct
             {
                 int id = Dal.Product.Add(dproduct);
             }
-            catch { 
-                //לזרוק חריגה
+            catch (ExceptionFromDal e)
+            {
+                throw new BO.ExceptionFromDal(e);
             }
+        }
+        else
+        {
+            throw new exception1();
         }
     }
 
@@ -112,20 +154,23 @@ internal class BlProduct : BLApi.IProduct
         foreach (DO.OrderItem productInOrder in temp)
         {
             if (productInOrder.ProductID == idProduct)
-            { 
-                //לזרוק חריגה -המוצר קיים באחת ההזמנות
+            {
+                throw new exception2();
             }
         }
         try
         {
             Dal.Product.Delete(idProduct);
         }
-        catch {
-            //לזרוק חריגה
+        catch (ExceptionFromDal e)
+        {
+            throw new BO.ExceptionFromDal(e);
         }
 
 
     }
+    
+    
     public void Update(BO.Product p)
     {
         if (p.ID > 0 && p.Name != " " && p.Price > 0 && p.InStock > 0)
@@ -141,9 +186,9 @@ internal class BlProduct : BLApi.IProduct
             {
                 Dal.Product.Update(dproduct);
             }
-            catch
+            catch (ExceptionFromDal e)
             {
-                //לזרוק חריגה
+                throw new BO.ExceptionFromDal(e);
             }
         }
     }

@@ -82,18 +82,18 @@ static internal class DataSource
     }
 
     static private void s_Initialize()
-    {
-        List<(string, string,string)> products1 = new List<(string, string,string)> {
-            ("Set for 6 diners","gold","dinnerware"),
-            ("Set of 6 glasses","gold","dinnerware"),
-            ("Bath towel", "white","textile"),
-            ("kitchen towel","yellow","textile"),
-            ("Decorative tool for soap","pink","textile"),
-            ("A luxurious vase","silver","stywling"),
-            ("Wool carpet","pink","textile"),
-            ("Bedding with a speckled print","brown","linen"),
-            ("Silk bedding","white","linen"),
-            ("Fragrance distributor","blue","bathAccessories")
+    {                                                                                                                                                                                                              
+        List<(string, string,Category)> products1 = new List<(string, string,Category)> {
+            ("Set for 6 diners","gold",Category.dinnerware),
+            ("Set of 6 glasses","gold",Category.dinnerware),
+            ("Bath towel", "white",Category.textile),
+            ("kitchen towel","yellow",Category.textile),
+            ("Decorative tool for soap","pink",Category.textile),
+            ("A luxurious vase","silver",Category.styling),
+            ("Wool carpet","pink",Category.textile),
+            ("Bedding with a speckled print","brown",Category.linen),
+            ("Silk bedding","white",Category.linen),
+            ("Fragrance distributor","blue",Category.bathAccessories)
         };
         
 
@@ -173,7 +173,8 @@ static internal class DataSource
                 arrMone[idOrder]++;
                 if (arrMone[idOrder] == 1)
                     mone++;
-                DO.OrderItem itemInOrder = new DO.OrderItem { ID = Config.ItemInOrder, OrderID = orders[idOrder].ID, ProductID = products[idProduct].ID, Price = products[idProduct].Price };
+                int amount = Convert.ToInt32(_random.Next(1, 20));
+                DO.OrderItem itemInOrder = new DO.OrderItem { ID = Config.ItemInOrder, OrderID = orders[idOrder].ID, ProductID = products[idProduct].ID, Price = products[idProduct].Price, Amount= amount };
                 AddOrederItem(itemInOrder);
             }
             

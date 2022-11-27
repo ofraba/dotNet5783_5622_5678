@@ -23,8 +23,8 @@ public class Order
     public override string ToString() => $@"
 CustomerOrder ID={ID}: {CustomerName}, 
 Email : {CustomerEmail}
-    	Adress: {CustomerAdress}
-    	OrderDate: {OrderDate}
+Address: {CustomerAddress}
+OrderDate: {OrderDate}
 ShipDate: {ShipDate}
 DeliveryDate: {DeliveryDate}
 ";

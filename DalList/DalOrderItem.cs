@@ -9,6 +9,7 @@ internal class DalOrderItem :IOrderItem
 {
     public int Add(DO.OrderItem orderItem)
     {
+        orderItem.ID = DataSource.Config.ItemInOrder;
         DataSource.orderItems.Add(orderItem);
         return orderItem.ID;
     }

@@ -7,11 +7,12 @@ internal class DalOrders:IOrder
 {
     public int Add(DO.Orders o)
     {
+        o.ID = DataSource.Config.Order;
         DataSource.orders.Add(o);
         return o.ID;
     }
 
-    public DO.Orders Get(int id)
+    public Orders Get(int id)
     {
         int i = 0;
         while (DataSource.orders[i].ID != id && i < DataSource.orders.Count)
@@ -26,7 +27,7 @@ internal class DalOrders:IOrder
  
     public IEnumerable<DO.Orders> GetAll()
     {
-        List<DO.Orders> temp = new List<DO.Orders>();
+        List<Orders> temp = new List<Orders>();
         for (int i = 0; i < DataSource.orders.Count; i++)
         {
             temp[i] = DataSource.orders[i];

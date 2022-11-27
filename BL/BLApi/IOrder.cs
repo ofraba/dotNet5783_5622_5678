@@ -11,12 +11,12 @@ public interface IOrder
     public IEnumerable<OrderForList> GetAll();
     public Order GetForManegar(int idOrder);
     //עדכון שילוח הזמנה
-    public Product OrderShippingUpdate(int idOrder);
+    public Order OrderShippingUpdate(int idOrder);
     //עדכון אספקת הזמנה
-    public int OrderDeliveryUpdate(int idOrder);
+    public Order OrderDeliveryUpdate(int idOrder);
 
     //מעקב הזמנה
-    public void OrderTracking(int idOrder);
+    //public void OrderTracking(int idOrder);
 
     //עדכו הזמנה-בונוס
     //public void Update();

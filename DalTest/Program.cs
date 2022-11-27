@@ -7,13 +7,11 @@ using System.Collections.Generic;
 
 namespace DalTest
 {
-   
-
-    static class Program
+    public class Program
     {
         static private IDal dalList = new DalList();
-        Random rnd = new Random();
-       
+        static readonly Random random = new Random();
+
         static void Main(string[] args)
         {
             Console.WriteLine("enter 0 for exit,\n 1 for product, \n 2 for orders, \n 3 for items in order:");
@@ -45,12 +43,12 @@ namespace DalTest
             static void productFunction(char p)
             {
                 double productPrice;
-                int productId, productAmount;
-                string productName, productCategory, productColor;
+                int productId, productAmount, productCategory;
+                string productName, productColor;
                 switch (p)
                 {
                     case 'a':
-                        productId = Convert.ToInt32(rnd.Next(100000, 999999));//cheak if it work
+                        productId = Convert.ToInt32(random.Next(100000, 999999));//cheak if it work
                         Console.WriteLine("enter name of the product");
                         productName = Console.ReadLine();
                         Console.WriteLine("enter price of the product");
@@ -59,27 +57,6 @@ namespace DalTest
                         productColor = Console.ReadLine();
                         Console.WriteLine("enter category\n 1 for dinnerware\n 2 for linen\n 3 for bathAccessories\n 4 for styling\n 5 for textile");
                         int category = int.Parse(Console.ReadLine());
-                        string chooseCategory;
-                        switch (category)
-                        {
-                            case 1:
-                                chooseCategory = Convert.ToString(DO.Category.dinnerware);
-                                break;
-                            case 2:
-                                chooseCategory = Convert.ToString(DO.Category.linen);
-                                break;
-                            case 3:
-                                chooseCategory = Convert.ToString(DO.Category.bathAccessories);
-                                break;
-                            case 4:
-                                chooseCategory = Convert.ToString(DO.Category.styling);
-                                break;
-                            case 5:
-                                chooseCategory = Convert.ToString(DO.Category.textile);
-                                break;
-                            default:
-                                break;
-                        }
                         Console.WriteLine("enter amount of the product");
                         productAmount = int.Parse(Console.ReadLine());
                         Product newProduct = new Product
@@ -88,7 +65,7 @@ namespace DalTest
                             Name = productName,
                             Price = productPrice,
                             Color = productColor,
-                            Category = chooseCategory,//איך ושיםקטגוריה?
+                            Category = (DO.Category)category,//איך ושיםקטגוריה?
                             Amount = productAmount
                         };
                         try
@@ -136,7 +113,7 @@ namespace DalTest
                         Console.WriteLine("enter color to update:");
                         productColor = Console.ReadLine();
                         Console.WriteLine("enter Category to update:");
-                        productCategory = Console.ReadLine();
+                        productCategory = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter amount to update:");
                         productAmount = int.Parse(Console.ReadLine());
                         Product updateProdut = new Product
@@ -145,7 +122,7 @@ namespace DalTest
                             Name = productName,
                             Price = productPrice,
                             Color = productColor,
-                            Category = productCategory,
+                            Category = (DO.Category)productCategory,
                             Amount = productAmount
                         };
                         try
@@ -179,29 +156,19 @@ namespace DalTest
                 switch (o)
                 {
                     case 'a':
-                        orderId = DataSource.Config.Order;
+                        Orders newOrder = new Orders() { };
                         Console.WriteLine("enter customer's name:");
-                        customerName = Console.ReadLine();
+                        newOrder.CustomerName = Console.ReadLine();
                         Console.WriteLine("enter  customer's email:");
-                        customerEmail = Console.ReadLine();
+                        newOrder.CustomerEmail = Console.ReadLine();
                         Console.WriteLine("enter customer's address");
-                        customerAdress = Console.ReadLine();
+                        newOrder.CustomerAdress = Console.ReadLine();
                         Console.WriteLine("enter date of order");
-                        orderDate = Convert.ToDateTime(Console.ReadLine());
+                        newOrder.OrderDate = Convert.ToDateTime(Console.ReadLine());
                         Console.WriteLine("enter date of ship");
-                        shipDate = Convert.ToDateTime(Console.ReadLine());
+                        newOrder.ShipDate = Convert.ToDateTime(Console.ReadLine());
                         Console.WriteLine("enter date of delivery");
-                        deliveryDate = Convert.ToDateTime(Console.ReadLine());
-                        Orders newOrder = new Orders
-                        {
-                            ID = orderId,
-                            CustomerName = customerName,
-                            CustomerEmail = customerEmail,
-                            CustomerAdress = customerAdress,
-                            OrderDate = orderDate,
-                            ShipDate = shipDate,//האם אמורים להכניס את זה
-                            DeliveryDate= deliveryDate//האם אמורים להכניס את זה
-                        };
+                        newOrder.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
                         try
                         {
                             dalList.Order.Add(newOrder);
@@ -237,10 +204,6 @@ namespace DalTest
                         {
                             Console.WriteLine(item);
                         }
-                        //for (int i = 0; i < allOrders.Length; i++)
-                        //{
-                        //    Console.WriteLine(allOrders[i]);
-                        //}
                         break;
                     case 'd':
                         Console.WriteLine("enter id of order you want to update");
@@ -291,30 +254,24 @@ namespace DalTest
                     default: break;
                 }
             }
+
+
             static void itemInOrderFunction(char i)
             {
                 double price;
-                int productId,orderId,id,amount;
+                int productId, orderId, id, amount;
                 switch (i)
                 {
                     case 'a':
-                        id= DataSource.Config.ItemInOrder;
+                        OrderItem newOrderItem = new OrderItem() { };
                         Console.WriteLine("enter id of the order");
-                        orderId = int.Parse(Console.ReadLine());
+                        newOrderItem.OrderID = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter id of the product");
-                        productId = int.Parse(Console.ReadLine());
+                        newOrderItem.ProductID = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter price");
-                        price = double.Parse(Console.ReadLine());
+                        newOrderItem.Price = double.Parse(Console.ReadLine());
                         Console.WriteLine("enter amount");
-                        amount = int.Parse(Console.ReadLine());
-                        OrderItem newOrderItem = new OrderItem
-                        {
-                            ID = id,
-                            ProductID = productId,
-                            OrderID = orderId,
-                            Price = price,
-                            Amount = amount
-                        };
+                        newOrderItem.Amount = int.Parse(Console.ReadLine());
                         try
                         {
                             dalList.OrderItem.Add(newOrderItem);
@@ -347,11 +304,7 @@ namespace DalTest
                         foreach (var item in allOrderItem)
                         {
                             Console.WriteLine(item);
-                        }
-                        //for (int j = 0; j < AllOrderItem.Length; j++)
-                        //{
-                        //    Console.WriteLine(AllOrderItem[j]);
-                        //}
+                        } 
                         break;
                     case 'd':
                         Console.WriteLine("enter id of the items in order you want to update");

@@ -3,5 +3,5 @@ namespace DalApi;
 
 public interface IProduct : ICrud<Product>
 {
-    int Add(global::BO.Product p);
+    //int Add(global::BO.Product p);
 }

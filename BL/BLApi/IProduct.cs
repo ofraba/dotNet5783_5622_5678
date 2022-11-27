@@ -11,6 +11,7 @@ namespace BLApi;
 public interface IProduct
 {
     public IEnumerable<ProductForList> GetAll();
+    public IEnumerable<ProductItem> GetForCatalog();
     public Product GetForManegar(int idProduct);
     public ProductItem GetForClient(int idProduct,Cart c);
     public void Add(Product p);
