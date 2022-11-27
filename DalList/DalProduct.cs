@@ -1,8 +1,9 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DalApi;
+using DO;
 namespace Dal;
 
-public class DalProduct
+internal class DalProduct :IProduct
 {
 
     public bool Exsist(int id)
@@ -16,7 +17,7 @@ public class DalProduct
         }
         return false;
     }
-    public int Create(DO.Product p)
+    public int Add(DO.Product p)
     {
         int id = p.ID;
         bool isExsist = Exsist(id);
@@ -28,7 +29,7 @@ public class DalProduct
         return id;
     }
 
-    public DO.Product Read(int id)
+    public DO.Product Get(int id)
     {
         int i = 0;
         while (DataSource.products[i].ID != id && i < DataSource.products.Count)
@@ -41,9 +42,10 @@ public class DalProduct
     }
 
 
-    public DO.Product[] ReadAll()
+
+    public IEnumerable<DO.Product> GetAll()
     {
-        DO.Product[] temp = new DO.Product[DataSource.products.Count];
+        List<DO.Product> temp = new List<DO.Product>();
         for (int i = 0; i < DataSource.products.Count; i++)
         {
             temp[i] = DataSource.products[i];
@@ -79,5 +81,7 @@ public class DalProduct
             throw new ex1();
         }
     }
+
+   
 }
 

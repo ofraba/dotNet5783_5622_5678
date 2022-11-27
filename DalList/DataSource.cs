@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using DalApi;
+using DO;
 namespace Dal;
 
 static internal class DataSource
 {
     static readonly Random _random = new Random();
 
-    static internal class Config//לבדוק האם השתמשנו
+    static internal class Config
     {
         static private int _order = 0;
         static public int Order
@@ -25,9 +27,9 @@ static internal class DataSource
         s_Initialize();
     }
 
-    List<DO.Orders> orders=new List<DO.Orders>();
-    List<DO.OrderItem> orderItems=new List<DO.OrderItem>();
-    List<DO.Product> products=new List<DO.Product>();
+    public static List<DO.Orders> orders=new List<DO.Orders>();
+    public static List<DO.OrderItem> orderItems=new List<DO.OrderItem>();
+    public static List<DO.Product> products=new List<DO.Product>();
 
 
     static void AddOrederItem(DO.OrderItem newOrderItem)

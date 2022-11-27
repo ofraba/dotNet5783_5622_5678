@@ -1,31 +1,30 @@
-﻿
+﻿using System.Collections.Generic;
 namespace Dal;
 
 public class DalOrderItem
 {
     public int Create(DO.OrderItem orderItem)
     {
-        int i= DataSource.Config.amountOrderItem;
-        DataSource.Config.amountOrderItem++;
-        DataSource.orderItems[i]=orderItem;
-        return DataSource.orderItems[i].ID;
+        DataSource.orderItems.Add(orderItem);
+        return orderItem.ID;
     }
     public DO.OrderItem Read(int id)
     {
         int i = 0;
-        while (DataSource.orderItems[i].ID != id && i < DataSource.Config.amountOrderItem)
+        while (DataSource.orderItems[i].ID != id && i < DataSource.orderItems.Count)
         {
             i++;
         }
-        if (i < DataSource.Config.amountOrderItem)
+        if (i < DataSource.orderItems.Count)
             return DataSource.orderItems[i];
-        throw new Exception("The object is not exsist");
+        throw new ex1();
     }
 
-    public DO.OrderItem[] ReadAll()
+    public List<DO.OrderItem> ReadAll()
     {
-        DO.OrderItem[] temp = new DO.OrderItem[DataSource.Config.amountOrderItem];
-        for (int i = 0; i < DataSource.Config.amountOrderItem; i++)
+        List<DO.OrderItem> temp = new List<DO.OrderItem>();
+        DO.OrderItem[] temp = new DO.OrderItem[DataSource.orderItems.Count];
+        for (int i = 0; i < DataSource.orderItems.Count; i++)
         {
             temp[i] = DataSource.orderItems[i];
         }
@@ -37,20 +36,15 @@ public class DalOrderItem
         int i = 0;
         while (DataSource.orderItems[i].ID != id && i < DataSource.Config.amountOrderItem)
         {
-            i++;
+            DataSource.orderItems.RemoveAt(i);
         }
         if (i >= DataSource.Config.amountOrderItem)
-            throw new Exception("The object is not exsist");
-        for (int j = i; j < DataSource.Config.amountOrderItem; j++)
-        {
-            DataSource.orderItems[j] = DataSource.orderItems[j + 1];
-        }
-        DataSource.Config.amountOrderItem--;
+            throw new ex1();
     }
     public void Update(DO.OrderItem ot)
     {
         int i;
-        for (i = 0; i < DataSource.Config.amountOrderItem; i++)
+        for (i = 0; i < DataSource.orderItems.Count; i++)
         {
             if (DataSource.orderItems[i].ID == ot.ID)
             {
@@ -58,9 +52,9 @@ public class DalOrderItem
                 break;
             }
         }
-        if (i >= DataSource.Config.amountOrderItem)
+        if (i >= DataSource.orderItems.Count)
         {
-            throw new Exception("The object is not exsist");
+            throw new ex1();
         }
     }
 }

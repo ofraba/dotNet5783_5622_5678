@@ -1,16 +1,17 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DalApi;
+using DO;
 namespace Dal;
 
-public class DalOrders
+internal class DalOrders:IOrder
 {
-    public int Create(DO.Orders o)
+    public int Add(DO.Orders o)
     {
-        DataSource.orders.Add=o;
+        DataSource.orders.Add(o);
         return o.ID;
     }
 
-    public DO.Orders Read(int id)
+    public DO.Orders Get(int id)
     {
         int i = 0;
         while (DataSource.orders[i].ID != id && i < DataSource.orders.Count)
@@ -23,7 +24,7 @@ public class DalOrders
     }
 
  
-    public List<DO.Orders> ReadAll()
+    public IEnumerable<DO.Orders> GetAll()
     {
         List<DO.Orders> temp = new List<DO.Orders>();
         for (int i = 0; i < DataSource.orders.Count; i++)
@@ -40,7 +41,7 @@ public class DalOrders
         {
              DataSource.orders.RemoveAt(i);
         }
-        if (i >= DataSource.Config.amountOrder)
+        if (i >= DataSource.orders.Count)
             throw new ex1();
     }
 
