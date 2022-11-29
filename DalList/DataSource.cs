@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Security.Cryptography;
 using DalApi;
 using DO;
 namespace Dal;
@@ -134,16 +136,36 @@ static internal class DataSource
             ("ayala rozner","ayala@gmail.com","toledano"),
             ("sara lavi", "sara@gmail.com","cahaneman")
         };
+
+
+
         for (int i = 0; i < 20; i++)
         {
             DateTime date = DateTime.Now;
-            DateTime date1 = DateTime.MinValue;
-            DateTime date2 = DateTime.MinValue;
-            int daySend = Convert.ToInt32(_random.Next(5,10));
-            int dayGet = Convert.ToInt32(_random.Next(5,10));
-            TimeSpan dateSend = new TimeSpan(daySend, 0, 0, 0);
-            TimeSpan dateGet = new TimeSpan(dayGet, 0, 0, 0);
-            DO.Orders order = new DO.Orders { ID = Config.Order, CustomerName = orders1[i].Item1, CustomerEmail = orders1[i].Item2, CustomerAdress = orders1[i].Item3, OrderDate = date, ShipDate = date1.Add(dateSend), DeliveryDate = date2.Add(dateGet) };
+            DateTime date2;
+            DateTime date3;
+            if (i < orders1.Count * 0.2)
+            {
+                date2 = DateTime.MinValue;
+                date3 = DateTime.MinValue;
+            }
+            else
+            {
+                int shippingDay = (int)_random.Next(5, 10);
+                TimeSpan dateSend = new TimeSpan(shippingDay, 0, 0, 0);
+                date2 = date.Add(dateSend);
+                if (i < orders1.Count * 0.2 + (orders1.Count * 0.8 * 0.6))
+                {
+                    int dayGet = (int)_random.Next(10, 14);
+                    TimeSpan dateGet = new TimeSpan(dayGet, 0, 0, 0);
+                    date3 = date.Add(dateGet);
+                }
+                else
+                {
+                    date3 = DateTime.MinValue;
+                }
+            }
+            DO.Orders order = new DO.Orders { ID = Config.Order, CustomerName = orders1[i].Item1, CustomerEmail = orders1[i].Item2, CustomerAdress = orders1[i].Item3, OrderDate = date, ShipDate = date2, DeliveryDate = date3 };
             AddOrder(order);
         }
 

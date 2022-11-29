@@ -30,7 +30,7 @@ internal class DalOrderItem :IOrderItem
         List<DO.OrderItem> temp = new List<DO.OrderItem>();
         for (int i = 0; i < DataSource.orderItems.Count; i++)
         {
-            temp[i] = DataSource.orderItems[i];
+            temp.Add(DataSource.orderItems[i]);
         }
         return temp;
     }

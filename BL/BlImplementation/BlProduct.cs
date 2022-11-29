@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
-using BO;
 using Dal;
 using DalApi;
-using DO;
+
 
 
 namespace BlImplementation;
@@ -18,73 +17,66 @@ internal class BlProduct : BLApi.IProduct
     public IDal Dal = new DalList();
     public IEnumerable<BO.ProductForList> GetAll()
     {
-        IEnumerable<BO.ProductForList> productList = null;
-        try {
-            IEnumerable<DO.Product> products = Dal.Product.GetAll();
-            foreach (DO.Product product in products)
-            {
-                BO.ProductForList productInList = new BO.ProductForList();
-                productInList.ID = product.ID;
-                productInList.Name = product.Name;
-                productInList.Price = product.Price;
-                //productList.Category = product.Category; //לא עובד כנראה יש בעיה עם הenum
-                productList.ToList().Add(productInList);
+        List<BO.ProductForList> productList = new List<BO.ProductForList>();
 
-            }
-        }
-        catch (ExceptionFromDal e)
+        IEnumerable<DO.Product> products = Dal.Product.GetAll();
+        foreach (DO.Product product in products)
         {
-            throw new BO.ExceptionFromDal(e);
+            BO.ProductForList productInList = new BO.ProductForList();
+            productInList.ID = product.ID;
+            productInList.Name = product.Name;
+            productInList.Price = product.Price;
+            productInList.Category = (BO.Category)product.Category;
+            productList.Add(productInList);
         }
-
         return productList;
     }
 
-    public IEnumerable<ProductItem> GetForCatalog()
+    public IEnumerable<BO.ProductItem> GetForCatalog()
     {
-        IEnumerable<BO.ProductItem> productList = null;
-        try
+        List<BO.ProductItem> productList = new List<BO.ProductItem>();
+
+        IEnumerable<DO.Product> products = Dal.Product.GetAll();
+        foreach (DO.Product product in products)
         {
-            IEnumerable<DO.Product> products = Dal.Product.GetAll();
-            foreach (DO.Product product in products)
+            BO.ProductItem productItem = new BO.ProductItem();
+            productItem.ID = product.ID;
+            productItem.Name = product.Name;
+            productItem.Price = product.Price;
+            productItem.Amount = product.Amount;
+            productItem.Category = (BO.Category)product.Category;
+            if (product.Amount > 0)
             {
-                ProductItem productItem = new ProductItem();
-                productItem.ID = product.ID;
-                productItem.Name = product.Name;
-                productItem.Price = product.Price;
-                productItem.Amount = product.Amount;
-                //productItem.Category = product.Category;
-                if (product.Amount > 0)
-                {
-                    productItem.InStock = true;
-                }
-                else
-                {
-                    productItem.InStock = false;
-                }
+                productItem.InStock = true;
             }
-        }
-        catch (ExceptionFromDal e)
-        {
-            throw new BO.ExceptionFromDal(e);
+            else
+            {
+                productItem.InStock = false;
+            }
+            productList.Add(productItem);
         }
         return productList;
     }
-    public BO.Product GetForManegar(int idProduct) {
+
+
+    public BO.Product GetForManegar(int idProduct)
+    {
         BO.Product bproduct = new BO.Product();
-        if (idProduct > 0) { 
+        if (idProduct > 0)
+        {
             DO.Product dproduct = new DO.Product();
-            try {
+            try
+            {
                 dproduct = Dal.Product.Get(idProduct);
                 bproduct.ID = dproduct.ID;
                 bproduct.Name = dproduct.Name;
                 bproduct.Price = dproduct.Price;
-                bproduct.Color=dproduct.Color;
-                //bproduct.Category = dproduct.Category;//לא עובד כנראה יש בעיה עם הenum
+                bproduct.Color = dproduct.Color;
+                bproduct.Category = (BO.Category)dproduct.Category;//לא עובד כנראה יש בעיה עם הenum
                 bproduct.InStock = dproduct.Amount;
 
             }
-            catch (ExceptionFromDal e)
+            catch (ex1 e)
             {
                 throw new BO.ExceptionFromDal(e);
             }
@@ -94,37 +86,37 @@ internal class BlProduct : BLApi.IProduct
     }
 
 
-    public ProductItem GetForClient(int idProduct, Cart c)
+    //public BO.ProductItem GetForClient(int idProduct, BO.Cart c)
+    //{
+    //    BO.ProductItem bproductItem = new BO.ProductItem();
+    //    if (idProduct > 0)
+    //    {
+    //        DO.Product dproduct = new DO.Product();
+    //        try
+    //        {
+    //            dproduct = Dal.Product.Get(idProduct);
+    //            bproductItem.ID = dproduct.ID;
+    //            bproductItem.Name = dproduct.Name;
+    //            bproductItem.Price = dproduct.Price;
+    //            bproductItem.Amount = dproduct.Amount;
+    //            bproductItem.Category = (BO.Category)dproduct.Category;//לא עובד כנראה יש בעיה עם הenum
+    //            if (dproduct.Amount>=1)
+    //                bproductItem.InStock = true;
+    //            else
+    //                bproductItem.InStock = false;
+    //        }
+    //        catch (BO.ExceptionFromDal e)
+    //        {
+    //            throw new BO.ExceptionFromDal(e);
+    //        }
+    //    }
+    //    return bproductItem;
+    //}
+
+
+    public int Add(BO.Product p)
     {
-        BO.ProductItem bproductItem = new BO.ProductItem();
-        if (idProduct > 0)
-        {
-            DO.Product dproduct = new DO.Product();
-            try
-            {
-                dproduct = Dal.Product.Get(idProduct);
-                bproductItem.ID = dproduct.ID;
-                bproductItem.Name = dproduct.Name;
-                bproductItem.Price = dproduct.Price;
-                bproductItem.Amount = dproduct.Amount;
-                //bproductItem.Category = dproduct.Category;//לא עובד כנראה יש בעיה עם הenum
-                if (dproduct.Amount>=1)
-                    bproductItem.InStock = true;
-                else
-                    bproductItem.InStock = false;
-            }
-            catch (ExceptionFromDal e)
-            {
-                throw new BO.ExceptionFromDal(e);
-            }
-        }
-        return bproductItem;
-    }
-    
-    
-    public void Add(BO.Product p)
-    {
-        if(p.ID>0 && p.Name !=" " && p.Price>0 && p.InStock>0)
+        if (p.ID > 0 && p.Name != " " && p.Price > 0 && p.InStock > 0)
         {
             DO.Product dproduct = new DO.Product();
             dproduct.ID = p.ID;
@@ -132,45 +124,46 @@ internal class BlProduct : BLApi.IProduct
             dproduct.Price = p.Price;
             dproduct.Amount = p.InStock;
             dproduct.Color = p.Color;
-            //dproduct.Category = p.Category;
+            dproduct.Category = (DO.Category)p.Category;
             try
             {
-                int id = Dal.Product.Add(dproduct);
+                return Dal.Product.Add(dproduct);
             }
-            catch (ExceptionFromDal e)
+            catch (ex2 e)
             {
                 throw new BO.ExceptionFromDal(e);
             }
         }
         else
         {
-            throw new exception1();
+            throw new BO.dataIsntInvalid();
         }
     }
 
-    public void Delete(int idProduct) {
-        
+    public void Delete(int idProduct)
+    {
+
         IEnumerable<DO.OrderItem> temp = Dal.OrderItem.GetAll();
         foreach (DO.OrderItem productInOrder in temp)
         {
             if (productInOrder.ProductID == idProduct)
             {
-                throw new exception2();
+                throw new BO.productExsistInOrder();
             }
         }
         try
         {
             Dal.Product.Delete(idProduct);
         }
-        catch (ExceptionFromDal e)
+        catch (ex1 e)
         {
             throw new BO.ExceptionFromDal(e);
         }
 
 
     }
-    
-    
+
+
     public void Update(BO.Product p)
     {
         if (p.ID > 0 && p.Name != " " && p.Price > 0 && p.InStock > 0)
@@ -181,12 +174,12 @@ internal class BlProduct : BLApi.IProduct
             dproduct.Price = p.Price;
             dproduct.Amount = p.InStock;
             dproduct.Color = p.Color;
-            //dproduct.Category = p.Category;
+            dproduct.Category = (DO.Category)p.Category;
             try
             {
                 Dal.Product.Update(dproduct);
             }
-            catch (ExceptionFromDal e)
+            catch (ex1 e)
             {
                 throw new BO.ExceptionFromDal(e);
             }

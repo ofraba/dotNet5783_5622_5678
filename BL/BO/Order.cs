@@ -12,7 +12,7 @@ public class Order
     public string CustomerName { get; set; }
     public string CustomerEmail { get; set; }
     public string CustomerAddress { get; set; }
-    public IEnumerable<OrderItem> Items { get; set; }
+    public List<BO.OrderItem> Items { get; set; }
     public OrderStatus Status { get; set; }
     public DateTime OrderDate { get; set; }
     public DateTime ShipDate { get; set; }
@@ -21,7 +21,8 @@ public class Order
     public double TotalPrice { get; set; }
 
     public override string ToString() => $@"
-CustomerOrder ID={ID}: {CustomerName}, 
+CustomerOrder ID={ID}: 
+Name:{CustomerName}, 
 Email : {CustomerEmail}
 Address: {CustomerAddress}
 OrderDate: {OrderDate}

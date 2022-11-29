@@ -15,13 +15,12 @@ internal class BlCart : BLApi.ICart
     public IDal dal = new DalList();
     public BO.Cart AddProductToCart(BO.Cart c, int productId)
     {
-
         foreach (var item in c.Items)
         {
             if (item.ProductID == productId)
             {
                 DO.Product product = dal.Product.Get(item.ProductID);
-                if (product.Amount >= item.Amount)
+                if (product.Amount > item.Amount)
                 {
                     item.Amount++;
                     item.TotalPrice += item.Price;
@@ -30,7 +29,7 @@ internal class BlCart : BLApi.ICart
                 }
                 else
                 {
-                    throw new BO.exception6(); //חריגה אין מספיק במלאי
+                    throw new BO.notEnoughAmount(); //חריגה אין מספיק במלאי
                 }
             }
         }
@@ -45,16 +44,18 @@ internal class BlCart : BLApi.ICart
                 orderItem.TotalPrice = product.Price;
                 orderItem.Name = product.Name;
                 orderItem.ProductID = productId;
-                c.Items.ToList().Add(orderItem);
+                c.Items.Add(orderItem);
                 c.TotalPrice += orderItem.Price;
             }
         }
-        catch (BO.ExceptionFromDal e)
+        catch (ex1 e)
         {
             throw new BO.ExceptionFromDal(e);//לא נמצא האוביקט
         }
         return c;//האם מחזירים בכל מצב?
     }
+
+
     public BO.Cart Update(BO.Cart c, int productId, int amount)
     {
         foreach (var item in c.Items)
@@ -64,9 +65,21 @@ internal class BlCart : BLApi.ICart
                 if (amount > item.Amount)
                 {
 
-                    return AddProductToCart(c, productId);
+                    DO.Product product = dal.Product.Get(item.ProductID);
+                    if (product.Amount > amount)
+                    {
+                        c.TotalPrice -= item.Price * item.Amount;
+                        item.Amount = amount;
+                        item.TotalPrice = item.Price * amount;
+                        c.TotalPrice += item.Price * item.Amount;
+                        break;
+                    }
+                    else
+                    {
+                        throw new BO.notEnoughAmount();
+                    }
                 }
-                else if (amount < item.Amount)
+                else if (amount < item.Amount && amount != 0)
                 {
                     c.TotalPrice -= item.TotalPrice;
                     item.TotalPrice = item.Price * amount;
@@ -77,48 +90,44 @@ internal class BlCart : BLApi.ICart
                 else
                 {
                     c.TotalPrice -= item.TotalPrice;
-                    c.Items.ToList().Remove(item);
+                    c.Items.Remove(item);
                     break;
                 }
             }
         }
+
         return c;
 
     }
     public void Confirm(BO.Cart c, string name, string email, string address)
     {
-        if (c.CustomerAdress == "" || c.CustomerName == "" || c.CustomerEmail == "")//check if the params are valid
-            throw new BO.exception1();
+        if (address == "" || name == "" || email == "")//check if the data are valid
+            throw new BO.dataIsntInvalid();
         try
         {
-            var mailAddress = new MailAddress(c.CustomerEmail);
+            var mailAddress = new MailAddress(email);
         }
         catch
         {
-            throw new BO.exception1();
+            throw new BO.dataIsntInvalid();
         }
-        DO.Orders order = new DO.Orders { ID=0, CustomerName = name , CustomerEmail = email, CustomerAdress = address, DeliveryDate= DateTime.MinValue, ShipDate = DateTime.MinValue, OrderDate = DateTime.Now };
-        try
+        DO.Orders order = new DO.Orders { ID = 0, CustomerName = name, CustomerEmail = email, CustomerAdress = address, DeliveryDate = DateTime.MinValue, ShipDate = DateTime.MinValue, OrderDate = DateTime.Now };
+
+        int id = dal.Order.Add(order);
+        foreach (var item in c.Items)
         {
-            int id = dal.Order.Add(order);
-            foreach (var item in c.Items)
+            DO.OrderItem itemInOrder = new DO.OrderItem { ID = 0, OrderID = id, ProductID = item.ProductID, Price = item.Price, Amount = item.Amount };
+            dal.OrderItem.Add(itemInOrder);
+            DO.Product product = dal.Product.Get(item.ProductID);
+            product.Amount -= item.Amount;
+            try
             {
-                DO.OrderItem itemInOrder = new DO.OrderItem { ID=0, OrderID = id , ProductID = item.ProductID , Price = item.Price , Amount= item.Amount };
-                dal.OrderItem.Add(itemInOrder);
-                //catch (BO.ExceptionFromDal e)
-                //{
-                //    throw new BO.ExceptionFromDal(e);//מספר הזמנה כבר קיים
-                //}
-                DO.Product product= dal.Product.Get(item.ProductID);
-                product.Amount -= item.Amount;
                 dal.Product.Update(product);
             }
+            catch (ex1 e)
+            {
+                throw new BO.ExceptionFromDal(e);//אוביקט כבר קיים
+            }
         }
-        catch (BO.ExceptionFromDal e)
-        {
-            throw new BO.ExceptionFromDal(e);//אוביקט כבר קיים
-        }
-
-
     }
 }

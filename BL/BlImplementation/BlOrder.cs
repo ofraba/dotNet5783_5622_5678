@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
-using BO;
 using Dal;
 using DalApi;
 
@@ -32,7 +31,7 @@ internal class BlOrder : BLApi.IOrder
 
     public IEnumerable<BO.OrderForList> GetAll()
     {
-        IEnumerable<BO.OrderForList> ordersList = null;
+        List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
         IEnumerable<DO.Orders> orders = dal.Order.GetAll();
         IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
         foreach (DO.Orders order in orders)
@@ -53,7 +52,7 @@ internal class BlOrder : BLApi.IOrder
             orderForList.TotalPrice = price;
             orderForList.AmountOfItems = amountMone;
             orderForList.status = Status(order);
-            ordersList.ToList().Add(orderForList);
+            ordersList.Add(orderForList);
 
         }
         return ordersList;
@@ -77,9 +76,10 @@ internal class BlOrder : BLApi.IOrder
                 bOrder.DeliveryDate = dOrder.DeliveryDate;
                 IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
                 double totalPrice = 0;
-                foreach (var itemInOrder in itemInOrderList)
+                bOrder.Items = new List<BO.OrderItem>();
+                foreach (DO.OrderItem itemInOrder in itemInOrderList)
                 {
-                    if (itemInOrder.ID == idOrder)
+                    if (itemInOrder.OrderID == idOrder)
                     {
                         BO.OrderItem orderItem = new BO.OrderItem();
                         orderItem.ID = itemInOrder.ID;
@@ -87,21 +87,20 @@ internal class BlOrder : BLApi.IOrder
                         orderItem.Price = itemInOrder.Price;
                         orderItem.ProductID = itemInOrder.ProductID;
                         orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-                        bOrder.Items.ToList().Add(orderItem);
+                        bOrder.Items.Add(orderItem);
                         totalPrice += itemInOrder.Price * itemInOrder.Amount;
-
                     }
                 }
                 bOrder.TotalPrice = totalPrice;
             }
-            catch (ExceptionFromDal e)
+            catch (ex1 e)
             {
                 throw new BO.ExceptionFromDal(e);
             }
         }
         else
         {
-            throw new exception3();
+            throw new BO.negativeIDnumber();
         }
         return bOrder;
 
@@ -140,7 +139,11 @@ internal class BlOrder : BLApi.IOrder
                         orderItem.Price = itemInOrder.Price;
                         orderItem.ProductID = itemInOrder.ProductID;
                         orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-                        order2.Items.ToList().Add(orderItem);
+                        if(order2.Items==null)
+                        {
+                            order2.Items = new List<BO.OrderItem>();
+                        }
+                        order2.Items.Add(orderItem);
                         totalPrice += itemInOrder.Price * itemInOrder.Amount;
                     }
                 }
@@ -150,10 +153,10 @@ internal class BlOrder : BLApi.IOrder
 
             else
             {
-                throw new exception4();
+                throw new BO.TheOrderHasBeenSent();
             }
         }
-        catch (ExceptionFromDal e)
+        catch (ex1 e)
         {
             throw new BO.ExceptionFromDal(e);
         }
@@ -195,7 +198,11 @@ internal class BlOrder : BLApi.IOrder
                         orderItem.Price = itemInOrder.Price;
                         orderItem.ProductID = itemInOrder.ProductID;
                         orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-                        order2.Items.ToList().Add(orderItem);
+                        if (order2.Items == null)
+                        {
+                            order2.Items = new List<BO.OrderItem>();
+                        }
+                        order2.Items.Add(orderItem);
                         totalPrice += itemInOrder.Price * itemInOrder.Amount;
                     }
                 }
@@ -204,10 +211,10 @@ internal class BlOrder : BLApi.IOrder
 
             else
             {
-                throw new exception5();//זריקת חריגה ההזמנה סופקה
+                throw new BO.orderHasBeenDelivered();//זריקת חריגה ההזמנה סופקה
             }
         }
-        catch (ExceptionFromDal e)
+        catch (ex1 e)
         {
             throw new BO.ExceptionFromDal(e);
         }

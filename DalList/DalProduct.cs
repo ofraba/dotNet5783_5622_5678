@@ -32,7 +32,7 @@ internal class DalProduct :IProduct
     public DO.Product Get(int id)
     {
         int i = 0;
-        while (DataSource.products[i].ID != id && i < DataSource.products.Count)
+        while (i < DataSource.products.Count && DataSource.products[i].ID != id)
         {
             i++;
         }
@@ -48,7 +48,7 @@ internal class DalProduct :IProduct
         List<DO.Product> temp = new List<DO.Product>();
         for (int i = 0; i < DataSource.products.Count; i++)
         {
-            temp[i] = DataSource.products[i];
+            temp.Add(DataSource.products[i]);
         }
         return temp;
     }
@@ -56,12 +56,14 @@ internal class DalProduct :IProduct
     public void Delete(int id)
     {
         int i = 0;
-        while (DataSource.products[i].ID != id && i < DataSource.products.Count)
+        while (i < DataSource.products.Count && DataSource.products[i].ID != id)
         {
-            DataSource.products.RemoveAt(i);
+            i++;
         }
         if (i >= DataSource.products.Count)
             throw new ex1();
+        else
+            DataSource.products.RemoveAt(i);
     }
 
 
