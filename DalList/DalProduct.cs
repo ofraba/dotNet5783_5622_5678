@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DalApi;
 using DO;
 namespace Dal;
@@ -43,14 +44,14 @@ internal class DalProduct :IProduct
 
 
 
-    public IEnumerable<DO.Product> GetAll()
+    public IEnumerable<DO.Product> GetAll(Func<Product, bool>? func = null)
     {
         List<DO.Product> temp = new List<DO.Product>();
         for (int i = 0; i < DataSource.products.Count; i++)
         {
             temp.Add(DataSource.products[i]);
         }
-        return temp;
+        return (func == null) ? temp : temp.Where(func);
     }
 
     public void Delete(int id)

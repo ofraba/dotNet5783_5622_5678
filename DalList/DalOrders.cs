@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DalApi;
 using DO;
 namespace Dal;
@@ -25,14 +26,14 @@ internal class DalOrders:IOrder
     }
 
  
-    public IEnumerable<DO.Orders> GetAll()
+    public IEnumerable<DO.Orders> GetAll(Func<Orders, bool>? func = null)
     {
         List<Orders> temp = new List<Orders>();
         for (int i = 0; i < DataSource.orders.Count; i++)
         {
             temp.Add(DataSource.orders[i]);
         }
-        return temp;
+        return (func == null) ? temp : temp.Where(func);
     }
 
     public void Delete(int id)

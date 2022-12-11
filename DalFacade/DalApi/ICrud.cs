@@ -8,5 +8,5 @@ public interface ICrud<T>
     public void Update(T entity);
     public void Delete(int idProduct);
     public T Get(int idOrderItem);
-    public IEnumerable<T> GetAll();
+    public IEnumerable<T> GetAll(Func<T, bool> func = null);
 }
