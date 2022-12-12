@@ -41,7 +41,10 @@ internal class DalProduct :IProduct
             return DataSource.products[i];
         throw new ex1();
     }
-
+    public Product Get(Predicate<Product> func)
+    {
+        return DataSource.products.Find(func);
+    }
 
 
     public IEnumerable<DO.Product> GetAll(Func<Product, bool>? func = null)

@@ -31,7 +31,8 @@ namespace DalTest
                         ordersFunction(oChoose);
                         break;
                     case 3:
-                        Console.WriteLine("enter a for add item in order,\n b for show item in order,\n c for show all of the items in order,\n d for update, \n e for delete:");
+                        Console.WriteLine("enter a for add item in order,\n b for show item in order,\n c for show all of the items in order," + "\n d for update, \n e for delete,\n f for show all of the products in sfecific order, \n g for show specific product in item by id of orde and id of prduct");
+                        
                         char iChoose = Convert.ToChar(Console.ReadLine());
                         itemInOrderFunction(iChoose);
                         break;
@@ -104,7 +105,7 @@ namespace DalTest
                         }
                         break;
                     case 'd':
-                        Console.WriteLine("enter id of prduct you want to update");
+                        Console.WriteLine("enter id of prםduct you want to update");
                         int idToUpdte = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter name to update:");
                         productName = Console.ReadLine();
@@ -345,6 +346,20 @@ namespace DalTest
                         {
                             Console.WriteLine(exception);
                         }
+                        break;
+                    case 'f':
+                        Console.WriteLine("enter id of order you want to see it's products");
+                        id = int.Parse(Console.ReadLine());
+                        foreach (var item in dalList.OrderItem.GetAll(element => element.OrderID == id))
+                        {
+                            Console.WriteLine(item);
+                        }
+                        break;
+                    case 'g':
+                        Console.WriteLine("enter id of product and order to see the product in order");
+                        id = int.Parse(Console.ReadLine());
+                        productId = int.Parse(Console.ReadLine());
+                        Console.WriteLine(dalList.OrderItem.Get(element => element.OrderID == id && element.ProductID == productId));
                         break;
                     default: break;
                 }

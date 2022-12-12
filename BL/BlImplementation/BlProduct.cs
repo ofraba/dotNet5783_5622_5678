@@ -15,7 +15,7 @@ namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
 {
     public IDal Dal = new DalList();
-    public IEnumerable<BO.ProductForList> GetAll()
+    public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null)
     {
         List<BO.ProductForList> productList = new List<BO.ProductForList>();
 

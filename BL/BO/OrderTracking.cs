@@ -12,9 +12,11 @@ public class OrderTracking
 {
     public int ID { get; set; }
     public OrderStatus status { get; set; }
+    public List<(DateTime, string)> dateAndDescription { get; set; }
     //public List<DateTime,string> dateAndDescription { get; set; }  
     public override string ToString() => $@"
 ID = {ID}: 
 status: {status}
+dateAndDescription: {dateAndDescription}
 ";
 }

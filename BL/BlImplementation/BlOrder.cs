@@ -221,17 +221,38 @@ internal class BlOrder : BLApi.IOrder
         return order2;
     }
 
-    //מעקב הזמנה
-    //public void OrderTracking(int idOrder)
-    //{
-    //    try
-    //    {
-    //        DO.Orders order = dal.Order.Get(idOrder);
-
-    //    }
-    //    catch
-    //    {
-
-    //    }
-    //}
+    
+    public BO.OrderTracking OrderTracking(int idOrder)
+    {
+        try
+        {
+            DO.Orders order = dal.Order.Get(idOrder);
+            BO.OrderStatus status = Status(order);
+            List<(DateTime, string)> descriptionAndDate = new List<(DateTime, string)> { };
+            if (status == BO.OrderStatus.provided)
+            {
+                descriptionAndDate.Add((order.DeliveryDate,"the order provied"));
+            }
+            if(status == BO.OrderStatus.sent)
+            {
+                descriptionAndDate.Add((order.ShipDate, "the order sent"));
+            }
+            if(status == BO.OrderStatus.confirmed)
+            {
+                descriptionAndDate.Add((order.OrderDate, "the order confirmed"));
+            }
+            BO.OrderTracking orderTracking = new BO.OrderTracking
+            {
+                ID = idOrder,
+                status = status,
+                dateAndDescription = descriptionAndDate
+            };
+            return orderTracking;
+        }
+        catch (ex1 e)
+        {
+            throw new BO.ExceptionFromDal(e);
+        }
+    }
+    
 }

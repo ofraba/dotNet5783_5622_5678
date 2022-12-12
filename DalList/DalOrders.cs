@@ -24,8 +24,11 @@ internal class DalOrders:IOrder
             return DataSource.orders[i];
         throw new ex1();
     }
+    public Orders Get(Predicate<Orders> func)
+    {
+        return DataSource.orders.Find(func);
+    }
 
- 
     public IEnumerable<DO.Orders> GetAll(Func<Orders, bool>? func = null)
     {
         List<Orders> temp = new List<Orders>();
