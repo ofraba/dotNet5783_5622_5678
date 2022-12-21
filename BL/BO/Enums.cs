@@ -11,7 +11,7 @@ public enum OrderStatus
   confirmed,sent,provided
 }
 
-public enum Category
+public enum Category 
 {
     dinnerware, linen, bathAccessories, styling, textile
 }

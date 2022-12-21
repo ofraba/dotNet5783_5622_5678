@@ -15,7 +15,7 @@ namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
 {
     public IDal Dal = new DalList();
-    public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null)
+    public IEnumerable<BO.ProductForList> GetAll(Func<BO.ProductForList, bool>? func = null)
     {
         List<BO.ProductForList> productList = new List<BO.ProductForList>();
 
@@ -29,7 +29,7 @@ internal class BlProduct : BLApi.IProduct
             productInList.Category = (BO.Category)product.Category;
             productList.Add(productInList);
         }
-        return productList;
+        return (func == null) ? productList : productList.Where(func);
     }
 
     public IEnumerable<BO.ProductItem> GetForCatalog()
@@ -86,32 +86,32 @@ internal class BlProduct : BLApi.IProduct
     }
 
 
-    //public BO.ProductItem GetForClient(int idProduct, BO.Cart c)
-    //{
-    //    BO.ProductItem bproductItem = new BO.ProductItem();
-    //    if (idProduct > 0)
-    //    {
-    //        DO.Product dproduct = new DO.Product();
-    //        try
-    //        {
-    //            dproduct = Dal.Product.Get(idProduct);
-    //            bproductItem.ID = dproduct.ID;
-    //            bproductItem.Name = dproduct.Name;
-    //            bproductItem.Price = dproduct.Price;
-    //            bproductItem.Amount = dproduct.Amount;
-    //            bproductItem.Category = (BO.Category)dproduct.Category;//לא עובד כנראה יש בעיה עם הenum
-    //            if (dproduct.Amount>=1)
-    //                bproductItem.InStock = true;
-    //            else
-    //                bproductItem.InStock = false;
-    //        }
-    //        catch (BO.ExceptionFromDal e)
-    //        {
-    //            throw new BO.ExceptionFromDal(e);
-    //        }
-    //    }
-    //    return bproductItem;
-    //}
+    public BO.ProductItem GetForClient(int idProduct, BO.Cart c)
+    {
+        BO.ProductItem bproductItem = new BO.ProductItem();
+        if (idProduct > 0)
+        {
+            DO.Product dproduct = new DO.Product();
+            try
+            {
+                dproduct = Dal.Product.Get(idProduct);
+                bproductItem.ID = dproduct.ID;
+                bproductItem.Name = dproduct.Name;
+                bproductItem.Price = dproduct.Price;
+                bproductItem.Amount = dproduct.Amount;
+                bproductItem.Category = (BO.Category)dproduct.Category;
+                if (dproduct.Amount >= 1)
+                    bproductItem.InStock = true;
+                else
+                    bproductItem.InStock = false;
+            }
+            catch (BO.ExceptionFromDal e)
+            {
+                throw new BO.ExceptionFromDal(e);
+            }
+        }
+        return bproductItem;
+    }
 
 
     public int Add(BO.Product p)

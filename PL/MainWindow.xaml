@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Window2" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="GoToThe_List" Content="Button" HorizontalAlignment="Left" Margin="320,170,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name="GoToThe_List" Content="Admin" HorizontalAlignment="Left" Margin="375,197,0,0" VerticalAlignment="Top" Click="GoToThe_List_Click"/>
 
     </Grid>
 </Window>
