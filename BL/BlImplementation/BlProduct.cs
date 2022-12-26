@@ -45,6 +45,7 @@ internal class BlProduct : BLApi.IProduct
             productItem.Price = product.Price;
             productItem.Amount = product.Amount;
             productItem.Category = (BO.Category)product.Category;
+            productItem.Color=product.Color;
             if (product.Amount > 0)
             {
                 productItem.InStock = true;
@@ -100,6 +101,7 @@ internal class BlProduct : BLApi.IProduct
                 bproductItem.Price = dproduct.Price;
                 bproductItem.Amount = dproduct.Amount;
                 bproductItem.Category = (BO.Category)dproduct.Category;
+                bproductItem.Color=dproduct.Color;
                 if (dproduct.Amount >= 1)
                     bproductItem.InStock = true;
                 else

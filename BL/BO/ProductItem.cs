@@ -14,12 +14,14 @@ public class ProductItem
     public int Amount { get; set; }
     public Category Category { get; set; }
     public bool InStock { get; set; }
+    public string Color { get; set; }
     public override string ToString() => $@"
 Product ID = {ID}: 
 name: {Name},
 amount: {Amount},
 category: {Category},
 Price: {Price},
-in stock?: {InStock}
+in stock?: {InStock},
+Color:{Color}
 ";
 }

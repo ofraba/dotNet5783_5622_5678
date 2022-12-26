@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlImplementation;
 using BLApi;
+using BO;
 
 namespace PL
 {
@@ -21,12 +22,15 @@ namespace PL
     /// </summary>
     public partial class ProductWindow : Window
     {
+        Cart c = new Cart();
         private IBl bl = new Bl();
         static readonly Random random = new Random();
-        public ProductWindow(IBl bl,BO.ProductItem product=null)
+        public ProductWindow(IBl bl, int id = 0)//,ProductListView pv
         {
             InitializeComponent();
-            if (product == null)
+            //ProductListView pv1;
+            //pv1 = pv;
+            if (id == 0)
             {
                 tb_Id.Text = random.Next(100000, 999999).ToString();
                 cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -35,17 +39,17 @@ namespace PL
             }
             else
             {
-                tb_Id.Text = product.ID.ToString();
-                cb_Category.SelectedItem = product.Category;
+                BO.ProductItem selectedItem = bl.Product.GetForClient(id, c);
+                tb_Id.Text = selectedItem.ID.ToString();
+                cb_Category.SelectedItem = selectedItem.Category;
                 cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                tb_Name.Text = product.Name.ToString();
-                //tb_Color.Text 
-                tb_Price.Text = product.Price.ToString();
-                tb_InStock.Text = product.Amount.ToString();
+                tb_Name.Text = selectedItem.Name.ToString();
+                tb_Color.Text = selectedItem.Color.ToString();
+                tb_Price.Text = selectedItem.Price.ToString();
+                tb_InStock.Text = selectedItem.Amount.ToString();
                 b_Add.Visibility = Visibility.Hidden;
                 b_UpDate.Visibility = Visibility.Visible;
             }
-           
         }
 
         private void b_Add_Click(object sender, RoutedEventArgs e)
@@ -60,21 +64,39 @@ namespace PL
             try
             {
                 int id = bl.Product.Add(newProduct);
+                //ProductListView pv = new ProductListView();
+                //pv.lv_ProductListView.ItemsSource = bl.Product.GetAll();
                 this.Close();
             }
             catch (BO.dataIsntInvalid ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message);
             }
             catch (BO.ExceptionFromDal ex)//
             {
-                Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
             }
         }
 
         private void b_UpDate_Click(object sender, RoutedEventArgs e)
         {
-
+            BO.Product updateProduct = new BO.Product();
+            updateProduct.ID = Convert.ToInt32(tb_Id.Text);
+            updateProduct.Category = (BO.Category)cb_Category.SelectedItem;
+            updateProduct.Name = tb_Name.Text;
+            updateProduct.Color = tb_Color.Text;
+            updateProduct.Price = Convert.ToInt32(tb_Price.Text);
+            updateProduct.InStock = Convert.ToInt32(tb_InStock.Text);
+            try
+            {
+                bl.Product.Update(updateProduct);
+                this.Close();
+            }
+            catch (BO.ExceptionFromDal ex)//
+            {
+                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+            }
+            //pv1.lv_ProductListView.ItemsSource = bl.Product.GetAll();
         }
     }
 }

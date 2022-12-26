@@ -28,7 +28,6 @@ namespace PL
         {
             InitializeComponent();
             lv_ProductListView.ItemsSource = bl.Product.GetAll();
-            //cb_CategoryFilter.Items.Add("all");
             cb_CategoryFilter.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
@@ -40,24 +39,15 @@ namespace PL
 
         private void b_AddNewProduct_Click(object sender, RoutedEventArgs e)
         {
-            ProductWindow productWindow = new ProductWindow(bl);
+            ProductWindow productWindow = new ProductWindow(bl);//,this
             productWindow.Show();
         }
 
         private void lv_ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ProductForList product = (BO.ProductForList)(sender as ListView).SelectedItem;
-            BO.ProductItem selectedItem = bl.Product.GetForClient(product.ID, c);
-            ProductWindow productWindow = new ProductWindow(bl, selectedItem);
+            ProductWindow productWindow = new ProductWindow(bl, product.ID);//,this
             productWindow.Show();
-           
-
-            //newProduct.ID = Convert.ToInt32(tb_Id.Text);
-            //newProduct.Category = (BO.Category)cb_Category.SelectedItem;
-            //newProduct.Name = tb_Name.Text;
-            //newProduct.Color = tb_Color.Text;
-            //newProduct.Price = Convert.ToInt32(tb_Price.Text);
-            //newProduct.InStock = Convert.ToInt32(tb_InStock.Text);
         }
     }
 }
