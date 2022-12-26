@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
-using Dal;
 using DalApi;
 
 
@@ -12,8 +11,7 @@ namespace BlImplementation;
 
 internal class BlOrder : BLApi.IOrder
 {
-    public IDal dal = new DalList();
-
+    IDal? dal = DalApi.Factory.Get();
 
 
     //The function calculates the status

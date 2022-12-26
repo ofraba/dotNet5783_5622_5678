@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using BLApi;
 using DalApi;
-using Dal;
 using System.Net.Mail;
 
 namespace BlImplementation;
 
-internal class BlCart : BLApi.ICart
+internal class BlCart : ICart
 {
-    public IDal dal = new DalList();
+    IDal? dal = DalApi.Factory.Get();
     public BO.Cart AddProductToCart(BO.Cart c, int productId)
     {
         foreach (var item in c.Items)

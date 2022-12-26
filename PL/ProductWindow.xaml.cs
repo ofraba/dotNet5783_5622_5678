@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BlImplementation;
 using BLApi;
 using BO;
 
@@ -23,11 +22,12 @@ namespace PL
     public partial class ProductWindow : Window
     {
         Cart c = new Cart();
-        private IBl bl = new Bl();
+        IBl bl = BLApi.Factory.Get();
         static readonly Random random = new Random();
-        public ProductWindow(IBl bl, int id = 0)//,ProductListView pv
+        public ProductWindow(IBl bl2, int id = 0)//,ProductListView pv
         {
             InitializeComponent();
+            bl = bl2;
             //ProductListView pv1;
             //pv1 = pv;
             if (id == 0)

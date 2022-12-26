@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
-using Dal;
 using DalApi;
 
 
@@ -14,7 +13,7 @@ namespace BlImplementation;
 
 internal class BlProduct : BLApi.IProduct
 {
-    public IDal Dal = new DalList();
+    IDal? Dal = DalApi.Factory.Get();
     public IEnumerable<BO.ProductForList> GetAll(Func<BO.ProductForList, bool>? func = null)
     {
         List<BO.ProductForList> productList = new List<BO.ProductForList>();

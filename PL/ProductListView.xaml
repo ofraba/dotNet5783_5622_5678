@@ -42,7 +42,9 @@
                     </ListView.View>
                 </ListView>
                 <Button x:Name="b_AddNewProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="15" Padding="5" Click="b_AddNewProduct_Click"/>
+                <Button x:Name="b_forAllProducts" Content="for all products" HorizontalAlignment="Left" Margin="540,15,0,0" Grid.Row="2" VerticalAlignment="Top" Click="forAllProducts_Click"/>
             </Grid>
         </Grid>
+        <Button Content="Button"/>
     </Grid>
 </Window>

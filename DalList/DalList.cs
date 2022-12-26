@@ -1,21 +1,15 @@
-﻿using System.Security.Cryptography;
-using Dal;
-using System;
-using DO;
-using DalApi;
+﻿using DalApi;
 namespace Dal;
 
 // צריך לממש
-sealed public class DalList : IDal
+internal sealed class DalList : IDal
 {
+    public static IDal Instance { get; } = new DalList();
+    DalList()
+    {
+
+    }
     public IProduct Product => new DalProduct();
-
-   
-
     public IOrder Order => new DalOrders();
-
-  
-
     public IOrderItem OrderItem => new DalOrderItem();
-
 }

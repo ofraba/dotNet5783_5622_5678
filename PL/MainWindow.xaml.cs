@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLApi;
-using BlImplementation;
 
 namespace PL
 {
@@ -21,7 +20,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IBl bl = new Bl();
+        IBl bl = BLApi.Factory.Get();
         public MainWindow()
         {
             InitializeComponent();
@@ -29,7 +28,7 @@ namespace PL
 
         private void GoToThe_List_Click(object sender, RoutedEventArgs e)
         {
-            ProductListView p = new ProductListView();
+            ProductListView p = new ProductListView(bl);
             p.Show();
         }
     }

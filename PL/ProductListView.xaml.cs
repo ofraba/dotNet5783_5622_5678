@@ -5,13 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+using DalApi;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using BlImplementation;
 using BLApi;
 using BO;
 
@@ -22,13 +17,15 @@ namespace PL
     /// </summary>
     public partial class ProductListView : Window
     {
-        private IBl bl = new Bl();
-        Cart c= new Cart();
-        public ProductListView()
+        int debily = 0;
+        IBl bl = BLApi.Factory.Get();
+        public ProductListView(IBl bl2)
         {
             InitializeComponent();
+            bl = bl2;
             lv_ProductListView.ItemsSource = bl.Product.GetAll();
             cb_CategoryFilter.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            debily=lv_ProductListView.Items.Count;
         }
 
         private void cb_CategoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -48,6 +45,12 @@ namespace PL
             ProductForList product = (BO.ProductForList)(sender as ListView).SelectedItem;
             ProductWindow productWindow = new ProductWindow(bl, product.ID);//,this
             productWindow.Show();
+        }
+
+
+        private void forAllProducts_Click(object sender, RoutedEventArgs e)
+        {
+            lv_ProductListView.ItemsSource = bl.Product.GetAll();
         }
     }
 }
