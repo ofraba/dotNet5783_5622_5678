@@ -20,7 +20,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBl bl = BLApi.Factory.Get();
+        IBl bl = Factory.Get();
         public MainWindow()
         {
             InitializeComponent();
@@ -28,8 +28,19 @@ namespace PL
 
         private void GoToThe_List_Click(object sender, RoutedEventArgs e)
         {
-            ProductListView p = new ProductListView(bl);
+            ManagerMenu m=new ManagerMenu(bl);
+            m.Show();
+        }
+
+        private void New_Order_Click(object sender, RoutedEventArgs e)
+        {
+            ProductListView p = new ProductListView(bl,"customer");
             p.Show();
+        }
+
+        private void Order_Tracking_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

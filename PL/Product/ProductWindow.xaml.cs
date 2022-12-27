@@ -22,20 +22,25 @@ namespace PL
     public partial class ProductWindow : Window
     {
         Cart c = new Cart();
+        int id1;
         IBl bl = BLApi.Factory.Get();
         static readonly Random random = new Random();
-        public ProductWindow(IBl bl2, int id = 0)//,ProductListView pv
+        ProductListView pv;
+        string str1;
+        public ProductWindow(IBl bl2,ProductListView pv1,string str, int id = 0)
         {
             InitializeComponent();
+            id1 = id;
+            pv = pv1;
             bl = bl2;
-            //ProductListView pv1;
-            //pv1 = pv;
+            str1 = str;
             if (id == 0)
             {
                 tb_Id.Text = random.Next(100000, 999999).ToString();
                 cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
                 b_Add.Visibility = Visibility.Visible;
                 b_UpDate.Visibility = Visibility.Hidden;
+                b_addToCart.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -48,7 +53,22 @@ namespace PL
                 tb_Price.Text = selectedItem.Price.ToString();
                 tb_InStock.Text = selectedItem.Amount.ToString();
                 b_Add.Visibility = Visibility.Hidden;
-                b_UpDate.Visibility = Visibility.Visible;
+                if (str1 == "update")
+                {
+                    b_UpDate.Visibility = Visibility.Visible;
+                    b_addToCart.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    b_UpDate.Visibility = Visibility.Hidden;
+                    b_addToCart.Visibility = Visibility.Visible;
+                    tb_Id.IsEnabled = false;
+                    cb_Category.IsEnabled = false;
+                    tb_Name.IsEnabled = false;
+                    tb_Color.IsEnabled = false;
+                    tb_Price.IsEnabled = false;
+                    tb_InStock.IsEnabled = false;
+                }
             }
         }
 
@@ -64,8 +84,7 @@ namespace PL
             try
             {
                 int id = bl.Product.Add(newProduct);
-                //ProductListView pv = new ProductListView();
-                //pv.lv_ProductListView.ItemsSource = bl.Product.GetAll();
+                pv.lv_ProductListView.ItemsSource = bl.Product.GetAll();
                 this.Close();
             }
             catch (BO.dataIsntInvalid ex)
@@ -90,13 +109,20 @@ namespace PL
             try
             {
                 bl.Product.Update(updateProduct);
+                pv.lv_ProductListView.ItemsSource = bl.Product.GetAll();
                 this.Close();
             }
             catch (BO.ExceptionFromDal ex)//
             {
                 MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
             }
-            //pv1.lv_ProductListView.ItemsSource = bl.Product.GetAll();
+        }
+
+        private void b_addToCart_Click(object sender, RoutedEventArgs e)
+        {
+            if(c.Items==null)
+                c.Items = new List<OrderItem>();
+            c = bl.Cart.AddProductToCart(c, id1);//לבדוק אם עובד
         }
     }
 }

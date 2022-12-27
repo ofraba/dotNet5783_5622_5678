@@ -1,0 +1,39 @@
+﻿<Window x:Class="PL.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="OrderWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="t_id" HorizontalAlignment="Left" Margin="181,40,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="t_name" HorizontalAlignment="Left" Margin="181,80,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="t_email" HorizontalAlignment="Left" Margin="181,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="t_address" HorizontalAlignment="Left" Margin="181,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="t_status" HorizontalAlignment="Left" Margin="181,200,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="Id" Content="Id:" HorizontalAlignment="Left" Margin="47,40,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
+        <Label x:Name="CustomerName" Content="Customer Name:" HorizontalAlignment="Left" Margin="47,80,0,0" VerticalAlignment="Top" Width="109" Height="27"/>
+        <Label x:Name="CustomerEmail" Content="Customer Email:" HorizontalAlignment="Left" Margin="47,120,0,0" VerticalAlignment="Top" Width="109" Height="27"/>
+        <Label x:Name="CustomerAddress" Content="Customer Address:" HorizontalAlignment="Left" Margin="47,160,0,0" VerticalAlignment="Top" Width="120" Height="27" RenderTransformOrigin="0.554,-0.181"/>
+        <Label x:Name="Status" Content="Status:" HorizontalAlignment="Left" Margin="47,200,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
+        <TextBox x:Name="t_orderDate" HorizontalAlignment="Left" Margin="181,240,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="t_shipDate" HorizontalAlignment="Left" Margin="181,280,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="t_deliveryDate" HorizontalAlignment="Left" Margin="181,320,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="t_toatalPrice" HorizontalAlignment="Left" Margin="181,360,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="OrderDate" Content="Order Date:" HorizontalAlignment="Left" Margin="47,240,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
+        <Label x:Name="ShipDate" Content="Ship Date:" HorizontalAlignment="Left" Margin="47,280,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
+        <Label x:Name="DeliveryDate" Content="Delivery Date:" HorizontalAlignment="Left" Margin="47,320,0,0" VerticalAlignment="Top" Width="97" Height="27" RenderTransformOrigin="0.554,-0.181"/>
+        <Label x:Name="TotalPrice" Content="Total Price:" HorizontalAlignment="Left" Margin="47,360,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
+        <ListView x:Name="lv_orderItems" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="421,93,57,106">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="UpdateOrderShip" Content="Update Ship Date" HorizontalAlignment="Left" Margin="421,387,0,0" VerticalAlignment="Top" Width="127" Click="UpdateOrderShip_Click"/>
+        <Button x:Name="UpdateDeliveryDate" Content="Update Delivery Date" HorizontalAlignment="Left" Margin="619,387,0,0" VerticalAlignment="Top" Width="124" Click="UpdateDeliveryDate_Click"/>
+
+    </Grid>
+</Window>

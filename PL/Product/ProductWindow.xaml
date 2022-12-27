@@ -21,5 +21,6 @@
         <TextBox x:Name="tb_InStock" HorizontalAlignment="Left" Margin="180,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
         <Button x:Name="b_Add" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="Add" Click="b_Add_Click"/>
         <Button x:Name="b_UpDate" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="UpDate" Click="b_UpDate_Click"/>
+        <Button x:Name="b_addToCart" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="Add To Cart" Click="b_addToCart_Click"/>
     </Grid>
 </Window>

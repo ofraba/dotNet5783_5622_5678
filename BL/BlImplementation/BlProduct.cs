@@ -31,7 +31,7 @@ internal class BlProduct : BLApi.IProduct
         return (func == null) ? productList : productList.Where(func);
     }
 
-    public IEnumerable<BO.ProductItem> GetForCatalog()
+    public IEnumerable<BO.ProductItem> GetForCatalog(Func<BO.ProductItem, bool>? func = null)
     {
         List<BO.ProductItem> productList = new List<BO.ProductItem>();
 
@@ -55,7 +55,7 @@ internal class BlProduct : BLApi.IProduct
             }
             productList.Add(productItem);
         }
-        return productList;
+        return (func == null) ? productList : productList.Where(func);
     }
 
 

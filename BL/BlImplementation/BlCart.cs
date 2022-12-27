@@ -14,6 +14,11 @@ internal class BlCart : ICart
     IDal? dal = DalApi.Factory.Get();
     public BO.Cart AddProductToCart(BO.Cart c, int productId)
     {
+        //var x = from item in c.Items
+        //        where item.ProductID == productId
+        //        let product = dal.Product.Get(item.ProductID)
+        //        where product.Amount > item.Amount
+        //        select new { amount = item.Amount++, totalPrice= item.TotalPrice += item.Price, cTotalPrice = c.TotalPrice += item.Price};
         foreach (var item in c.Items)
         {
             if (item.ProductID == productId)

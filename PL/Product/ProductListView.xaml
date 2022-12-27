@@ -7,25 +7,32 @@
         mc:Ignorable="d"
         Title="ProductListView" Height="640" Width="800">
     <Grid Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="411*"/>
+            <ColumnDefinition Width="389*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="0"/>
             <RowDefinition Height="7.718"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2" Margin="0,0,0,570" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Grid x:Name="MainGrid_Copy" Grid.ColumnSpan="2" Margin="0,0,0,-578">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="101*"/>
+                    <ColumnDefinition Width="299*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40*"/>
                     <RowDefinition Height="500*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid x:Name="UpGrid1" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-                    VerticalAlignment="Stretch" Width="auto">
+                <Grid x:Name="UpGrid1" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2" Margin="0,0,0,524" Grid.RowSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="221*"/>
                         <ColumnDefinition Width="179*"/>
@@ -34,17 +41,17 @@
                     <ComboBox x:Name="cb_CategoryFilter" Grid.Column="2" Width="120" Margin="140,0,140,0" SelectionChanged="cb_CategoryFilter_SelectionChanged"/>
                     <Label x:Name="l_CategoryFilter" Content="Filter by category:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="54,0,0,0"/>
                 </Grid>
-                <ListView x:Name="lv_ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="lv_ProductListView_MouseDoubleClick">
+                <ListView x:Name="lv_ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="lv_ProductListView_MouseDoubleClick" Grid.ColumnSpan="2" >
                     <ListView.View>
                         <GridView>
                             <GridViewColumn/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button x:Name="b_AddNewProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="15" Padding="5" Click="b_AddNewProduct_Click"/>
-                <Button x:Name="b_forAllProducts" Content="for all products" HorizontalAlignment="Left" Margin="540,15,0,0" Grid.Row="2" VerticalAlignment="Top" Click="forAllProducts_Click"/>
+                <Button x:Name="b_AddNewProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="479,15,0,15" Padding="5" Click="b_AddNewProduct_Click" Grid.Column="1"/>
+                <Button x:Name="b_forAllProducts" Content="for all products" HorizontalAlignment="Left" Margin="485,0,0,0" Padding="5" VerticalAlignment="Center" Click="forAllProducts_Click" Grid.Column="1"/>
+                <Button x:Name="GoToCart" Content="Go To Cart" HorizontalAlignment="Left" Margin="479,0,0,0" VerticalAlignment="Center" Height="24" Width="104" Grid.Column="1" Grid.Row="2" Click="GoToCart_Click"/>
             </Grid>
         </Grid>
-        <Button Content="Button"/>
     </Grid>
 </Window>
