@@ -17,8 +17,8 @@ namespace PL
     /// </summary>
     public partial class ProductListView : Window
     {
+        Cart c = new Cart();
         string str1;
-        int debily = 0;
         IBl bl = BLApi.Factory.Get();
         public ProductListView(IBl bl2,string str)
         {
@@ -37,7 +37,6 @@ namespace PL
                 cb_CategoryFilter.ItemsSource = Enum.GetValues(typeof(BO.Category));
                 GoToCart.Visibility= Visibility.Hidden;
             }
-            debily = lv_ProductListView.Items.Count;
         }
 
         private void cb_CategoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,7 +56,7 @@ namespace PL
 
         private void b_AddNewProduct_Click(object sender, RoutedEventArgs e)
         {
-            ProductWindow productWindow = new ProductWindow(bl,this,"add");
+            ProductWindow productWindow = new ProductWindow(bl,this,"add",c);
             productWindow.Show();
         }
 
@@ -66,13 +65,13 @@ namespace PL
             if (str1 == "customer")
             {
                 ProductItem product = (BO.ProductItem)(sender as ListView).SelectedItem;
-                ProductWindow productWindow = new ProductWindow(bl, this,"show",product.ID);
+                ProductWindow productWindow = new ProductWindow(bl, this,"show",c,product.ID);
                 productWindow.Show();
             }
             else
             {
                 ProductForList product = (BO.ProductForList)(sender as ListView).SelectedItem;
-                ProductWindow productWindow = new ProductWindow(bl, this,"update",product.ID);
+                ProductWindow productWindow = new ProductWindow(bl, this,"update",c,product.ID);
                 productWindow.Show();
             }
             
@@ -93,7 +92,8 @@ namespace PL
 
         private void GoToCart_Click(object sender, RoutedEventArgs e)
         {
-            //להעביר לעמוד שמביא את הסל
+           WindowCart windowCart = new WindowCart(c,bl);
+            windowCart.Show();
         }
     }
 }

@@ -43,6 +43,7 @@ internal class BlCart : ICart
             if (product.Amount > 0)
             {
                 BO.OrderItem orderItem = new BO.OrderItem();
+                orderItem.ID = c.Items.Count + 1;
                 orderItem.Amount = 1;
                 orderItem.Price = product.Price;
                 orderItem.TotalPrice = product.Price;

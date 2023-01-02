@@ -21,18 +21,19 @@ namespace PL
     /// </summary>
     public partial class ProductWindow : Window
     {
-        Cart c = new Cart();
+        Cart c;
         int id1;
         IBl bl = BLApi.Factory.Get();
         static readonly Random random = new Random();
         ProductListView pv;
         string str1;
-        public ProductWindow(IBl bl2,ProductListView pv1,string str, int id = 0)
+        public ProductWindow(IBl bl2,ProductListView pv1,string str, Cart c1,int id = 0)
         {
             InitializeComponent();
             id1 = id;
             pv = pv1;
             bl = bl2;
+            c = c1;
             str1 = str;
             if (id == 0)
             {
@@ -123,6 +124,7 @@ namespace PL
             if(c.Items==null)
                 c.Items = new List<OrderItem>();
             c = bl.Cart.AddProductToCart(c, id1);//לבדוק אם עובד
+            this.Close();
         }
     }
 }

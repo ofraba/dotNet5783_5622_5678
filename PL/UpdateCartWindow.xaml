@@ -1,0 +1,32 @@
+﻿<Window x:Class="PL.UpdateCartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="UpdateCartWindow" Height="450" Width="751">
+    <Grid Margin="84,0,176,10">
+        <Label x:Name="l_Id" Content="ID:" HorizontalAlignment="Left" Margin="253,64,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="l_ProductID" Content="Product ID:" HorizontalAlignment="Left" Margin="253,114,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="l_Name" Content="Name:" HorizontalAlignment="Left" Margin="253,164,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="l_Price1" Content="Price:" HorizontalAlignment="Left" Margin="253,214,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="l_TotalPrice" Content="TotalPrice:" HorizontalAlignment="Left" Margin="253,264,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="l_Amount" Content="Amount:" HorizontalAlignment="Left" Margin="253,314,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tb_Id" HorizontalAlignment="Left" Margin="323,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_Name" HorizontalAlignment="Left" Margin="323,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_Price1" HorizontalAlignment="Left" Margin="323,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_TotalPrice" HorizontalAlignment="Left" Margin="323,264,0,0" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBox x:Name="tb_Amount" HorizontalAlignment="Left" Margin="323,314,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <Button x:Name="b_UpDate" HorizontalAlignment="Left" Margin="259,378,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="UpDate" Click="b_UpDate_Click" RenderTransformOrigin="-0.33,0.774"/>
+        <TextBox x:Name="tb_ProductID" HorizontalAlignment="Left" Margin="327,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"/>
+        <Button x:Name="b_remove" HorizontalAlignment="Left" Margin="368,378,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="Remove" Click="b_Remove_Click" RenderTransformOrigin="-0.33,0.774"/>
+
+
+
+
+
+
+
+    </Grid>
+</Window>
