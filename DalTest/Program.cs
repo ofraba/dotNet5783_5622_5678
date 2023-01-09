@@ -15,25 +15,28 @@ namespace DalTest
         static void Main(string[] args)
         {
             Console.WriteLine("enter 0 for exit,\n 1 for product, \n 2 for orders, \n 3 for items in order:");
-            int number = int.Parse(Console.ReadLine());
+            int number;
+            int.TryParse(Console.ReadLine(), out number);
             while (number != 0)
             {
                 switch (number)
                 {
                     case 1:
                         Console.WriteLine("enter a for add a prduct,\n b for show a prduct,\n c for show all of the products,\n d for update, \n e for delete:");
-                        char pChoose = Convert.ToChar(Console.ReadLine());
+                        char pChoose;
+                        char.TryParse(Console.ReadLine(), out pChoose);
                         productFunction(pChoose);
                         break;
                     case 2:
                         Console.WriteLine("enter a for add a order,\n b for show a order,\n c for show all of the orders,\n d for update, \n e for delete:");
-                        char oChoose = Convert.ToChar(Console.ReadLine());
+                        char oChoose;
+                        char.TryParse(Console.ReadLine(), out oChoose);
                         ordersFunction(oChoose);
                         break;
                     case 3:
                         Console.WriteLine("enter a for add item in order,\n b for show item in order,\n c for show all of the items in order," + "\n d for update, \n e for delete,\n f for show all of the products in sfecific order, \n g for show specific product in item by id of orde and id of prduct");
-                        
-                        char iChoose = Convert.ToChar(Console.ReadLine());
+                        char iChoose;
+                        char.TryParse(Console.ReadLine(), out iChoose);
                         itemInOrderFunction(iChoose);
                         break;
                     default:
@@ -44,29 +47,29 @@ namespace DalTest
             static void productFunction(char p)
             {
                 double productPrice;
-                int productId, productAmount, productCategory;
-                string productName, productColor;
+                int productId, productAmount, productCategory, category;
+                string? productName, productColor;
                 switch (p)
                 {
                     case 'a':
-                        productId = Convert.ToInt32(random.Next(100000, 999999));//cheak if it work
+                        productId = Convert.ToInt32(random.Next(100000, 999999));
                         Console.WriteLine("enter name of the product");
                         productName = Console.ReadLine();
                         Console.WriteLine("enter price of the product");
-                        productPrice = double.Parse(Console.ReadLine());
+                        double.TryParse(Console.ReadLine(), out productPrice);
                         Console.WriteLine("enter color of the product");
                         productColor = Console.ReadLine();
                         Console.WriteLine("enter category\n 1 for dinnerware\n 2 for linen\n 3 for bathAccessories\n 4 for styling\n 5 for textile");
-                        int category = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out category);
                         Console.WriteLine("enter amount of the product");
-                        productAmount = int.Parse(Console.ReadLine());
-                        Product newProduct = new Product
+                        int.TryParse(Console.ReadLine(), out productAmount);
+                        Product newProduct = new Product()
                         {
                             ID = productId,
                             Name = productName,
                             Price = productPrice,
                             Color = productColor,
-                            Category = (DO.Category)category,//איך ושיםקטגוריה?
+                            Category = (DO.Category)category,
                             Amount = productAmount
                         };
                         try
@@ -80,7 +83,8 @@ namespace DalTest
                         break;
                     case 'b':
                         Console.WriteLine("enter id of prduct you want to see");
-                        int idToSearch = int.Parse(Console.ReadLine());
+                        int idToSearch;
+                        int.TryParse(Console.ReadLine(), out idToSearch);
                         Product product = new Product();
                         try
                         {
@@ -106,17 +110,18 @@ namespace DalTest
                         break;
                     case 'd':
                         Console.WriteLine("enter id of prםduct you want to update");
-                        int idToUpdte = int.Parse(Console.ReadLine());
+                        int idToUpdte;
+                        int.TryParse(Console.ReadLine(), out idToUpdte);
                         Console.WriteLine("enter name to update:");
                         productName = Console.ReadLine();
                         Console.WriteLine("enter price to update:");
-                        productPrice = double.Parse(Console.ReadLine());
+                        double.TryParse(Console.ReadLine(), out productPrice);
                         Console.WriteLine("enter color to update:");
                         productColor = Console.ReadLine();
                         Console.WriteLine("enter Category to update:");
-                        productCategory = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out productCategory);
                         Console.WriteLine("enter amount to update:");
-                        productAmount = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out productAmount);
                         Product updateProdut = new Product
                         {
                             ID = idToUpdte,
@@ -137,7 +142,8 @@ namespace DalTest
                         break;
                     case 'e':
                         Console.WriteLine("enter id of product to delete");
-                        int idToDelete= int.Parse(Console.ReadLine());
+                        int idToDelete;
+                        int.TryParse(Console.ReadLine(), out idToDelete);
                         try {
                             dalList.Product.Delete(idToDelete);
                         }
@@ -152,8 +158,7 @@ namespace DalTest
             static void ordersFunction(char o)
             {
                 DateTime orderDate, shipDate, deliveryDate;
-                int orderId;
-                string customerName, customerEmail, customerAdress;
+                string? customerName, customerEmail, customerAdress;
                 switch (o)
                 {
                     case 'a':
@@ -181,7 +186,8 @@ namespace DalTest
                         break;
                     case 'b':
                         Console.WriteLine("enter id of order you want to see");
-                        int idToSearch = int.Parse(Console.ReadLine());
+                        int idToSearch;
+                        int.TryParse(Console.ReadLine(), out idToSearch);
                         Orders order = new Orders();
                         try
                         {
@@ -208,7 +214,8 @@ namespace DalTest
                         break;
                     case 'd':
                         Console.WriteLine("enter id of order you want to update");
-                        int idToUpdte = int.Parse(Console.ReadLine());
+                        int idToUpdte;
+                        int.TryParse(Console.ReadLine(), out idToUpdte);
                         Console.WriteLine("enter customer's name to update:");
                         customerName = Console.ReadLine();
                         Console.WriteLine("enter customer's email to update:");
@@ -242,7 +249,8 @@ namespace DalTest
                         break;
                     case 'e':
                         Console.WriteLine("enter id of product to delete");
-                        int idToDelete = int.Parse(Console.ReadLine());
+                        int idToDelete;
+                        int.TryParse(Console.ReadLine(), out idToDelete);
                         try
                         {
                             dalList.Order.Delete(idToDelete);
@@ -260,19 +268,23 @@ namespace DalTest
             static void itemInOrderFunction(char i)
             {
                 double price;
-                int productId, orderId, id, amount;
+                int productId, orderId, id, amount, idToDelete;
                 switch (i)
                 {
                     case 'a':
                         OrderItem newOrderItem = new OrderItem() { };
                         Console.WriteLine("enter id of the order");
-                        newOrderItem.OrderID = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out orderId);
+                        newOrderItem.OrderID = orderId;
                         Console.WriteLine("enter id of the product");
-                        newOrderItem.ProductID = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out productId);
+                        newOrderItem.ProductID = productId;
                         Console.WriteLine("enter price");
-                        newOrderItem.Price = double.Parse(Console.ReadLine());
+                        double.TryParse(Console.ReadLine(), out price);
+                        newOrderItem.Price = price;
                         Console.WriteLine("enter amount");
-                        newOrderItem.Amount = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out amount);
+                        newOrderItem.Amount = amount;
                         try
                         {
                             dalList.OrderItem.Add(newOrderItem);
@@ -284,7 +296,8 @@ namespace DalTest
                         break;
                     case 'b':
                         Console.WriteLine("enter id of items in order");
-                        int idToSearch = int.Parse(Console.ReadLine());
+                        int idToSearch;
+                        int.TryParse(Console.ReadLine(), out idToSearch);
                         OrderItem orderItem = new OrderItem();
                         try
                         {
@@ -309,15 +322,16 @@ namespace DalTest
                         break;
                     case 'd':
                         Console.WriteLine("enter id of the items in order you want to update");
-                        int idToUpdte = int.Parse(Console.ReadLine());
+                        int idToUpdte;
+                        int.TryParse(Console.ReadLine(), out idToUpdte);
                         Console.WriteLine("enter id of product to update:");
-                        productId = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out productId);
                         Console.WriteLine("enter id of order to update:");
-                        orderId = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out orderId);
                         Console.WriteLine("enter price to update:");
-                        price = double.Parse(Console.ReadLine());
+                        double.TryParse(Console.ReadLine(), out price);
                         Console.WriteLine("enter amount to update:");
-                        amount = int.Parse(Console.ReadLine());
+                         int.TryParse(Console.ReadLine(), out amount);
                         OrderItem updateOrderItem = new OrderItem
                         {
                             ID = idToUpdte,
@@ -337,7 +351,7 @@ namespace DalTest
                         break;
                     case 'e':
                         Console.WriteLine("enter id of items in order to delete");
-                        int idToDelete = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out idToDelete);
                         try
                         {
                             dalList.OrderItem.Delete(idToDelete);
@@ -349,7 +363,7 @@ namespace DalTest
                         break;
                     case 'f':
                         Console.WriteLine("enter id of order you want to see it's products");
-                        id = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out id);
                         foreach (var item in dalList.OrderItem.GetAll(element => element.OrderID == id))
                         {
                             Console.WriteLine(item);
@@ -357,8 +371,8 @@ namespace DalTest
                         break;
                     case 'g':
                         Console.WriteLine("enter id of product and order to see the product in order");
-                        id = int.Parse(Console.ReadLine());
-                        productId = int.Parse(Console.ReadLine());
+                        int.TryParse(Console.ReadLine(), out id);
+                        int.TryParse(Console.ReadLine(), out productId);
                         Console.WriteLine(dalList.OrderItem.Get(element => element.OrderID == id && element.ProductID == productId));
                         break;
                     default: break;

@@ -1,7 +1,6 @@
 ﻿using BLApi;
 using BO;
 using BL;
-using BLApi;
 using BlImplementation;
 using DO;
 using Dal;
@@ -19,38 +18,43 @@ namespace BlTest
             BO.Cart cart = new BO.Cart();
             cart.Items = new List<BO.OrderItem>();
             Console.WriteLine("enter 0 for exit,\n 1 for product, \n 2 for orders, \n 3 for cart:");
-            int number = int.Parse(Console.ReadLine());
+            int number;
+            int.TryParse(Console.ReadLine(), out number);
             while (number != 0)
             {
                 switch (number)
                 {
                     case 1:
                         Console.WriteLine("enter a for show all of the products,\n b for show the products for catalog,\n c for show details of product, \n d for add product \n e for update\n f for delete:");
-                        char pChoose = Convert.ToChar(Console.ReadLine());
+                        char pChoose;
+                        char.TryParse(Console.ReadLine(), out pChoose);
                         productFunction(pChoose);
                         break;
                     case 2:
                         Console.WriteLine("enter a for show all of the orders,\n b for show the order for manager,\n c for update Order Shipping, \n d for update Order Delivery:");
-                        char oChoose = Convert.ToChar(Console.ReadLine());
+                        char oChoose;
+                        char.TryParse(Console.ReadLine(),out oChoose);
                         ordersFunction(oChoose);
                         break;
                     case 3:
                         Console.WriteLine("enter a for add product to the cart,\n b for update amont,\n c for confirm order:");
-                        char cChoose = Convert.ToChar(Console.ReadLine());
+                        char cChoose;
+                        char.TryParse(Console.ReadLine(), out cChoose);
                         cartFunction(cChoose, cart);
                         break;
                     default:
                         break;
                 }
                 Console.WriteLine("enter 0 for exit,\n 1 for product, \n 2 for orders, \n 3 for cart:");
-                number = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out number);
             }
         }
 
         static void productFunction(char pChoose)
         {
             int id, productCategory;
-
+            double tmp;
+            int tmp1;
             switch (pChoose)
             {
                 case 'a':
@@ -69,14 +73,14 @@ namespace BlTest
                     break;
                 case 'c'://get details of product
                     Console.WriteLine("enter id of product you want to show");
-                    id = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out id);
                     try
                     {
                         Console.WriteLine(bl.Product.GetForManegar(id));
                     }
                     catch (BO.ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     break;
                 case 'd'://add a product
@@ -85,14 +89,17 @@ namespace BlTest
                     Console.WriteLine("enter name of product");
                     newProduct.Name = Console.ReadLine();
                     Console.WriteLine("enter price of the product");
-                    newProduct.Price = double.Parse(Console.ReadLine());
+                    double.TryParse(Console.ReadLine(), out tmp);
+                    newProduct.Price = tmp;
                     Console.WriteLine("enter color of the product");
                     newProduct.Color = Console.ReadLine();
                     Console.WriteLine("enter category\n 1 for dinnerware\n 2 for linen\n 3 for bathAccessories\n 4 for styling\n 5 for textile");
-                    productCategory = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out tmp1);
+                    productCategory = tmp1;
                     newProduct.Category = (BO.Category)productCategory;
                     Console.WriteLine("enter amount of the product");
-                    newProduct.InStock = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out tmp1);
+                    newProduct.InStock = tmp1;
                     try
                     {
                         Console.WriteLine(bl.Product.Add(newProduct));
@@ -101,45 +108,49 @@ namespace BlTest
                     {
                         Console.WriteLine(e.Message);
                     }
-                    catch (BO.ExceptionFromDal e)//
+                    catch (BO.ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     break;
                 case 'e'://update product
                     BO.Product updateProduct = new BO.Product();
                     Console.WriteLine("enter id of product");
-                    updateProduct.ID = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out tmp1);
+                    updateProduct.ID = tmp1;
                     Console.WriteLine("enter name of product");
                     updateProduct.Name = Console.ReadLine();
                     Console.WriteLine("enter price of the product");
-                    updateProduct.Price = double.Parse(Console.ReadLine());
+                    double.TryParse(Console.ReadLine(), out tmp);
+                    updateProduct.Price = tmp;
                     Console.WriteLine("enter color of the product");
                     updateProduct.Color = Console.ReadLine();
                     Console.WriteLine("enter category\n 1 for dinnerware\n 2 for linen\n 3 for bathAccessories\n 4 for styling\n 5 for textile");
-                    productCategory = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out tmp1);
+                    productCategory = tmp1;
                     updateProduct.Category = (BO.Category)productCategory;
                     Console.WriteLine("enter amount of the product");
-                    updateProduct.InStock = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out tmp1);
+                    updateProduct.InStock = tmp1;
                     try
                     {
                         bl.Product.Update(updateProduct);
                     }
-                    catch (BO.ExceptionFromDal e)//
+                    catch (BO.ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     break;
                 case 'f'://delete product
                     Console.WriteLine("enter id of product");
-                    id = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out id);
                     try
                     {
                         bl.Product.Delete(id);
                     }
                     catch (ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     catch (productExsistInOrder e)
                     {
@@ -164,7 +175,7 @@ namespace BlTest
                     break;
                 case 'b'://show the order for manager
                     Console.WriteLine("enter id of order you want to show");
-                    orderId = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out orderId);
                     try
                     {
                         Console.WriteLine(bl.Order.GetForManegar(orderId));
@@ -175,19 +186,19 @@ namespace BlTest
                     }
                     catch (ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     break;
                 case 'c'://update Order Shipping
                     Console.WriteLine("enter id of order you want to update shipping");
-                    orderId = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(),out orderId);
                     try
                     {
                         Console.WriteLine(bl.Order.OrderShippingUpdate(orderId));
                     }
                     catch (ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     catch (TheOrderHasBeenSent e)
                     {
@@ -196,14 +207,14 @@ namespace BlTest
                     break;
                 case 'd'://update Order Delivery
                     Console.WriteLine("enter id of order you want to update delivery");
-                    orderId = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out orderId);
                     try
                     {
                         Console.WriteLine(bl.Order.OrderDeliveryUpdate(orderId));
                     }
                     catch (ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     catch (orderHasBeenDelivered e)
                     {
@@ -222,7 +233,7 @@ namespace BlTest
             {
                 case 'a'://add product to the cart
                     Console.WriteLine("enter id of product you want to add to the cart");
-                    id = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out id);
                     try
                     {
                         BO.Cart cart2 = bl.Cart.AddProductToCart(cart, id);
@@ -233,7 +244,7 @@ namespace BlTest
                     }
                     catch (ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     catch (notEnoughAmount e)
                     {
@@ -242,9 +253,10 @@ namespace BlTest
                     break;
                 case 'b'://update amount
                     Console.WriteLine("enter id of product you want to update");
-                    id = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(),out id);
                     Console.WriteLine("enter new amount");
-                    int amount = int.Parse(Console.ReadLine());
+                    int amount;
+                    int.TryParse(Console.ReadLine(),out amount);
                     try
                     {
                         Console.WriteLine(bl.Cart.Update(cart, id, amount));
@@ -256,18 +268,18 @@ namespace BlTest
                     break;
                 case 'c'://confirm order
                     Console.WriteLine("enter customer's email");
-                    string email = Console.ReadLine();
+                    string? email = Console.ReadLine();
                     Console.WriteLine("enter customer's name");
-                    string name = Console.ReadLine();
+                    string? name = Console.ReadLine();
                     Console.WriteLine("enter customer's address");
-                    string address = Console.ReadLine();
+                    string? address = Console.ReadLine();
                     try
                     {
                         bl.Cart.Confirm(cart, name, email, address);
                     }
                     catch (ExceptionFromDal e)
                     {
-                        Console.WriteLine(e.Message + " " + e.InnerException.Message);
+                        Console.WriteLine(e.Message + " " + e.InnerException?.Message);
                     }
                     catch (dataIsntInvalid e)
                     {

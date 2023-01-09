@@ -24,13 +24,12 @@ namespace PL
     public partial class OrderWindow : Window
     {
         IBl bl = BLApi.Factory.Get();
-        OrderListView o;
         int id1;
-        public OrderWindow(IBl bl2, OrderListView ol1, int id)
+        public OrderWindow(IBl bl2,int id,string page="")
         {
             InitializeComponent();
             UpdateDeliveryDate.Visibility = Visibility.Hidden;
-            o = ol1;
+            
             bl = bl2;
             id1=id;
             BO.Order selectedItem = bl.Order.GetForManegar(id);
@@ -53,6 +52,10 @@ namespace PL
             t_deliveryDate.IsEnabled = false;
             t_toatalPrice.Text = selectedItem.TotalPrice.ToString();
             t_toatalPrice.IsEnabled = false;
+            if(page=="orderTracking")
+            {
+                UpdateOrderShip.Visibility = Visibility.Hidden;
+            }
         }
 
         private void UpdateOrderShip_Click(object sender, RoutedEventArgs e)
@@ -60,6 +63,7 @@ namespace PL
            BO.Order order= bl.Order.OrderShippingUpdate(id1);
             t_shipDate.Text= order.ShipDate.ToString();
             UpdateDeliveryDate.Visibility = Visibility.Visible;
+            UpdateOrderShip.Visibility = Visibility.Hidden;
         }
 
         private void UpdateDeliveryDate_Click(object sender, RoutedEventArgs e)

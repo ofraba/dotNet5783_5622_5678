@@ -34,14 +34,15 @@ namespace PL
 
         private void lv_itemInCart_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            OrderItem orderItem = (BO.OrderItem)(sender as ListView).SelectedItem;
-            UpdateCartWindow updateCartWindow = new UpdateCartWindow(cart,bl,orderItem.ID, orderItem);
+            OrderItem orderItem = (BO.OrderItem)((ListView)sender).SelectedItem;//
+            UpdateCartWindow updateCartWindow = new UpdateCartWindow(cart,bl,orderItem.ID,this, orderItem);
             updateCartWindow.Show();
         }
 
-        private void confirm_Click(object sender, RoutedEventArgs e)//לפתוח חלונית שנותנת אפשרות להכניס פרטי לקוח ואז אמור להפח כפתור של אישור הזמנה 
+        private void confirm_Click(object sender, RoutedEventArgs e)
         {
-
+            ConfirmWindow cw = new ConfirmWindow(bl, cart);
+            cw.Show();
         }
     }
 }

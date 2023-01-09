@@ -1,7 +1,6 @@
 ﻿using DalApi;
 namespace Dal;
 
-// צריך לממש
 internal sealed class DalList : IDal
 {
     public static IDal Instance { get; } = new DalList();

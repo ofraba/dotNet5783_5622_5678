@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
+using BO;
 using DalApi;
 
 
@@ -14,6 +15,12 @@ namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
 {
     IDal? Dal = DalApi.Factory.Get();
+
+
+    
+
+
+
     public IEnumerable<BO.ProductForList> GetAll(Func<BO.ProductForList, bool>? func = null)
     {
         List<BO.ProductForList> productList = new List<BO.ProductForList>();
@@ -143,6 +150,12 @@ internal class BlProduct : BLApi.IProduct
 
     public void Delete(int idProduct)
     {
+        //Order tempOrder = (from item in _order
+        //                   where item.ID == OrderID
+        //                   select item).FirstOrDefault();
+        //    if (tempOrder.ID == 0)
+        //        throw new ObjectNotFoundException();
+        //    return tempOrder;
 
         IEnumerable<DO.OrderItem> temp = Dal.OrderItem.GetAll();
         foreach (DO.OrderItem productInOrder in temp)

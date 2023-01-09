@@ -40,7 +40,8 @@ namespace PL
 
         private void Order_Tracking_Click(object sender, RoutedEventArgs e)
         {
-
+            OrderTrackingWindow orderTrackingWindow = new OrderTrackingWindow(bl);
+            orderTrackingWindow.Show();
         }
     }
 }

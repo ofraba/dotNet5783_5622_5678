@@ -1,0 +1,28 @@
+﻿<Window x:Class="PL.OrderTrackingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="OrderTrackingWindow" Height="450" Width="800">
+    <Grid Margin="0,0,0,17">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="99*"/>
+            <ColumnDefinition Width="61*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="tb_id" HorizontalAlignment="Left" Margin="247,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30" Text="enter order id"/>
+        <Button x:Name="b_search" Content="search" HorizontalAlignment="Left" Margin="428,119,0,0" VerticalAlignment="Top" Width="102" Height="30" Grid.ColumnSpan="2" Click="b_search_Click"/>
+        <Label x:Name="l_status" Content="status:" HorizontalAlignment="Left" Margin="247,181,0,0" VerticalAlignment="Top" Width="98" Height="26" Visibility="Hidden"/>
+        <TextBox x:Name="tb_status" HorizontalAlignment="Left" Margin="410,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Height="18" Visibility="Hidden"/>
+        <ListView x:Name="lv_orderTracking" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="271,240,25,0" Visibility="Hidden">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="b_details" Grid.Column="1" Content="for details click!" HorizontalAlignment="Left" Margin="128,381,0,0" VerticalAlignment="Top" Height="36" Width="103" Click="b_details_Click"/>
+
+    </Grid>
+</Window>

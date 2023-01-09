@@ -35,8 +35,8 @@ namespace PL
             //ProductWindow productWindow = new ProductWindow(bl, this, product.ID);
             //productWindow.Show();
 
-            OrderForList order = (OrderForList)(sender as ListView).SelectedItem;
-            OrderWindow orderWindow = new OrderWindow(bl,this,order.ID);
+            OrderForList order = (OrderForList)((ListView)sender).SelectedItem;
+            OrderWindow orderWindow = new OrderWindow(bl,order.ID);
             orderWindow.Show();
 
         }

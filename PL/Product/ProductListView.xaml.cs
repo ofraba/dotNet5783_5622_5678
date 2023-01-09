@@ -64,13 +64,13 @@ namespace PL
         {
             if (str1 == "customer")
             {
-                ProductItem product = (BO.ProductItem)(sender as ListView).SelectedItem;
+                ProductItem product = (BO.ProductItem)((ListView)sender).SelectedItem;
                 ProductWindow productWindow = new ProductWindow(bl, this,"show",c,product.ID);
                 productWindow.Show();
             }
             else
             {
-                ProductForList product = (BO.ProductForList)(sender as ListView).SelectedItem;
+                ProductForList product = (BO.ProductForList)((ListView)sender).SelectedItem;
                 ProductWindow productWindow = new ProductWindow(bl, this,"update",c,product.ID);
                 productWindow.Show();
             }

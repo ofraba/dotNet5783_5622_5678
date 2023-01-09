@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BLApi;
 using DalApi;
 using System.Net.Mail;
+using BO;
 
 namespace BlImplementation;
 
@@ -69,8 +70,15 @@ internal class BlCart : ICart
             {
                 if (amount > item.Amount)
                 {
-
-                    DO.Product product = dal.Product.Get(item.ProductID);
+                    DO.Product product;
+                    try
+                    {
+                        product=dal?.Product.Get(item.ProductID) ?? throw new nullException();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
                     if (product.Amount > amount)
                     {
                         c.TotalPrice -= item.Price * item.Amount;
@@ -104,6 +112,8 @@ internal class BlCart : ICart
         return c;
 
     }
+
+
     public void Confirm(BO.Cart c, string name, string email, string address)
     {
         if (address == "" || name == "" || email == "")//check if the data are valid
@@ -116,23 +126,40 @@ internal class BlCart : ICart
         {
             throw new BO.dataIsntInvalid();
         }
-        DO.Orders order = new DO.Orders { ID = 0, CustomerName = name, CustomerEmail = email, CustomerAdress = address, DeliveryDate = DateTime.MinValue, ShipDate = DateTime.MinValue, OrderDate = DateTime.Now };
+        DO.Orders order = new DO.Orders 
+        { CustomerName = name, CustomerEmail = email, CustomerAdress = address, DeliveryDate = DateTime.MinValue, ShipDate = DateTime.MinValue, OrderDate = DateTime.Now };
 
-        int id = dal.Order.Add(order);
-        foreach (var item in c.Items)
+        int id;
+        try
         {
-            DO.OrderItem itemInOrder = new DO.OrderItem { ID = 0, OrderID = id, ProductID = item.ProductID, Price = item.Price, Amount = item.Amount };
-            dal.OrderItem.Add(itemInOrder);
-            DO.Product product = dal.Product.Get(item.ProductID);
-            product.Amount -= item.Amount;
-            try
+             id = dal?.Order.Add(order) ?? throw new nullException();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        int idItemInOrder;
+        try {
+            foreach (var item in c.Items ?? throw new nullException())
             {
-                dal.Product.Update(product);
-            }
-            catch (ex1 e)
-            {
-                throw new BO.ExceptionFromDal(e);//אוביקט כבר קיים
+                DO.OrderItem itemInOrder = new DO.OrderItem { OrderID = id, ProductID = item.ProductID, Price = item.Price, Amount = item.Amount };
+                idItemInOrder = dal.OrderItem.Add(itemInOrder);
+                DO.Product product = dal.Product.Get(item.ProductID);
+                product.Amount -= item.Amount;
+                try
+                {
+                    dal.Product.Update(product);
+                }
+                catch (ex1 e)
+                {
+                    throw new BO.ExceptionFromDal(e);//אוביקט כבר קיים
+                }
             }
         }
+        catch (Exception)
+        {
+            throw;
+        }
+
     }
 }

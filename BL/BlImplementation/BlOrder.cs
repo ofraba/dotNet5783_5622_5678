@@ -103,6 +103,7 @@ internal class BlOrder : BLApi.IOrder
         return bOrder;
 
     }
+
     //עדכון שילוח הזמנה
     public BO.Order OrderShippingUpdate(int idOrder)
     {

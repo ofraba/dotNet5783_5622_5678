@@ -49,8 +49,8 @@ namespace PL
                 tb_Id.Text = selectedItem.ID.ToString();
                 cb_Category.SelectedItem = selectedItem.Category;
                 cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                tb_Name.Text = selectedItem.Name.ToString();
-                tb_Color.Text = selectedItem.Color.ToString();
+                tb_Name.Text = selectedItem.Name?.ToString();
+                tb_Color.Text = selectedItem.Color?.ToString();
                 tb_Price.Text = selectedItem.Price.ToString();
                 tb_InStock.Text = selectedItem.Amount.ToString();
                 b_Add.Visibility = Visibility.Hidden;
@@ -94,7 +94,7 @@ namespace PL
             }
             catch (BO.ExceptionFromDal ex)//
             {
-                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }
         }
 
@@ -115,7 +115,7 @@ namespace PL
             }
             catch (BO.ExceptionFromDal ex)//
             {
-                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }
         }
 

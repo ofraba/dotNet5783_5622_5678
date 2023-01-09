@@ -48,3 +48,9 @@ public class notEnoughAmount : Exception
 
 }
 
+public class nullException : Exception
+{
+    public override string Message => "it's null";
+
+}
+

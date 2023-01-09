@@ -23,11 +23,13 @@ namespace PL
     {
         IBl bl = BLApi.Factory.Get();
         Cart cart;
-        public UpdateCartWindow(Cart c,IBl bll,int id,OrderItem orderItem)
+        WindowCart wCart;
+        public UpdateCartWindow(Cart c,IBl bll,int id,WindowCart windowCart, OrderItem orderItem)
         {
             InitializeComponent();
             bl = bll;
             cart = c;
+            wCart = windowCart;
             tb_Id.Text = id.ToString();
             tb_Name.Text =orderItem.Name;
             tb_ProductID.Text =orderItem.ProductID.ToString();
@@ -38,10 +40,18 @@ namespace PL
 
         private void b_UpDate_Click(object sender, RoutedEventArgs e)//צריך לעשות שישר יעדכן בעמוד 
         {
-            int amount= Convert.ToInt32(tb_Amount.Text);
+            int amount = Convert.ToInt32(tb_Amount.Text);
             int productId = Convert.ToInt32(tb_ProductID.Text);
-            bl.Cart.Update(cart, productId, amount);
-            this.Close();
+            try
+            {
+                bl.Cart.Update(cart, productId, amount);
+                wCart.lv_itemInCart.ItemsSource = cart.Items;
+                this.Close();
+            }
+            catch (BO.notEnoughAmount ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void b_Remove_Click(object sender, RoutedEventArgs e)//צריך לעשות שישר יעדכן בעמוד 
