@@ -9,6 +9,7 @@ using DalApi;
 using System.Windows.Input;
 using BLApi;
 using BO;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -28,15 +29,14 @@ namespace PL
             if (str1 == "customer") 
             {
                 lv_ProductListView.ItemsSource = bl.Product.GetForCatalog();
-                cb_CategoryFilter.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                b_AddNewProduct.Visibility = Visibility.Hidden;
+                //b_AddNewProduct.Visibility = Visibility.Hidden;
             }
             else
             {
                 lv_ProductListView.ItemsSource = bl.Product.GetAll();
-                cb_CategoryFilter.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                GoToCart.Visibility= Visibility.Hidden;
+                //GoToCart.Visibility= Visibility.Hidden;
             }
+            cb_CategoryFilter.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
         private void cb_CategoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)

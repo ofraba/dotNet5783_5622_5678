@@ -31,14 +31,9 @@ namespace PL
         }
         private void lv_OrderListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //ProductForList product = (ProductForList)(sender as ListView).SelectedItem;
-            //ProductWindow productWindow = new ProductWindow(bl, this, product.ID);
-            //productWindow.Show();
-
             OrderForList order = (OrderForList)((ListView)sender).SelectedItem;
             OrderWindow orderWindow = new OrderWindow(bl,order.ID);
             orderWindow.Show();
-
         }
     }
 }

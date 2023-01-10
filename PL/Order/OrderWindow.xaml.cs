@@ -35,23 +35,14 @@ namespace PL
             BO.Order selectedItem = bl.Order.GetForManegar(id);
             lv_orderItems.ItemsSource=selectedItem.Items;
             t_id.Text = selectedItem.ID.ToString();
-            t_id.IsEnabled = false;
             t_name.Text = selectedItem.CustomerName;
-            t_name.IsEnabled = false;
             t_email.Text = selectedItem.CustomerEmail;
-            t_email.IsEnabled = false;
             t_address.Text = selectedItem.CustomerAddress;
-            t_address.IsEnabled = false;
             t_status.Text = selectedItem.Status.ToString();
-            t_status.IsEnabled = false;
             t_orderDate.Text = selectedItem.OrderDate.ToString();
-            t_orderDate.IsEnabled = false;
             t_shipDate.Text = selectedItem.ShipDate.ToString();
-            t_shipDate.IsEnabled = false;
             t_deliveryDate.Text = selectedItem.DeliveryDate.ToString();
-            t_deliveryDate.IsEnabled = false;
             t_toatalPrice.Text = selectedItem.TotalPrice.ToString();
-            t_toatalPrice.IsEnabled = false;
             if(page=="orderTracking")
             {
                 UpdateOrderShip.Visibility = Visibility.Hidden;

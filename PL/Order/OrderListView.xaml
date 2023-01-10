@@ -10,7 +10,11 @@
         <ListView x:Name="lv_OrderListView" Height="382" VerticalAlignment="Top" MouseDoubleClick="lv_OrderListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="Id" Width="120" DisplayMemberBinding="{Binding ID}" />
+                    <GridViewColumn Header="Customer Name" Width="120" DisplayMemberBinding="{Binding CustomerName}" />
+                    <GridViewColumn Header="status" Width="120" DisplayMemberBinding="{Binding status}" />
+                    <GridViewColumn Header="Amount Of Items" Width="120" DisplayMemberBinding="{Binding AmountOfItems}" />
+                    <GridViewColumn Header="Total Price" Width="120" DisplayMemberBinding="{Binding TotalPrice}" />
                 </GridView>
             </ListView.View>
         </ListView>
