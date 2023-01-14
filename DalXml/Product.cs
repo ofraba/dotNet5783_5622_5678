@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DalApi;
+using DO;
 
-namespace DalApi
+namespace Dal
 {
-    internal class OrderItem
+    internal class Product:IProduct
     {
+
     }
 }

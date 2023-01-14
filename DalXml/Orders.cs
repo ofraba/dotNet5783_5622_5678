@@ -1,12 +1,16 @@
-﻿using System;
+﻿using DalApi;
+using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalApi
+
+
+namespace Dal
 {
-    internal class Product
+    internal class Orders:IOrder
     {
     }
 }

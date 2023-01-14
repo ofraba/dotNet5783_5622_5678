@@ -50,13 +50,13 @@ namespace PL
         CultureInfo culture)
         {
             string stringValue = (string)value;
-            if (stringValue == "customer")
+            if (stringValue == "manager")
             {
-                return Visibility.Visible;
+                return Visibility.Hidden;
             }
             else
             {
-                return Visibility.Hidden;
+                return Visibility.Visible;
             }
         }
         public object ConvertBack(
