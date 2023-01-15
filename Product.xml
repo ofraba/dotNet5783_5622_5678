@@ -1,4 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Product>
-	
-</Product>
+<products>
+	<product>
+		<ID>5866</ID>
+		<Name>set of dishes</Name>
+		<Price>450</Price>
+		<Color>green</Color>
+		<Category>dinnerware</Category>
+		<Amount>2</Amount>
+	</product>
+</products>

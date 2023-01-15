@@ -14,7 +14,7 @@ namespace BlImplementation;
 
 internal class BlProduct : BLApi.IProduct
 {
-    IDal? Dal = DalApi.Factory.Get();
+    IDal? dal = DalApi.Factory.Get();
 
 
     
@@ -23,45 +23,75 @@ internal class BlProduct : BLApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetAll(Func<BO.ProductForList, bool>? func = null)
     {
-        List<BO.ProductForList> productList = new List<BO.ProductForList>();
+        //List<BO.ProductForList> productList = new List<BO.ProductForList>();
 
-        IEnumerable<DO.Product> products = Dal.Product.GetAll();
-        foreach (DO.Product product in products)
-        {
-            BO.ProductForList productInList = new BO.ProductForList();
-            productInList.ID = product.ID;
-            productInList.Name = product.Name;
-            productInList.Price = product.Price;
-            productInList.Category = (BO.Category)product.Category;
-            productList.Add(productInList);
-        }
+        //IEnumerable<DO.Product> products = Dal.Product.GetAll();
+        //foreach (DO.Product product in products)
+        //{
+        //    BO.ProductForList productInList = new BO.ProductForList();
+        //    productInList.ID = product.ID;
+        //    productInList.Name = product.Name;
+        //    productInList.Price = product.Price;
+        //    productInList.Category = (BO.Category)product.Category;
+        //    productList.Add(productInList);
+        //}
+        //return (func == null) ? productList : productList.Where(func);
+
+
+
+       var productList = (from product in dal?.Product.GetAll() ?? throw new nullException()
+                          select new BO.ProductForList()
+                {
+                    ID = product.ID,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Category = (BO.Category)product.Category
+                }
+                );
         return (func == null) ? productList : productList.Where(func);
     }
 
     public IEnumerable<BO.ProductItem> GetForCatalog(Func<BO.ProductItem, bool>? func = null)
     {
-        List<BO.ProductItem> productList = new List<BO.ProductItem>();
+        //List<BO.ProductItem> productList = new List<BO.ProductItem>();
 
-        IEnumerable<DO.Product> products = Dal.Product.GetAll();
-        foreach (DO.Product product in products)
-        {
-            BO.ProductItem productItem = new BO.ProductItem();
-            productItem.ID = product.ID;
-            productItem.Name = product.Name;
-            productItem.Price = product.Price;
-            productItem.Amount = product.Amount;
-            productItem.Category = (BO.Category)product.Category;
-            productItem.Color=product.Color;
-            if (product.Amount > 0)
-            {
-                productItem.InStock = true;
-            }
-            else
-            {
-                productItem.InStock = false;
-            }
-            productList.Add(productItem);
-        }
+        //IEnumerable<DO.Product> products = Dal.Product.GetAll();
+        //foreach (DO.Product product in products)
+        //{
+        //    BO.ProductItem productItem = new BO.ProductItem();
+        //    productItem.ID = product.ID;
+        //    productItem.Name = product.Name;
+        //    productItem.Price = product.Price;
+        //    productItem.Amount = product.Amount;
+        //    productItem.Category = (BO.Category)product.Category;
+        //    productItem.Color = product.Color;
+        //    if (product.Amount > 0)
+        //    {
+        //        productItem.InStock = true;
+        //    }
+        //    else
+        //    {
+        //        productItem.InStock = false;
+        //    }
+        //    productList.Add(productItem);
+        //}
+        //return (func == null) ? productList : productList.Where(func);
+
+
+
+
+
+        var productList = (from product in dal?.Product.GetAll() ?? throw new nullException()
+                           select new BO.ProductItem()
+                           {
+                               ID = product.ID,
+                               Name = product.Name,
+                               Price = product.Price,
+                               Amount = product.Amount,
+                               Category = (BO.Category)product.Category,
+                               Color = product.Color,
+                               InStock= product.Amount>0?true:false
+                           });
         return (func == null) ? productList : productList.Where(func);
     }
 
@@ -74,7 +104,7 @@ internal class BlProduct : BLApi.IProduct
             DO.Product dproduct = new DO.Product();
             try
             {
-                dproduct = Dal.Product.Get(idProduct);
+                dproduct = dal?.Product.Get(idProduct) ?? throw new nullException();
                 bproduct.ID = dproduct.ID;
                 bproduct.Name = dproduct.Name;
                 bproduct.Price = dproduct.Price;
@@ -101,7 +131,7 @@ internal class BlProduct : BLApi.IProduct
             DO.Product dproduct = new DO.Product();
             try
             {
-                dproduct = Dal.Product.Get(idProduct);
+                dproduct = dal?.Product.Get(idProduct) ?? throw new nullException();
                 bproductItem.ID = dproduct.ID;
                 bproductItem.Name = dproduct.Name;
                 bproductItem.Price = dproduct.Price;
@@ -135,7 +165,7 @@ internal class BlProduct : BLApi.IProduct
             dproduct.Category = (DO.Category)p.Category;
             try
             {
-                return Dal.Product.Add(dproduct);
+                return dal?.Product.Add(dproduct) ?? throw new nullException();
             }
             catch (ex2 e)
             {
@@ -150,31 +180,30 @@ internal class BlProduct : BLApi.IProduct
 
     public void Delete(int idProduct)
     {
-        //Order tempOrder = (from item in _order
-        //                   where item.ID == OrderID
-        //                   select item).FirstOrDefault();
-        //    if (tempOrder.ID == 0)
-        //        throw new ObjectNotFoundException();
-        //    return tempOrder;
-
-        IEnumerable<DO.OrderItem> temp = Dal.OrderItem.GetAll();
-        foreach (DO.OrderItem productInOrder in temp)
+        IEnumerable<DO.OrderItem> temp = dal?.OrderItem.GetAll()?? throw new nullException();
+        //foreach (DO.OrderItem productInOrder in temp)
+        //{
+        //    if (productInOrder.ProductID == idProduct)
+        //    {
+        //        throw new BO.productExsistInOrder();
+        //    }
+        //}
+        var orderItem = from item in temp
+                        let productID = item.ProductID
+                        where item.ProductID == idProduct
+                        select item;
+        if(orderItem != null)
         {
-            if (productInOrder.ProductID == idProduct)
-            {
-                throw new BO.productExsistInOrder();
-            }
+            throw new BO.productExsistInOrder();
         }
         try
         {
-            Dal.Product.Delete(idProduct);
+            dal.Product.Delete(idProduct);
         }
         catch (ex1 e)
         {
             throw new BO.ExceptionFromDal(e);
         }
-
-
     }
 
 
@@ -191,13 +220,15 @@ internal class BlProduct : BLApi.IProduct
             dproduct.Category = (DO.Category)p.Category;
             try
             {
-                Dal.Product.Update(dproduct);
+                dal?.Product.Update(dproduct);
             }
             catch (ex1 e)
             {
                 throw new BO.ExceptionFromDal(e);
             }
         }
+        else {
+            throw new InvalidDataException();
+        }
     }
-
 }

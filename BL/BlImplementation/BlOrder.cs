@@ -27,81 +27,132 @@ internal class BlOrder : BLApi.IOrder
 
 
 
-    public IEnumerable<BO.OrderForList> GetAll()
+    public IEnumerable<BO.OrderForList> GetAll(Func<BO.OrderForList, bool>? func = null)
     {
-        List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
-        IEnumerable<DO.Orders> orders = dal.Order.GetAll();
-        IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
-        foreach (DO.Orders order in orders)
-        {
-            BO.OrderForList orderForList = new BO.OrderForList();
-            orderForList.ID = order.ID;
-            orderForList.CustomerName = order.CustomerName;
-            int amountMone = 0;
-            double price = 0;
-            foreach (DO.OrderItem itemInOrder in itemInOrderList)
-            {
-                if (itemInOrder.ID == order.ID)
-                {
-                    amountMone += itemInOrder.Amount;
-                    price += itemInOrder.Price;
-                }
-            }
-            orderForList.TotalPrice = price;
-            orderForList.AmountOfItems = amountMone;
-            orderForList.status = Status(order);
-            ordersList.Add(orderForList);
+        //List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
+        //IEnumerable<DO.Orders> orders = dal.Order.GetAll();
+        //IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
+        //foreach (DO.Orders order in orders)
+        //{
+        //    BO.OrderForList orderForList = new BO.OrderForList();
+        //    orderForList.ID = order.ID;
+        //    orderForList.CustomerName = order.CustomerName;
+        //    int amountMone = 0;
+        //    double price = 0;
+        //    foreach (DO.OrderItem itemInOrder in itemInOrderList)
+        //    {
+        //        if (itemInOrder.ID == order.ID)
+        //        {
+        //            amountMone += itemInOrder.Amount;
+        //            price += itemInOrder.Price;
+        //        }
+        //    }
+        //    orderForList.TotalPrice = price;
+        //    orderForList.AmountOfItems = amountMone;
+        //    orderForList.status = Status(order);
+        //    ordersList.Add(orderForList);
 
-        }
-        return ordersList;
+        //}
+        //return (func == null) ? ordersList : ordersList.Where(func);
+        
+         var orders=(from order in dal.Order.GetAll()
+                let orderItems = dal.OrderItem.FindAllOrderItem(order.ID)
+                select new BO.OrderForList()
+                {
+                    ID = order.ID,
+                    CustomerName = order.CustomerName,
+                    AmountOfItems = orderItems.Count(),
+                    TotalPrice = orderItems.Sum(order => order.Price),
+                    status = Status(order)
+                });
+        return (func == null) ? orders : orders.Where(func);
+
     }
 
     public BO.Order GetForManegar(int idOrder)
     {
-        BO.Order bOrder = new BO.Order();
-        if (idOrder > 0)
-        {
-            DO.Orders dOrder = new DO.Orders();
-            try
+        //BO.Order bOrder = new BO.Order();
+        //if (idOrder > 0)
+        //{
+        //    DO.Orders dOrder = new DO.Orders();
+        //    try
+        //    {
+        //        dOrder = dal.Order.Get(idOrder);
+        //        bOrder.ID = dOrder.ID;
+        //        bOrder.CustomerName = dOrder.CustomerName;
+        //        bOrder.CustomerEmail = dOrder.CustomerEmail;
+        //        bOrder.CustomerAddress = dOrder.CustomerAdress;
+        //        bOrder.OrderDate = dOrder.OrderDate;
+        //        bOrder.ShipDate = dOrder.ShipDate;
+        //        bOrder.DeliveryDate = dOrder.DeliveryDate;
+        //        IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
+        //        double totalPrice = 0;
+        //        bOrder.Items = new List<BO.OrderItem>();
+        //        foreach (DO.OrderItem itemInOrder in itemInOrderList)
+        //        {
+        //            if (itemInOrder.OrderID == idOrder)
+        //            {
+        //                BO.OrderItem orderItem = new BO.OrderItem();
+        //                orderItem.ID = itemInOrder.ID;
+        //                orderItem.Amount = itemInOrder.Amount;
+        //                orderItem.Price = itemInOrder.Price;
+        //                orderItem.ProductID = itemInOrder.ProductID;
+        //                orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
+        //                bOrder.Items.Add(orderItem);
+        //                totalPrice += itemInOrder.Price * itemInOrder.Amount;
+        //            }
+        //        }
+        //        bOrder.TotalPrice = totalPrice;
+        //    }
+        //    catch (ex1 e)
+        //    {
+        //        throw new BO.ExceptionFromDal(e);
+        //    }
+        //}
+        //else
+        //{
+        //    throw new BO.negativeIDnumber();
+        //}
+        //return bOrder;
+            BO.Order bOrder = new BO.Order();
+            if (idOrder > 0)
             {
-                dOrder = dal.Order.Get(idOrder);
-                bOrder.ID = dOrder.ID;
-                bOrder.CustomerName = dOrder.CustomerName;
-                bOrder.CustomerEmail = dOrder.CustomerEmail;
-                bOrder.CustomerAddress = dOrder.CustomerAdress;
-                bOrder.OrderDate = dOrder.OrderDate;
-                bOrder.ShipDate = dOrder.ShipDate;
-                bOrder.DeliveryDate = dOrder.DeliveryDate;
-                IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
-                double totalPrice = 0;
-                bOrder.Items = new List<BO.OrderItem>();
-                foreach (DO.OrderItem itemInOrder in itemInOrderList)
+                DO.Orders dOrder = new DO.Orders();
+                try
                 {
-                    if (itemInOrder.OrderID == idOrder)
-                    {
-                        BO.OrderItem orderItem = new BO.OrderItem();
-                        orderItem.ID = itemInOrder.ID;
-                        orderItem.Amount = itemInOrder.Amount;
-                        orderItem.Price = itemInOrder.Price;
-                        orderItem.ProductID = itemInOrder.ProductID;
-                        orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-                        bOrder.Items.Add(orderItem);
-                        totalPrice += itemInOrder.Price * itemInOrder.Amount;
-                    }
-                }
-                bOrder.TotalPrice = totalPrice;
-            }
-            catch (ex1 e)
-            {
-                throw new BO.ExceptionFromDal(e);
-            }
-        }
-        else
-        {
-            throw new BO.negativeIDnumber();
-        }
-        return bOrder;
+                    dOrder = dal.Order.Get(idOrder);
+                    bOrder.ID = dOrder.ID;
+                    bOrder.CustomerName = dOrder.CustomerName;
+                    bOrder.CustomerEmail = dOrder.CustomerEmail;
+                    bOrder.CustomerAddress = dOrder.CustomerAdress;
+                    bOrder.OrderDate = dOrder.OrderDate;
+                    bOrder.ShipDate = dOrder.ShipDate;
+                    bOrder.DeliveryDate = dOrder.DeliveryDate;
+                    bOrder.Items = new List<BO.OrderItem>();
+                    double totalPrice = 0;
+                    var itemInOrderList1 = from itemInOrder in dal.OrderItem.GetAll()
+                                           where itemInOrder.OrderID == idOrder
+                                           select (new BO.OrderItem()
+                                           {
+                                               ID = itemInOrder.ID,
+                                               Amount = itemInOrder.Amount,
+                                               Price = itemInOrder.Price,
+                                               ProductID = itemInOrder.ProductID,
+                                               TotalPrice = itemInOrder.Price * itemInOrder.Amount
+                                           }, totalPrice += itemInOrder.Price * itemInOrder.Amount);
 
+                    bOrder.TotalPrice = totalPrice;
+                }
+                catch (ex1 e)
+                {
+                    throw new BO.ExceptionFromDal(e);
+                }
+            }
+            else
+            {
+                throw new BO.negativeIDnumber();
+            }
+            return bOrder;
     }
 
     //עדכון שילוח הזמנה

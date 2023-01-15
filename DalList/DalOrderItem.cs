@@ -81,16 +81,16 @@ internal class DalOrderItem :IOrderItem
     //        return DataSource.orderItems[i];
     //}
 
-    //public IEnumerable<OrderItem> FindAllOrderItem(int idOrder)
-    //{
-    //    IEnumerable<OrderItem> list = null;
-    //    for (int i = 0; i < DataSource.orderItems.Count; i++)
-    //    {
-    //        if (DataSource.orderItems[i].OrderID == idOrder)
-    //        {
-    //            list.ToList().Add(DataSource.orderItems[i]);
-    //        }
-    //    }
-    //    return list;
-    //}
+    public IEnumerable<OrderItem> FindAllOrderItem(int idOrder)
+    {
+        List<OrderItem> list =new List<OrderItem>();
+        for (int i = 0; i < DataSource.orderItems.Count; i++)
+        {
+            if (DataSource.orderItems[i].OrderID == idOrder)
+            {
+                list.Add(DataSource.orderItems[i]);
+            }
+        }
+        return list;
+    }
 }

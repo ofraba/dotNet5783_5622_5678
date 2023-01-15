@@ -1,4 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Orders>
-	
-</Orders>
+<orders>
+	<order>
+		<ID>46</ID>
+		<CustomerName>Tamar</CustomerName>
+		<CustomerEmail>t@gmail.com</CustomerEmail>
+		<CustomerAdress>Aco</CustomerAdress>
+		<OrderDate>15/01/23</OrderDate>
+		<ShipDate></ShipDate>
+		<DeliveryDate></DeliveryDate>
+	</order>
+</orders>

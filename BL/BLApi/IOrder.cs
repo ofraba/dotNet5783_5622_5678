@@ -8,7 +8,7 @@ namespace BLApi;
 
 public interface IOrder
 {
-    public IEnumerable<OrderForList> GetAll();
+    public IEnumerable<OrderForList> GetAll(Func<BO.OrderForList, bool>? func = null);
     public Order GetForManegar(int idOrder);
     //עדכון שילוח הזמנה
     public Order OrderShippingUpdate(int idOrder);
