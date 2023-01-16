@@ -6,6 +6,12 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="400">
+    <Window.Resources>
+        <local:convertAdd x:Key="convertAdd" />
+        <local:convertUpdate x:Key="convertUpdate" />
+        <local:changeIsEnabledInTextBox x:Key="changeIsEnabledInTextBox" />
+        <local:changeVisibilityForAddToCart x:Key="changeVisibilityForAddToCart" />
+    </Window.Resources>
     <Grid>
         <Label x:Name="l_Id" Content="Id:" HorizontalAlignment="Left" Margin="110,70,0,0" VerticalAlignment="Top"/>
         <Label x:Name="l_Category" Content="Category:" HorizontalAlignment="Left" Margin="110,120,0,0" VerticalAlignment="Top"/>
@@ -13,14 +19,14 @@
         <Label x:Name="l_Color" Content="Color:" HorizontalAlignment="Left" Margin="110,220,0,0" VerticalAlignment="Top"/>
         <Label x:Name="l_Price" Content="Price:" HorizontalAlignment="Left" Margin="110,270,0,0" VerticalAlignment="Top"/>
         <Label x:Name="l_InStock" Content="In Stock:" HorizontalAlignment="Left" Margin="110,320,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tb_Id" HorizontalAlignment="Left" Margin="180,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="cb_Category" HorizontalAlignment="Left" Margin="180,120,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tb_Name" HorizontalAlignment="Left" Margin="180,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tb_Color" HorizontalAlignment="Left" Margin="180,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tb_Price" HorizontalAlignment="Left" Margin="180,270,0,0" VerticalAlignment="Top" Width="120" Text="0"/>
-        <TextBox x:Name="tb_InStock" HorizontalAlignment="Left" Margin="180,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
-        <Button x:Name="b_Add" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="Add" Click="b_Add_Click"/>
-        <Button x:Name="b_UpDate" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="UpDate" Click="b_UpDate_Click"/>
-        <Button x:Name="b_addToCart" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="Add To Cart" Click="b_addToCart_Click"/>
+        <TextBox x:Name="tb_Id" Text="{Binding ID}" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source2, Converter={StaticResource changeIsEnabledInTextBox }}" HorizontalAlignment="Left" Margin="180,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cb_Category" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source2, Converter={StaticResource changeIsEnabledInTextBox }}" HorizontalAlignment="Left" Margin="180,120,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_Name" Text="{Binding Name}" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source2, Converter={StaticResource changeIsEnabledInTextBox }}"  HorizontalAlignment="Left" Margin="180,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_Color" Text="{Binding Color}" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source2, Converter={StaticResource changeIsEnabledInTextBox }}" HorizontalAlignment="Left" Margin="180,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_Price" Text="{Binding Price}" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source2, Converter={StaticResource changeIsEnabledInTextBox }}" HorizontalAlignment="Left" Margin="180,270,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_InStock" Text="{Binding Amount}" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source2, Converter={StaticResource changeIsEnabledInTextBox }}" HorizontalAlignment="Left" Margin="180,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="b_Add"  Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source1, Converter={StaticResource convertAdd }}" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="Add" Click="b_Add_Click"/>
+        <Button x:Name="b_UpDate" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source2, Converter={StaticResource convertUpdate }}" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="UpDate" Click="b_UpDate_Click"/>
+        <Button x:Name="b_addToCart" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source2, Converter={StaticResource changeVisibilityForAddToCart }}" HorizontalAlignment="Center" Margin="0,376,0,0" VerticalAlignment="Top" Padding="7,3,7,3" Content="Add To Cart" Click="b_addToCart_Click"/>
     </Grid>
 </Window>

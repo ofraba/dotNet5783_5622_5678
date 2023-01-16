@@ -71,7 +71,50 @@ internal class BlOrder : BLApi.IOrder
 
     public BO.Order GetForManegar(int idOrder)
     {
-        //BO.Order bOrder = new BO.Order();
+        BO.Order bOrder = new BO.Order();
+        if (idOrder > 0)
+        {
+            DO.Orders dOrder = new DO.Orders();
+            try
+            {
+                dOrder = dal.Order.Get(idOrder);
+                bOrder.ID = dOrder.ID;
+                bOrder.CustomerName = dOrder.CustomerName;
+                bOrder.CustomerEmail = dOrder.CustomerEmail;
+                bOrder.CustomerAddress = dOrder.CustomerAdress;
+                bOrder.OrderDate = dOrder.OrderDate;
+                bOrder.ShipDate = dOrder.ShipDate;
+                bOrder.DeliveryDate = dOrder.DeliveryDate;
+                IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
+                double totalPrice = 0;
+                bOrder.Items = new List<BO.OrderItem>();
+                foreach (DO.OrderItem itemInOrder in itemInOrderList)
+                {
+                    if (itemInOrder.OrderID == idOrder)
+                    {
+                        BO.OrderItem orderItem = new BO.OrderItem();
+                        orderItem.ID = itemInOrder.ID;
+                        orderItem.Amount = itemInOrder.Amount;
+                        orderItem.Price = itemInOrder.Price;
+                        orderItem.ProductID = itemInOrder.ProductID;
+                        orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
+                        bOrder.Items.Add(orderItem);
+                        totalPrice += itemInOrder.Price * itemInOrder.Amount;
+                    }
+                }
+                bOrder.TotalPrice = totalPrice;
+            }
+            catch (ex1 e)
+            {
+                throw new BO.ExceptionFromDal(e);
+            }
+        }
+        else
+        {
+            throw new BO.negativeIDnumber();
+        }
+        return bOrder;
+        //BO.Order bOrder = new BO.Order();  //לא עובד טוב, לא מציג items של הזמנה
         //if (idOrder > 0)
         //{
         //    DO.Orders dOrder = new DO.Orders();
@@ -85,23 +128,19 @@ internal class BlOrder : BLApi.IOrder
         //        bOrder.OrderDate = dOrder.OrderDate;
         //        bOrder.ShipDate = dOrder.ShipDate;
         //        bOrder.DeliveryDate = dOrder.DeliveryDate;
-        //        IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
-        //        double totalPrice = 0;
         //        bOrder.Items = new List<BO.OrderItem>();
-        //        foreach (DO.OrderItem itemInOrder in itemInOrderList)
-        //        {
-        //            if (itemInOrder.OrderID == idOrder)
-        //            {
-        //                BO.OrderItem orderItem = new BO.OrderItem();
-        //                orderItem.ID = itemInOrder.ID;
-        //                orderItem.Amount = itemInOrder.Amount;
-        //                orderItem.Price = itemInOrder.Price;
-        //                orderItem.ProductID = itemInOrder.ProductID;
-        //                orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-        //                bOrder.Items.Add(orderItem);
-        //                totalPrice += itemInOrder.Price * itemInOrder.Amount;
-        //            }
-        //        }
+        //        double totalPrice = 0;
+        //        var itemInOrderList1 = from itemInOrder in dal.OrderItem.GetAll()
+        //                               where itemInOrder.OrderID == idOrder
+        //                               select (new BO.OrderItem()
+        //                               {
+        //                                   ID = itemInOrder.ID,
+        //                                   Amount = itemInOrder.Amount,
+        //                                   Price = itemInOrder.Price,
+        //                                   ProductID = itemInOrder.ProductID,
+        //                                   TotalPrice = itemInOrder.Price * itemInOrder.Amount
+        //                               }, totalPrice += itemInOrder.Price * itemInOrder.Amount);
+
         //        bOrder.TotalPrice = totalPrice;
         //    }
         //    catch (ex1 e)
@@ -114,45 +153,6 @@ internal class BlOrder : BLApi.IOrder
         //    throw new BO.negativeIDnumber();
         //}
         //return bOrder;
-            BO.Order bOrder = new BO.Order();
-            if (idOrder > 0)
-            {
-                DO.Orders dOrder = new DO.Orders();
-                try
-                {
-                    dOrder = dal.Order.Get(idOrder);
-                    bOrder.ID = dOrder.ID;
-                    bOrder.CustomerName = dOrder.CustomerName;
-                    bOrder.CustomerEmail = dOrder.CustomerEmail;
-                    bOrder.CustomerAddress = dOrder.CustomerAdress;
-                    bOrder.OrderDate = dOrder.OrderDate;
-                    bOrder.ShipDate = dOrder.ShipDate;
-                    bOrder.DeliveryDate = dOrder.DeliveryDate;
-                    bOrder.Items = new List<BO.OrderItem>();
-                    double totalPrice = 0;
-                    var itemInOrderList1 = from itemInOrder in dal.OrderItem.GetAll()
-                                           where itemInOrder.OrderID == idOrder
-                                           select (new BO.OrderItem()
-                                           {
-                                               ID = itemInOrder.ID,
-                                               Amount = itemInOrder.Amount,
-                                               Price = itemInOrder.Price,
-                                               ProductID = itemInOrder.ProductID,
-                                               TotalPrice = itemInOrder.Price * itemInOrder.Amount
-                                           }, totalPrice += itemInOrder.Price * itemInOrder.Amount);
-
-                    bOrder.TotalPrice = totalPrice;
-                }
-                catch (ex1 e)
-                {
-                    throw new BO.ExceptionFromDal(e);
-                }
-            }
-            else
-            {
-                throw new BO.negativeIDnumber();
-            }
-            return bOrder;
     }
 
     //עדכון שילוח הזמנה

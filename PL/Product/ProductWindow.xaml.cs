@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace PL
         static readonly Random random = new Random();
         ProductListView pv;
         string str1;
+        public int source1 { get; set; }
+        public string source2 { get; set; }
         public ProductWindow(IBl bl2,ProductListView pv1,string str, Cart c1,int id = 0)
         {
             InitializeComponent();
@@ -34,54 +37,57 @@ namespace PL
             pv = pv1;
             bl = bl2;
             c = c1;
+            source1=id;
+            source2 = str;
             str1 = str;
-            if (id == 0)
+            if (source2 == "add")//הוספת פריט
             {
-                tb_Id.Text = random.Next(100000, 999999).ToString();
-                cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                b_Add.Visibility = Visibility.Visible;
-                b_UpDate.Visibility = Visibility.Hidden;
-                b_addToCart.Visibility = Visibility.Hidden;
+                tb_Id.Text = random.Next(100000, 999999).ToString();//לא מציג את ה-id
+                cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));//לעשות binding
+                //b_Add.Visibility = Visibility.Visible;
+                //b_UpDate.Visibility = Visibility.Hidden;
+                //b_addToCart.Visibility = Visibility.Hidden;
             }
             else
             {
                 BO.ProductItem selectedItem = bl.Product.GetForClient(id, c);
-                tb_Id.Text = selectedItem.ID.ToString();
-                cb_Category.SelectedItem = selectedItem.Category;
-                cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                tb_Name.Text = selectedItem.Name?.ToString();
-                tb_Color.Text = selectedItem.Color?.ToString();
-                tb_Price.Text = selectedItem.Price.ToString();
-                tb_InStock.Text = selectedItem.Amount.ToString();
-                b_Add.Visibility = Visibility.Hidden;
-                if (str1 == "update")
-                {
-                    b_UpDate.Visibility = Visibility.Visible;
-                    b_addToCart.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    b_UpDate.Visibility = Visibility.Hidden;
-                    b_addToCart.Visibility = Visibility.Visible;
-                    tb_Id.IsEnabled = false;
-                    cb_Category.IsEnabled = false;
-                    tb_Name.IsEnabled = false;
-                    tb_Color.IsEnabled = false;
-                    tb_Price.IsEnabled = false;
-                    tb_InStock.IsEnabled = false;
-                }
+                DataContext=selectedItem;
+                //tb_Id.Text = selectedItem.ID.ToString();
+                cb_Category.SelectedItem = selectedItem.Category;//לעשות binding
+                cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));//לעשות binding
+                //tb_Name.Text = selectedItem.Name?.ToString();
+                //tb_Color.Text = selectedItem.Color?.ToString();
+                //tb_Price.Text = selectedItem.Price.ToString();
+                //tb_InStock.Text = selectedItem.Amount.ToString();
+                //b_Add.Visibility = Visibility.Hidden;
+                //if (source2 == "update")
+                //{
+                //b_UpDate.Visibility = Visibility.Visible;
+                //b_addToCart.Visibility = Visibility.Hidden;
+                //}
+                //else//show
+                //{
+                //    b_UpDate.Visibility = Visibility.Hidden;
+                //    b_addToCart.Visibility = Visibility.Visible;
+                //tb_Id.IsEnabled = false;
+                //cb_Category.IsEnabled = false;
+                //tb_Name.IsEnabled = false;
+                //tb_Color.IsEnabled = false;
+                //tb_Price.IsEnabled = false;
+                //tb_InStock.IsEnabled = false;
+                //}
             }
         }
 
-        private void b_Add_Click(object sender, RoutedEventArgs e)
+            private void b_Add_Click(object sender, RoutedEventArgs e)
         {
             BO.Product newProduct = new BO.Product();
             newProduct.ID = Convert.ToInt32(tb_Id.Text);
             newProduct.Category = (BO.Category)cb_Category.SelectedItem;
             newProduct.Name = tb_Name.Text;
             newProduct.Color = tb_Color.Text;
-            newProduct.Price = Convert.ToInt32(tb_Price.Text);
-            newProduct.InStock = Convert.ToInt32(tb_InStock.Text);
+            newProduct.Price = Convert.ToInt32(tb_Price.Text);//אם מכניסים string נתקע...
+            newProduct.InStock = Convert.ToInt32(tb_InStock.Text);//אם מכניסים string נתקע...
             try
             {
                 int id = bl.Product.Add(newProduct);
@@ -113,7 +119,7 @@ namespace PL
                 pv.lv_ProductListView.ItemsSource = bl.Product.GetAll();
                 this.Close();
             }
-            catch (BO.ExceptionFromDal ex)//
+            catch (BO.ExceptionFromDal ex)
             {
                 MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }
@@ -127,4 +133,116 @@ namespace PL
             this.Close();
         }
     }
+    public class convertAdd : IValueConverter
+    {
+        public object Convert(
+ object value,
+ Type targetType,
+ object parameter,
+ CultureInfo culture)
+        {
+            int intValue = (int)value;
+            if (intValue == 0)
+            {
+                return Visibility.Visible;
+            }
+            else
+            {
+                return Visibility.Hidden;
+            }
+        }
+        public object ConvertBack(
+ object value,
+ Type targetType,
+ object parameter,
+ CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class convertUpdate : IValueConverter
+    {
+        public object Convert(
+ object value,
+ Type targetType,
+ object parameter,
+ CultureInfo culture)
+        {
+            string stringValue = (string)value;
+            if (stringValue == "update")
+            {
+                return Visibility.Visible;
+            }
+            else
+            {
+                return Visibility.Hidden;
+            }
+        }
+        public object ConvertBack(
+ object value,
+ Type targetType,
+ object parameter,
+ CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class changeIsEnabledInTextBox : IValueConverter
+    {
+        public object Convert(
+ object value,
+ Type targetType,
+ object parameter,
+ CultureInfo culture)
+        {
+            string stringValue = (string)value;
+            if (stringValue == "show")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public object ConvertBack(
+ object value,
+ Type targetType,
+ object parameter,
+ CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class changeVisibilityForAddToCart : IValueConverter
+    {
+        public object Convert(
+ object value,
+ Type targetType,
+ object parameter,
+ CultureInfo culture)
+        {
+            string stringValue = (string)value;
+            if (stringValue == "show")
+            {
+                return Visibility.Visible;
+            }
+            else
+            {
+                return Visibility.Hidden;
+            }
+        }
+        public object ConvertBack(
+ object value,
+ Type targetType,
+ object parameter,
+ CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
+
+
