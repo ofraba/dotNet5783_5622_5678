@@ -17,7 +17,7 @@ internal class BlProduct : BLApi.IProduct
     IDal? dal = DalApi.Factory.Get();
 
 
-    
+
 
 
 
@@ -39,15 +39,15 @@ internal class BlProduct : BLApi.IProduct
 
 
 
-       var productList = (from product in dal?.Product.GetAll() ?? throw new nullException()
-                          select new BO.ProductForList()
-                {
-                    ID = product.ID,
-                    Name = product.Name,
-                    Price = product.Price,
-                    Category = (BO.Category)product.Category
-                }
-                );
+        var productList = (from product in dal?.Product.GetAll() ?? throw new nullException()
+                           select new BO.ProductForList()
+                           {
+                               ID = product.ID,
+                               Name = product.Name,
+                               Price = product.Price,
+                               Category = (BO.Category)product.Category
+                           }
+                 );
         return (func == null) ? productList : productList.Where(func);
     }
 
@@ -90,7 +90,7 @@ internal class BlProduct : BLApi.IProduct
                                Amount = product.Amount,
                                Category = (BO.Category)product.Category,
                                Color = product.Color,
-                               InStock= product.Amount>0?true:false
+                               InStock = product.Amount > 0 ? true : false
                            });
         return (func == null) ? productList : productList.Where(func);
     }
@@ -137,7 +137,7 @@ internal class BlProduct : BLApi.IProduct
                 bproductItem.Price = dproduct.Price;
                 bproductItem.Amount = dproduct.Amount;
                 bproductItem.Category = (BO.Category)dproduct.Category;
-                bproductItem.Color=dproduct.Color;
+                bproductItem.Color = dproduct.Color;
                 if (dproduct.Amount >= 1)
                     bproductItem.InStock = true;
                 else
@@ -180,7 +180,7 @@ internal class BlProduct : BLApi.IProduct
 
     public void Delete(int idProduct)
     {
-        IEnumerable<DO.OrderItem> temp = dal?.OrderItem.GetAll()?? throw new nullException();
+        IEnumerable<DO.OrderItem> temp = dal?.OrderItem.GetAll() ?? throw new nullException();
         //foreach (DO.OrderItem productInOrder in temp)
         //{
         //    if (productInOrder.ProductID == idProduct)
@@ -192,7 +192,7 @@ internal class BlProduct : BLApi.IProduct
                         let productID = item.ProductID
                         where item.ProductID == idProduct
                         select item;
-        if(orderItem != null)
+        if (orderItem != null)
         {
             throw new BO.productExsistInOrder();
         }
@@ -227,7 +227,8 @@ internal class BlProduct : BLApi.IProduct
                 throw new BO.ExceptionFromDal(e);
             }
         }
-        else {
+        else
+        {
             throw new InvalidDataException();
         }
     }
