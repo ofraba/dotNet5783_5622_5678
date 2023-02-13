@@ -15,13 +15,20 @@ internal class DalOrders:IOrder
 
     public Orders Get(int id)
     {
-        int i = 0;
-        while (i < DataSource.orders.Count && DataSource.orders[i].ID != id)
-        {
-            i++;
-        }
-        if (i < DataSource.orders.Count)
-            return DataSource.orders[i];
+        //int i = 0;
+        //while (i < DataSource.orders.Count && DataSource.orders[i].ID != id)
+        //{
+        //    i++;
+        //}
+        //if (i < DataSource.orders.Count)
+        //    return DataSource.orders[i];
+        //throw new ex1();
+
+        DO.Orders order1 = (from order in DataSource.orders
+                              where order.ID == id
+                              select order).FirstOrDefault();
+        if (order1.ID != 0)
+            return order1;
         throw new ex1();
     }
     public Orders Get(Predicate<Orders> func)

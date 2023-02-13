@@ -55,8 +55,8 @@ internal class BlOrder : BLApi.IOrder
         //}
         //return (func == null) ? ordersList : ordersList.Where(func);
         
-         var orders=(from order in dal.Order.GetAll()
-                let orderItems = dal.OrderItem.FindAllOrderItem(order.ID)
+         var orders=(from order in dal?.Order.GetAll()
+                let orderItems = dal?.OrderItem.FindAllOrderItem(order.ID)
                 select new BO.OrderForList()
                 {
                     ID = order.ID,
@@ -85,23 +85,23 @@ internal class BlOrder : BLApi.IOrder
                 bOrder.OrderDate = dOrder.OrderDate;
                 bOrder.ShipDate = dOrder.ShipDate;
                 bOrder.DeliveryDate = dOrder.DeliveryDate;
-                IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
-                double totalPrice = 0;
                 bOrder.Items = new List<BO.OrderItem>();
-                foreach (DO.OrderItem itemInOrder in itemInOrderList)
-                {
-                    if (itemInOrder.OrderID == idOrder)
+                double totalPrice = 0;
+                var itemInOrderList1 = from itemInOrder in dal.OrderItem.GetAll()
+                                        where itemInOrder.OrderID == idOrder
+                                        select (new BO.OrderItem()
+                                        {
+                                           ID = itemInOrder.ID,
+                                           Amount = itemInOrder.Amount,
+                                           Price = itemInOrder.Price,
+                                           ProductID = itemInOrder.ProductID,
+                                           TotalPrice = itemInOrder.Price * itemInOrder.Amount,
+                                        });
+                    itemInOrderList1.ToList().ForEach(item =>
                     {
-                        BO.OrderItem orderItem = new BO.OrderItem();
-                        orderItem.ID = itemInOrder.ID;
-                        orderItem.Amount = itemInOrder.Amount;
-                        orderItem.Price = itemInOrder.Price;
-                        orderItem.ProductID = itemInOrder.ProductID;
-                        orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-                        bOrder.Items.Add(orderItem);
-                        totalPrice += itemInOrder.Price * itemInOrder.Amount;
-                    }
-                }
+                        bOrder.Items.Add(item);
+                        totalPrice += item.Price * item.Amount;
+                    });
                 bOrder.TotalPrice = totalPrice;
             }
             catch (ex1 e)
@@ -114,103 +114,33 @@ internal class BlOrder : BLApi.IOrder
             throw new BO.negativeIDnumber();
         }
         return bOrder;
-        //BO.Order bOrder = new BO.Order();  //לא עובד טוב, לא מציג items של הזמנה
-        //if (idOrder > 0)
-        //{
-        //    DO.Orders dOrder = new DO.Orders();
-        //    try
-        //    {
-        //        dOrder = dal.Order.Get(idOrder);
-        //        bOrder.ID = dOrder.ID;
-        //        bOrder.CustomerName = dOrder.CustomerName;
-        //        bOrder.CustomerEmail = dOrder.CustomerEmail;
-        //        bOrder.CustomerAddress = dOrder.CustomerAdress;
-        //        bOrder.OrderDate = dOrder.OrderDate;
-        //        bOrder.ShipDate = dOrder.ShipDate;
-        //        bOrder.DeliveryDate = dOrder.DeliveryDate;
-        //        bOrder.Items = new List<BO.OrderItem>();
-        //        double totalPrice = 0;
-        //        var itemInOrderList1 = from itemInOrder in dal.OrderItem.GetAll()
-        //                               where itemInOrder.OrderID == idOrder
-        //                               select (new BO.OrderItem()
-        //                               {
-        //                                   ID = itemInOrder.ID,
-        //                                   Amount = itemInOrder.Amount,
-        //                                   Price = itemInOrder.Price,
-        //                                   ProductID = itemInOrder.ProductID,
-        //                                   TotalPrice = itemInOrder.Price * itemInOrder.Amount
-        //                               }, totalPrice += itemInOrder.Price * itemInOrder.Amount);
-
-        //        bOrder.TotalPrice = totalPrice;
-        //    }
-        //    catch (ex1 e)
-        //    {
-        //        throw new BO.ExceptionFromDal(e);
-        //    }
-        //}
-        //else
-        //{
-        //    throw new BO.negativeIDnumber();
-        //}
-        //return bOrder;
     }
 
     //עדכון שילוח הזמנה
     public BO.Order OrderShippingUpdate(int idOrder)
     {
-        BO.Order order2 = new BO.Order();
         try
         {
+            BO.Order updatedOrder = GetForManegar(idOrder);
             DO.Orders order = dal.Order.Get(idOrder);
-            BO.OrderStatus status = Status(order);
-            if (status == BO.OrderStatus.confirmed)
+            if (order.ShipDate == DateTime.MinValue || order.ShipDate.CompareTo(DateTime.Now) > 0)
             {
-                DateTime today = DateTime.Now;
-                DO.Orders order1 = new DO.Orders { ID = order.ID, CustomerName = order.CustomerName, CustomerEmail = order.CustomerEmail, CustomerAdress = order.CustomerAdress, OrderDate = order.OrderDate, ShipDate = today, DeliveryDate = order.DeliveryDate };
-                dal.Order.Update(order1);
-                IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
-                order2.ID = order.ID;
-                order2.CustomerName = order.CustomerName;
-                order2.CustomerEmail = order.CustomerEmail;
-                order2.CustomerAddress = order.CustomerAdress;
-                order2.Status = BO.OrderStatus.sent;
-                order2.OrderDate = order.OrderDate;
-                order2.ShipDate = today;
-                order2.DeliveryDate = order.DeliveryDate;
-
-                double totalPrice = 0;
-                foreach (var itemInOrder in itemInOrderList)
-                {
-                    if (itemInOrder.ID == idOrder)
-                    {
-                        BO.OrderItem orderItem = new BO.OrderItem();
-                        orderItem.ID = itemInOrder.ID;
-                        orderItem.Amount = itemInOrder.Amount;
-                        orderItem.Price = itemInOrder.Price;
-                        orderItem.ProductID = itemInOrder.ProductID;
-                        orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-                        if(order2.Items==null)
-                        {
-                            order2.Items = new List<BO.OrderItem>();
-                        }
-                        order2.Items.Add(orderItem);
-                        totalPrice += itemInOrder.Price * itemInOrder.Amount;
-                    }
-                }
-                order2.TotalPrice = totalPrice;
-
+                order.ShipDate = DateTime.Now;
+                dal.Order.Update(order);
+                updatedOrder = GetForManegar(idOrder);
+                updatedOrder.Status=BO.OrderStatus.sent;
+                return updatedOrder;
             }
-
             else
             {
-                throw new BO.TheOrderHasBeenSent();
+                throw new BO.TheOrderHasBeenSent();//זריקת חריגה ההזמנה סופקה
             }
+
         }
         catch (ex1 e)
         {
             throw new BO.ExceptionFromDal(e);
         }
-        return order2;
     }
 
 
@@ -218,47 +148,18 @@ internal class BlOrder : BLApi.IOrder
     //עדכון אספקת הזמנה
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
-        BO.Order order2 = new BO.Order();
+
         try
         {
+            BO.Order updatedOrder = GetForManegar(idOrder);
             DO.Orders order = dal.Order.Get(idOrder);
-            BO.OrderStatus status = Status(order);
-            if (status == BO.OrderStatus.sent)
+            if (order.DeliveryDate == DateTime.MinValue || order.DeliveryDate.CompareTo(DateTime.Now) > 0)
             {
-                DateTime today = DateTime.Now;
-                DO.Orders order1 = new DO.Orders { ID = order.ID, CustomerName = order.CustomerName, CustomerEmail = order.CustomerEmail, CustomerAdress = order.CustomerAdress, OrderDate = order.OrderDate, ShipDate = order.ShipDate, DeliveryDate = today };
-                dal.Order.Update(order1);
-                IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
-                order2.ID = order.ID;
-                order2.CustomerName = order.CustomerName;
-                order2.CustomerEmail = order.CustomerEmail;
-                order2.CustomerAddress = order.CustomerAdress;
-                order2.Status = BO.OrderStatus.provided;
-                order2.OrderDate = order.OrderDate;
-                order2.ShipDate = order.ShipDate;
-                order2.DeliveryDate = today;
-                double totalPrice = 0;
-                foreach (var itemInOrder in itemInOrderList)
-                {
-                    if (itemInOrder.ID == idOrder)
-                    {
-                        BO.OrderItem orderItem = new BO.OrderItem();
-                        orderItem.ID = itemInOrder.ID;
-                        orderItem.Amount = itemInOrder.Amount;
-                        orderItem.Price = itemInOrder.Price;
-                        orderItem.ProductID = itemInOrder.ProductID;
-                        orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-                        if (order2.Items == null)
-                        {
-                            order2.Items = new List<BO.OrderItem>();
-                        }
-                        order2.Items.Add(orderItem);
-                        totalPrice += itemInOrder.Price * itemInOrder.Amount;
-                    }
-                }
-                order2.TotalPrice = totalPrice;
+                order.DeliveryDate = DateTime.Now;
+                dal.Order.Update(order);
+                updatedOrder = GetForManegar(idOrder);
+                return updatedOrder;
             }
-
             else
             {
                 throw new BO.orderHasBeenDelivered();//זריקת חריגה ההזמנה סופקה
@@ -268,7 +169,59 @@ internal class BlOrder : BLApi.IOrder
         {
             throw new BO.ExceptionFromDal(e);
         }
-        return order2;
+
+
+        //BO.Order order2 = new BO.Order();
+        //try
+        //{
+        //    DO.Orders order = dal.Order.Get(idOrder);
+        //    BO.OrderStatus status = Status(order);
+        //    if (status == BO.OrderStatus.sent)
+        //    {
+        //        DateTime today = DateTime.Now;
+        //        DO.Orders order1 = new DO.Orders { ID = order.ID, CustomerName = order.CustomerName, CustomerEmail = order.CustomerEmail, CustomerAdress = order.CustomerAdress, OrderDate = order.OrderDate, ShipDate = order.ShipDate, DeliveryDate = today };
+        //        dal.Order.Update(order1);
+        //        IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
+        //        order2.ID = order.ID;
+        //        order2.CustomerName = order.CustomerName;
+        //        order2.CustomerEmail = order.CustomerEmail;
+        //        order2.CustomerAddress = order.CustomerAdress;
+        //        order2.Status = BO.OrderStatus.provided;
+        //        order2.OrderDate = order.OrderDate;
+        //        order2.ShipDate = order.ShipDate;
+        //        order2.DeliveryDate = today;
+        //        double totalPrice = 0;
+        //        foreach (var itemInOrder in itemInOrderList)
+        //        {
+        //            if (itemInOrder.ID == idOrder)
+        //            {
+        //                BO.OrderItem orderItem = new BO.OrderItem();
+        //                orderItem.ID = itemInOrder.ID;
+        //                orderItem.Amount = itemInOrder.Amount;
+        //                orderItem.Price = itemInOrder.Price;
+        //                orderItem.ProductID = itemInOrder.ProductID;
+        //                orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
+        //                if (order2.Items == null)
+        //                {
+        //                    order2.Items = new List<BO.OrderItem>();
+        //                }
+        //                order2.Items.Add(orderItem);
+        //                totalPrice += itemInOrder.Price * itemInOrder.Amount;
+        //            }
+        //        }
+        //        order2.TotalPrice = totalPrice;
+        //    }
+
+        //    else
+        //    {
+        //        throw new BO.orderHasBeenDelivered();//זריקת חריגה ההזמנה סופקה
+        //    }
+        //}
+        //catch (ex1 e)
+        //{
+        //    throw new BO.ExceptionFromDal(e);
+        //}
+        //return order2;
     }
 
     

@@ -136,9 +136,6 @@ static internal class DataSource
             ("ayala rozner","ayala@gmail.com","toledano"),
             ("sara lavi", "sara@gmail.com","cahaneman")
         };
-
-
-
         for (int i = 0; i < 20; i++)
         {
             DateTime date = DateTime.Now;
@@ -154,7 +151,7 @@ static internal class DataSource
                 int shippingDay = (int)_random.Next(5, 10);
                 TimeSpan dateSend = new TimeSpan(shippingDay, 0, 0, 0);
                 date2 = date.Add(dateSend);
-                if (i < orders1.Count * 0.2 + (orders1.Count * 0.8 * 0.6))
+                if (i < (orders1.Count * 0.2 + (orders1.Count * 0.8 * 0.6)))
                 {
                     int dayGet = (int)_random.Next(10, 14);
                     TimeSpan dateGet = new TimeSpan(dayGet, 0, 0, 0);

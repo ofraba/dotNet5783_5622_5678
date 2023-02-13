@@ -108,9 +108,7 @@ internal class BlCart : ICart
                 }
             }
         }
-
         return c;
-
     }
 
 

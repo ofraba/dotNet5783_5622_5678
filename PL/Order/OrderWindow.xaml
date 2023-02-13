@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="OrderWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:doItIsEnable x:Key="doItIsEnable" />
+    </Window.Resources>
     <Grid>
         <TextBox x:Name="t_id" HorizontalAlignment="Left" Margin="181,40,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox x:Name="t_name" HorizontalAlignment="Left" Margin="181,80,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
@@ -32,8 +35,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="UpdateOrderShip" Content="Update Ship Date" HorizontalAlignment="Left" Margin="421,387,0,0" VerticalAlignment="Top" Width="127" Click="UpdateOrderShip_Click"/>
-        <Button x:Name="UpdateDeliveryDate" Content="Update Delivery Date" HorizontalAlignment="Left" Margin="619,387,0,0" VerticalAlignment="Top" Width="124" Click="UpdateDeliveryDate_Click"/>
+        <Button x:Name="UpdateOrderShip" IsEnabled="{Binding ElementName=UpdateOrderShip,Path=Text,Converter={StaticResource doItIsEnable}}" Content="Update Ship Date" HorizontalAlignment="Left" Margin="421,387,0,0" VerticalAlignment="Top" Width="127" Click="UpdateOrderShip_Click"/>
+        <Button x:Name="UpdateDeliveryDate" IsEnabled="{Binding ElementName=UpdateOrderShip,Path=Text,Converter={StaticResource doItIsEnable}}" Content="Update Delivery Date" HorizontalAlignment="Left" Margin="619,387,0,0" VerticalAlignment="Top" Width="124" Click="UpdateDeliveryDate_Click"/>
 
     </Grid>
 </Window>
