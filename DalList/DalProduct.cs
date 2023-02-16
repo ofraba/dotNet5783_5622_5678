@@ -77,9 +77,7 @@ internal class DalProduct :IProduct
 
         var products = (from item in DataSource.products
                         select item).ToList();
-        return products;
-
-
+        return (func == null) ? products : products.Where(func);//
     }
 
     public void Delete(int id)

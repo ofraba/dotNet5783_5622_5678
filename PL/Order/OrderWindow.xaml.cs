@@ -65,11 +65,11 @@ namespace PL
     }
 
 
-    public class doItIsEnable : IValueConverter//לא עובד שיהיה לא מאופשר
+    public class DoItIsEnable : IValueConverter//לא עובד שיהיה לא מאופשר
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            DateTime date = (DateTime)value;
+            DateTime date = (DateTime)value;//לבדוק אם עובד 
             if (date != DateTime.MinValue)
             {
                 return false;
