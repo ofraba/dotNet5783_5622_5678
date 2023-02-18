@@ -76,6 +76,7 @@ internal class DalProduct :IProduct
 
 
         var products = (from item in DataSource.products
+                        orderby item.Category
                         select item).ToList();
         return (func == null) ? products : products.Where(func);//
     }
@@ -112,19 +113,27 @@ internal class DalProduct :IProduct
 
     public void Update(DO.Product p)
     {
-        int i;
-        for (i = 0; i < DataSource.products.Count; i++)
-        {
-            if (DataSource.products[i].ID == p.ID)
-            {
-                DataSource.products[i] = p;
-                break;
-            }
-        }
-        if (i >= DataSource.products.Count)
+        //int i;
+        //for (i = 0; i < DataSource.products.Count; i++)
+        //{
+        //    if (DataSource.products[i].ID == p.ID)
+        //    {
+        //        DataSource.products[i] = p;
+        //        break;
+        //    }
+        //}
+        //if (i >= DataSource.products.Count)
+        //{
+        //    throw new ex1();
+        //}
+
+        var productToUpdate= DataSource.products.Where(product => product.ID == p.ID).Select((item, i) => new {index=i}).FirstOrDefault();
+        if(productToUpdate == null)
         {
             throw new ex1();
         }
+        DataSource.products[productToUpdate.index] = p;
+
         //bool check = false;  //not update
         //DataSource.products.ForEach(product =>
         //{

@@ -77,7 +77,7 @@ internal class BlOrder : BLApi.IOrder
             DO.Orders dOrder = new DO.Orders();
             try
             {
-                dOrder = dal.Order.Get(idOrder);
+                dOrder = dal?.Order.Get(idOrder) ?? throw new BO.nullException();
                 bOrder.ID = dOrder.ID;
                 bOrder.CustomerName = dOrder.CustomerName;
                 bOrder.CustomerEmail = dOrder.CustomerEmail;
@@ -122,7 +122,7 @@ internal class BlOrder : BLApi.IOrder
         try
         {
             BO.Order updatedOrder = GetForManegar(idOrder);
-            DO.Orders order = dal.Order.Get(idOrder);
+            DO.Orders order = dal?.Order.Get(idOrder) ?? throw new BO.nullException(); ;
             if (order.ShipDate == DateTime.MinValue || order.ShipDate.CompareTo(DateTime.Now) > 0)
             {
                 order.ShipDate = DateTime.Now;
@@ -152,7 +152,7 @@ internal class BlOrder : BLApi.IOrder
         try
         {
             BO.Order updatedOrder = GetForManegar(idOrder);
-            DO.Orders order = dal.Order.Get(idOrder);
+            DO.Orders order = dal?.Order.Get(idOrder) ?? throw new BO.nullException(); ;
             if (order.DeliveryDate == DateTime.MinValue || order.DeliveryDate.CompareTo(DateTime.Now) > 0)
             {
                 order.DeliveryDate = DateTime.Now;
@@ -229,7 +229,7 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
-            DO.Orders order = dal.Order.Get(idOrder);
+            DO.Orders order = dal?.Order.Get(idOrder) ?? throw new BO.nullException(); ;
             BO.OrderStatus status = Status(order);
             List<(DateTime, string)> descriptionAndDate = new List<(DateTime, string)> { };
             if (status == BO.OrderStatus.provided)
