@@ -129,7 +129,16 @@ namespace PL
         {
             if(c.Items==null)
                 c.Items = new List<OrderItem>();
-            c = bl.Cart.AddProductToCart(c, id1);//לבדוק אם עובד
+            try {
+                c = bl.Cart.AddProductToCart(c, id1);
+            }
+            catch(BO.notEnoughAmount ex) {
+                MessageBox.Show(ex.Message);
+            }
+                catch (BO.ExceptionFromDal ex)
+            {
+                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
+            }
             this.Close();
         }
     }
