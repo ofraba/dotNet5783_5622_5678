@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csp
 		{1F349A90-3057-43AD-BBCF-062FC281E5BD} = {1F349A90-3057-43AD-BBCF-062FC281E5BD}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{291521F6-F10B-40BC-BABC-4B7032897E60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{9C42DE6C-8D52-4ACA-9D3B-3F1E6D89C9FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C42DE6C-8D52-4ACA-9D3B-3F1E6D89C9FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C42DE6C-8D52-4ACA-9D3B-3F1E6D89C9FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{291521F6-F10B-40BC-BABC-4B7032897E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{291521F6-F10B-40BC-BABC-4B7032897E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{291521F6-F10B-40BC-BABC-4B7032897E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{291521F6-F10B-40BC-BABC-4B7032897E60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
