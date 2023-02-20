@@ -59,46 +59,6 @@ internal class BlCart : ICart
             }
         }
         return c;
-
-        //foreach (var item in c.Items)
-        //{
-        //    if (item.ProductID == productId)
-        //    {
-        //        DO.Product product = dal.Product.Get(item.ProductID);
-        //        if (product.Amount > item.Amount)
-        //        {
-        //            item.Amount++;
-        //            item.TotalPrice += item.Price;
-        //            c.TotalPrice += item.Price;
-        //            return c;
-        //        }
-        //        else
-        //        {
-        //            throw new BO.notEnoughAmount(); //חריגה אין מספיק במלאי
-        //        }
-        //    }
-        //}
-        //try
-        //{
-        //    DO.Product product = dal.Product.Get(productId);
-        //    if (product.Amount > 0)
-        //    {
-        //        BO.OrderItem orderItem = new BO.OrderItem();
-        //        orderItem.ID = c.Items.Count + 1;
-        //        orderItem.Amount = 1;
-        //        orderItem.Price = product.Price;
-        //        orderItem.TotalPrice = product.Price;
-        //        orderItem.Name = product.Name;
-        //        orderItem.ProductID = productId;
-        //        c.Items.Add(orderItem);
-        //        c.TotalPrice += orderItem.Price;
-        //    }
-        //}
-        //catch (ex1 e)
-        //{
-        //    throw new BO.ExceptionFromDal(e);//לא נמצא האוביקט
-        //}
-        //return c;//האם מחזירים בכל מצב?
     }
     
 
@@ -118,7 +78,7 @@ internal class BlCart : ICart
                 {
                     throw;
                 }
-                if (product.Amount > amount)
+                if (product.Amount >= amount)
                 {
                     c.TotalPrice -= orderItem.Price * orderItem.Amount;
                     orderItem.Amount = amount;
@@ -145,51 +105,6 @@ internal class BlCart : ICart
         }
 
         return c;
-        //foreach (var item in c.Items)
-        //{
-        //    if (item.ProductID == productId)
-        //    {
-        //        if (amount > item.Amount)
-        //        {
-        //            DO.Product product;
-        //            try
-        //            {
-        //                product=dal?.Product.Get(item.ProductID) ?? throw new nullException();
-        //            }
-        //            catch (Exception)
-        //            {
-        //                throw;
-        //            }
-        //            if (product.Amount > amount)
-        //            {
-        //                c.TotalPrice -= item.Price * item.Amount;
-        //                item.Amount = amount;
-        //                item.TotalPrice = item.Price * amount;
-        //                c.TotalPrice += item.Price * item.Amount;
-        //                break;
-        //            }
-        //            else
-        //            {
-        //                throw new BO.notEnoughAmount();
-        //            }
-        //        }
-        //        else if (amount < item.Amount && amount != 0)
-        //        {
-        //            c.TotalPrice -= item.TotalPrice;
-        //            item.TotalPrice = item.Price * amount;
-        //            item.Amount = amount;
-        //            c.TotalPrice += item.TotalPrice;
-        //            break;
-        //        }
-        //        else
-        //        {
-        //            c.TotalPrice -= item.TotalPrice;
-        //            c.Items.Remove(item);
-        //            break;
-        //        }
-        //    }
-        //}
-        //return c;
     }
 
 
@@ -222,7 +137,7 @@ internal class BlCart : ICart
             }
             catch (ex1 e)
             {
-                throw new BO.ExceptionFromDal(e);//the object is exsist
+                throw new BO.ExceptionFromDal(e);//the object is not exsist
             }
         });
     }

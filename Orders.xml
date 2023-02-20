@@ -1,12 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<orders>
-	<order>
-		<ID>46</ID>
-		<CustomerName>Tamar</CustomerName>
-		<CustomerEmail>t@gmail.com</CustomerEmail>
-		<CustomerAdress>Aco</CustomerAdress>
-		<OrderDate>15/01/23</OrderDate>
-		<ShipDate></ShipDate>
-		<DeliveryDate></DeliveryDate>
-	</order>
-</orders>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfOrders xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Orders>
+    <ID>1</ID>
+    <CustomerName>neomi</CustomerName>
+    <CustomerEmail>n@gmil.com</CustomerEmail>
+    <CustomerAdress>zarchi</CustomerAdress>
+    <OrderDate>2023-02-21T00:48:16.6612943+02:00</OrderDate>
+    <ShipDate>2023-02-21T00:48:45.4721941+02:00</ShipDate>
+    <DeliveryDate>2023-02-21T00:51:02.598017+02:00</DeliveryDate>
+  </Orders>
+</ArrayOfOrders>

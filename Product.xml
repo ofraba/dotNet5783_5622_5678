@@ -1,11 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
-	<product>
-		<ID>5866</ID>
-		<Name>set of dishes</Name>
-		<Price>450</Price>
-		<Color>green</Color>
-		<Category>dinnerware</Category>
-		<Amount>2</Amount>
-	</product>
+  <Product>
+    <ID>666666</ID>
+    <Name>set of dishes</Name>
+    <Price>800</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>2</Amount>
+  </Product>
+  <Product>
+    <ID>777777</ID>
+    <Name>set of dishes</Name>
+    <Price>450</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>3</Amount>
+  </Product>
+  <Product>
+    <ID>888888</ID>
+    <Name>set of dishes</Name>
+    <Price>4500</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>2</Amount>
+  </Product>
+  <Product>
+    <ID>999999</ID>
+    <Name>set of dishes</Name>
+    <Price>4502</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>2</Amount>
+  </Product>
+  <Product>
+    <ID>919191</ID>
+    <Name>dddd</Name>
+    <Price>340</Price>
+    <Color>red</Color>
+    <Category>styling</Category>
+    <Amount>5</Amount>
+  </Product>
+  <Product>
+    <ID>111111</ID>
+    <Name>set of dishes</Name>
+    <Price>500</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>2</Amount>
+  </Product>
+  <Product>
+    <ID>555555</ID>
+    <Name>set of dishes</Name>
+    <Price>450</Price>
+    <Color>green</Color>
+    <Category>bathAccessories</Category>
+    <Amount>9</Amount>
+  </Product>
+  <Product>
+    <ID>818181</ID>
+    <Name>carpet</Name>
+    <Price>45</Price>
+    <Color>green</Color>
+    <Category>linen</Category>
+    <Amount>8</Amount>
+  </Product>
+  <Product>
+    <ID>222222</ID>
+    <Name>set</Name>
+    <Price>450</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>0</Amount>
+  </Product>
+  <Product>
+    <ID>444444</ID>
+    <Name>set of dishes</Name>
+    <Price>450</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>2</Amount>
+  </Product>
+  <Product>
+    <ID>333333</ID>
+    <Name>set of dishes</Name>
+    <Price>500</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>5</Amount>
+  </Product>
+  <Product>
+    <ID>787878</ID>
+    <Name>carpet</Name>
+    <Price>36</Price>
+    <Color>red</Color>
+    <Category>textile</Category>
+    <Amount>7</Amount>
+  </Product>
 </products>

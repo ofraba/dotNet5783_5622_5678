@@ -69,8 +69,8 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            DateTime date = (DateTime)value;//לבדוק אם עובד 
-            if (date != DateTime.MinValue)
+            string mindate = DateTime.MinValue.ToString();
+            if (mindate != value.ToString())
             {
                 return false;
             }

@@ -32,7 +32,7 @@ namespace PL
             bl = bl2;
             if (str1 == "customer") 
             {
-                lv_ProductListView.ItemsSource = bl.Product.GetForCatalog();
+                lv_ProductListView.ItemsSource = bl.Product.GetForCatalog(x => x.Amount != 0);
                 //b_AddNewProduct.Visibility = Visibility.Hidden;
             }
             else
@@ -86,7 +86,7 @@ namespace PL
         {
             if (str1 == "customer")
             {
-                lv_ProductListView.ItemsSource = bl.Product.GetForCatalog();
+                lv_ProductListView.ItemsSource = bl.Product.GetForCatalog(x => x.Amount != 0);
             }
             else
             {

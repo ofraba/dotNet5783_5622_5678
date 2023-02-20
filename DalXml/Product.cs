@@ -38,7 +38,7 @@ namespace Dal
         public DO.Product Get(int id)
         {
             XElement? Products = XDocument.Load("../Product.xml").Root;
-            var findThisProduct = Products?.Elements().ToList().Find(product => Convert.ToInt32(product?.Element("Id")?.Value) == id);
+            var findThisProduct = Products?.Elements().ToList().Find(product => Convert.ToInt32(product?.Element("ID")?.Value) == id);
             if (findThisProduct == null)
                 throw new ex1();
             DO.Category.TryParse(findThisProduct?.Element("Category")?.Value, out DO.Category productCategory);
@@ -52,6 +52,26 @@ namespace Dal
                 Amount = Convert.ToInt32(findThisProduct?.Element("Amount")?.Value)
             };
         }
+
+        public DO.Product Get(Predicate<DO.Product> func)
+        {
+            XElement? Products = XDocument.Load("../Product.xml").Root;
+            List<DO.Product> allProduct = new List<DO.Product>();
+            Products?.Elements().ToList().ForEach(item => {
+                DO.Category.TryParse(item?.Element("Category")?.Value, out DO.Category productCategory);
+                allProduct.Add(new DO.Product
+                {
+                    ID = Convert.ToInt32(item?.Element("ID")?.Value),
+                    Name = item?.Element("Name")?.Value.ToString(),
+                    Price = Convert.ToInt32(item?.Element("Price")?.Value),
+                    Color = item?.Element("Color")?.Value.ToString(),
+                    Category = productCategory,
+                    Amount = Convert.ToInt32(item?.Element("Amount")?.Value),
+                });
+            });
+            return allProduct.Find(func);
+        }
+
 
         public IEnumerable<DO.Product> GetAll(Func<DO.Product, bool>? func = null)
         {
@@ -70,19 +90,19 @@ namespace Dal
                     Amount = Convert.ToInt32(item?.Element("Amount")?.Value),
                 });
             });
-             return func == null ? productsList : productsList.Where(func);
+            return func == null ? productsList : productsList.Where(func);
         }
 
         public void Delete(int id)
         {
             XElement? Products = XDocument.Load("../Product.xml").Root;
             Products?.Elements().ToList().Find(product => Convert.ToInt32(product?.Element("ID")?.Value) == id)?.Remove();
+            Products?.Save("../Product.xml");
         }
         public void Update(DO.Product updateProduct)
         {
             Delete(updateProduct.ID);
             Add(updateProduct);
         }
-
     }
 }
