@@ -43,5 +43,11 @@ namespace PL
             OrderTrackingWindow orderTrackingWindow = new OrderTrackingWindow(bl);
             orderTrackingWindow.Show();
         }
+
+        private void Run_Click(object sender, RoutedEventArgs e)
+        {
+            SimulatorWindow s = new SimulatorWindow();
+            s.Show();
+        }
     }
 }

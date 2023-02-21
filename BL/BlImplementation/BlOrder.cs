@@ -29,6 +29,8 @@ internal class BlOrder : BLApi.IOrder
 
     public IEnumerable<BO.OrderForList> GetAll(Func<BO.OrderForList, bool>? func = null)
     {
+    
+        
          var orders=(from order in dal?.Order.GetAll()
                 let orderItems = dal?.OrderItem.FindAllOrderItem(order.ID)
                 select new BO.OrderForList()
