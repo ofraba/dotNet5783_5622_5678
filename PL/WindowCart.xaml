@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="WindowCart" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="/banner_winter_2-01-pjve0cg73axa5tkeljzr6930x3e3047oyb3ru2z8jk.jpg"/>
+        </Grid.Background>
         <ListView x:Name="lv_itemInCart" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,478,76" MouseDoubleClick="lv_itemInCart_MouseDoubleClick">
             <ListView.View>
                 <GridView>

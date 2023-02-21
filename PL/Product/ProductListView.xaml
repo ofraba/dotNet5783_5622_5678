@@ -28,6 +28,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Grid x:Name="MainGrid_Copy" Grid.ColumnSpan="2" Margin="0,0,0,-578">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Product/אביזרי-אמבטיה.jpg"/>
+                </Grid.Background>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="101*"/>
                     <ColumnDefinition Width="299*"/>
@@ -38,6 +41,9 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid x:Name="UpGrid1" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2" Margin="0,0,0,524" Grid.RowSpan="2">
+                    <Grid.Background>
+                        <ImageBrush/>
+                    </Grid.Background>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="221*"/>
                         <ColumnDefinition Width="179*"/>

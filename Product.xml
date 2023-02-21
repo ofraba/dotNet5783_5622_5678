@@ -9,14 +9,6 @@
     <Amount>2</Amount>
   </Product>
   <Product>
-    <ID>777777</ID>
-    <Name>set of dishes</Name>
-    <Price>450</Price>
-    <Color>green</Color>
-    <Category>dinnerware</Category>
-    <Amount>3</Amount>
-  </Product>
-  <Product>
     <ID>888888</ID>
     <Name>set of dishes</Name>
     <Price>4500</Price>
@@ -95,5 +87,13 @@
     <Color>red</Color>
     <Category>textile</Category>
     <Amount>7</Amount>
+  </Product>
+  <Product>
+    <ID>777777</ID>
+    <Name>set of dishes</Name>
+    <Price>500</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>3</Amount>
   </Product>
 </products>

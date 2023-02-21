@@ -8,6 +8,9 @@
         Title="SimulatorWindow" Height="450" Width="800"
         Closing="Window_Closing">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/צילום מסך 2023-02-22 003916.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="24*"/>
             <ColumnDefinition/>

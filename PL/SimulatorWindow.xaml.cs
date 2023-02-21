@@ -33,7 +33,7 @@ namespace PL
         public SimulatorWindow()
         {
             InitializeComponent();
-            worker.DoWork += giveTheOrder;
+            //worker.DoWork += giveTheOrder;
             worker.WorkerReportsProgress = true;
             worker.RunWorkerAsync();
             isTimerRun = true;
