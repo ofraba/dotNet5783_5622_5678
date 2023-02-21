@@ -17,6 +17,7 @@ public interface IOrder
 
     //מעקב הזמנה
     public OrderTracking OrderTracking(int idOrder);
+    public int? ChooseOrder();
 
     //עדכו הזמנה-בונוס
     //public void Update();

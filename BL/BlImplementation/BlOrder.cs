@@ -29,32 +29,6 @@ internal class BlOrder : BLApi.IOrder
 
     public IEnumerable<BO.OrderForList> GetAll(Func<BO.OrderForList, bool>? func = null)
     {
-        //List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
-        //IEnumerable<DO.Orders> orders = dal.Order.GetAll();
-        //IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
-        //foreach (DO.Orders order in orders)
-        //{
-        //    BO.OrderForList orderForList = new BO.OrderForList();
-        //    orderForList.ID = order.ID;
-        //    orderForList.CustomerName = order.CustomerName;
-        //    int amountMone = 0;
-        //    double price = 0;
-        //    foreach (DO.OrderItem itemInOrder in itemInOrderList)
-        //    {
-        //        if (itemInOrder.ID == order.ID)
-        //        {
-        //            amountMone += itemInOrder.Amount;
-        //            price += itemInOrder.Price;
-        //        }
-        //    }
-        //    orderForList.TotalPrice = price;
-        //    orderForList.AmountOfItems = amountMone;
-        //    orderForList.status = Status(order);
-        //    ordersList.Add(orderForList);
-
-        //}
-        //return (func == null) ? ordersList : ordersList.Where(func);
-        
          var orders=(from order in dal?.Order.GetAll()
                 let orderItems = dal?.OrderItem.FindAllOrderItem(order.ID)
                 select new BO.OrderForList()
@@ -169,59 +143,6 @@ internal class BlOrder : BLApi.IOrder
         {
             throw new BO.ExceptionFromDal(e);
         }
-
-
-        //BO.Order order2 = new BO.Order();
-        //try
-        //{
-        //    DO.Orders order = dal.Order.Get(idOrder);
-        //    BO.OrderStatus status = Status(order);
-        //    if (status == BO.OrderStatus.sent)
-        //    {
-        //        DateTime today = DateTime.Now;
-        //        DO.Orders order1 = new DO.Orders { ID = order.ID, CustomerName = order.CustomerName, CustomerEmail = order.CustomerEmail, CustomerAdress = order.CustomerAdress, OrderDate = order.OrderDate, ShipDate = order.ShipDate, DeliveryDate = today };
-        //        dal.Order.Update(order1);
-        //        IEnumerable<DO.OrderItem> itemInOrderList = dal.OrderItem.GetAll();
-        //        order2.ID = order.ID;
-        //        order2.CustomerName = order.CustomerName;
-        //        order2.CustomerEmail = order.CustomerEmail;
-        //        order2.CustomerAddress = order.CustomerAdress;
-        //        order2.Status = BO.OrderStatus.provided;
-        //        order2.OrderDate = order.OrderDate;
-        //        order2.ShipDate = order.ShipDate;
-        //        order2.DeliveryDate = today;
-        //        double totalPrice = 0;
-        //        foreach (var itemInOrder in itemInOrderList)
-        //        {
-        //            if (itemInOrder.ID == idOrder)
-        //            {
-        //                BO.OrderItem orderItem = new BO.OrderItem();
-        //                orderItem.ID = itemInOrder.ID;
-        //                orderItem.Amount = itemInOrder.Amount;
-        //                orderItem.Price = itemInOrder.Price;
-        //                orderItem.ProductID = itemInOrder.ProductID;
-        //                orderItem.TotalPrice = itemInOrder.Price * itemInOrder.Amount;
-        //                if (order2.Items == null)
-        //                {
-        //                    order2.Items = new List<BO.OrderItem>();
-        //                }
-        //                order2.Items.Add(orderItem);
-        //                totalPrice += itemInOrder.Price * itemInOrder.Amount;
-        //            }
-        //        }
-        //        order2.TotalPrice = totalPrice;
-        //    }
-
-        //    else
-        //    {
-        //        throw new BO.orderHasBeenDelivered();//זריקת חריגה ההזמנה סופקה
-        //    }
-        //}
-        //catch (ex1 e)
-        //{
-        //    throw new BO.ExceptionFromDal(e);
-        //}
-        //return order2;
     }
 
     
@@ -257,5 +178,35 @@ internal class BlOrder : BLApi.IOrder
             throw new BO.ExceptionFromDal(e);
         }
     }
-    
+
+    public int? ChooseOrder()
+    {
+        IEnumerable<DO.Orders> orderList = dal?.Order.GetAll() ?? throw new BO.nullException();
+        DateTime theMinDate= DateTime.Now;
+        int numberOfOrder = 0;
+        int temp = 0;
+        bool cheak = false;
+        orderList.ToList().ForEach(item =>
+        {
+            if (item.DeliveryDate == DateTime.MinValue)
+            { 
+               if(item.ShipDate<theMinDate && item.OrderDate<theMinDate)
+                {
+                    numberOfOrder=temp;
+
+                    if(item.ShipDate!=DateTime.MinValue)
+                    {
+                        theMinDate=item.ShipDate;
+                    }
+                    else
+                    {
+                        theMinDate = item.OrderDate;
+                    }
+                }
+            }
+            temp++;
+        });
+        return cheak? numberOfOrder+1:null;
+    }
+
 }
