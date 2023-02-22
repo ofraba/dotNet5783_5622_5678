@@ -54,6 +54,7 @@ internal class BlOrder : BLApi.IOrder
             try
             {
                 dOrder = dal?.Order.Get(idOrder) ?? throw new BO.nullException();
+                bOrder.Status = Status(dOrder);
                 bOrder.ID = dOrder.ID;
                 bOrder.CustomerName = dOrder.CustomerName;
                 bOrder.CustomerEmail = dOrder.CustomerEmail;

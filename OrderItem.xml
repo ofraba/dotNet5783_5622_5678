@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfOrderItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <OrderItem>
-    <ID>1</ID>
-    <ProductID>333333</ProductID>
-    <OrderID>1</OrderID>
-    <Price>450</Price>
-    <Amount>2</Amount>
-  </OrderItem>
-</ArrayOfOrderItem>
+<?xml version="1.0" encoding="utf-8"?><ArrayOfOrderItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><OrderItem><ID>1</ID><ProductID>777777</ProductID><OrderID>1</OrderID><Price>500</Price><Amount>1</Amount></OrderItem><OrderItem><ID>2</ID><ProductID>999999</ProductID><OrderID>2</OrderID><Price>4502</Price><Amount>1</Amount></OrderItem><OrderItem><ID>3</ID><ProductID>333333</ProductID><OrderID>2</OrderID><Price>500</Price><Amount>1</Amount></OrderItem></ArrayOfOrderItem>

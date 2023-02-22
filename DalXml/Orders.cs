@@ -15,13 +15,16 @@ namespace Dal
     {
         public int Add(DO.Orders o)
         {
-            XElement? config = XDocument.Load("../config.xml").Root;
-            XElement? idElement = config?.Element("OrderId");
-            int id = Convert.ToInt32(idElement.Value);//
-            o.ID = id++;
-            idElement.Value = id.ToString();
-            List<DO.Orders> lst1 = new();
-            //= GetAll().ToList();
+            if (o.ID == 0)
+            {
+                XElement? config = XDocument.Load("../config.xml").Root;
+                XElement? idElement = config?.Element("OrderId");
+                int id = Convert.ToInt32(idElement?.Value);//
+                o.ID = id++;
+                idElement.Value = id.ToString();
+                config?.Save("../config.xml");
+            }
+            List<DO.Orders> lst1 = GetAll().ToList();
             lst1.Add(o);
             StreamWriter write = new StreamWriter("../Orders.xml");
             XmlSerializer ser = new XmlSerializer(typeof(List<DO.Orders>));

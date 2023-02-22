@@ -1,12 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfOrders xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Orders>
-    <ID>1</ID>
-    <CustomerName>neomi</CustomerName>
-    <CustomerEmail>n@gmil.com</CustomerEmail>
-    <CustomerAdress>zarchi</CustomerAdress>
-    <OrderDate>2023-02-21T00:48:16.6612943+02:00</OrderDate>
-    <ShipDate>2023-02-21T00:48:45.4721941+02:00</ShipDate>
-    <DeliveryDate>2023-02-21T00:51:02.598017+02:00</DeliveryDate>
-  </Orders>
-</ArrayOfOrders>
+<?xml version="1.0" encoding="utf-8"?><ArrayOfOrders xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Orders><ID>2</ID><CustomerName>sara</CustomerName><CustomerEmail>sara@gmail.com</CustomerEmail><CustomerAdress>Aco</CustomerAdress><OrderDate>2023-02-22T14:25:55.7886857+02:00</OrderDate><ShipDate>2023-02-22T14:26:12.998909+02:00</ShipDate><DeliveryDate>0001-01-01T00:00:00</DeliveryDate></Orders><Orders><ID>1</ID><CustomerName>noa</CustomerName><CustomerEmail>noa@gmail.com</CustomerEmail><CustomerAdress>ramot</CustomerAdress><OrderDate>2023-02-22T14:24:57.8469982+02:00</OrderDate><ShipDate>2023-02-22T14:28:54.7333377+02:00</ShipDate><DeliveryDate>2023-02-22T14:35:18.9141176+02:00</DeliveryDate></Orders></ArrayOfOrders>

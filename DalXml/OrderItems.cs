@@ -19,8 +19,8 @@ namespace Dal
             int id = Convert.ToInt32(idElement?.Value);
             ot.ID = id++;
             idElement.Value = id.ToString();
-            List<DO.OrderItem> lst1 = new();
-            //= GetAll().ToList();
+            config?.Save("../config.xml");
+            List<DO.OrderItem> lst1 = GetAll().ToList();
             lst1.Add(ot);
             StreamWriter write = new StreamWriter("../OrderItem.xml");
             XmlSerializer ser = new XmlSerializer(typeof(List<DO.OrderItem>));
