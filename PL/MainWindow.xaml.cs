@@ -30,24 +30,29 @@ namespace PL
         {
             ManagerMenu m=new ManagerMenu(bl);
             m.Show();
+            Close();
         }
 
         private void New_Order_Click(object sender, RoutedEventArgs e)
         {
             ProductListView p = new ProductListView(bl,"customer");
             p.Show();
+            Close();
         }
 
         private void Order_Tracking_Click(object sender, RoutedEventArgs e)
         {
             OrderTrackingWindow orderTrackingWindow = new OrderTrackingWindow(bl);
             orderTrackingWindow.Show();
+            Close();
+
         }
 
         private void Run_Click(object sender, RoutedEventArgs e)
         {
             SimulatorWindow s = new SimulatorWindow();
             s.Show();
+            Close();
         }
     }
 }

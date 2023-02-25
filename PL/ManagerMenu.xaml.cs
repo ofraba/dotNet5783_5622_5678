@@ -38,5 +38,12 @@ namespace PL
             OrderListView ol = new OrderListView(bl);
             ol.Show();
         }
+
+        private void Go_Back_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow m = new MainWindow();
+            m.Show();
+            Close();
+        }
     }
 }

@@ -16,8 +16,18 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="Stop_Simulator" Content="Stopping the simulator" HorizontalAlignment="Left" Margin="322,233,0,0" VerticalAlignment="Top" Height="66" Width="162" Click="Stop_Simulator_Click"/>
+        <Button x:Name="Stop_Simulator" Content="Stopping the simulator" HorizontalAlignment="Left" Margin="340,368,0,0" VerticalAlignment="Top" Height="47" Width="144" Click="Stop_Simulator_Click"/>
         <TextBlock x:Name="timerTextBlock" HorizontalAlignment="Left" Margin="287,40,0,0" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" Height="86" Width="232" FontSize="60"/>
+        <Label x:Name="next_stutes" Content="next stutes:" HorizontalAlignment="Left" Height="28" Margin="288,319,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="id" Content="Order Id:" HorizontalAlignment="Left" Height="28" Margin="287,146,0,0" VerticalAlignment="Top" Width="82"/>
+        <Label x:Name="start" Content="time of start:" HorizontalAlignment="Left" Height="28" Margin="287,189,0,0" VerticalAlignment="Top" Width="97"/>
+        <Label x:Name="end" Content="time of end:" HorizontalAlignment="Left" Height="28" Margin="287,233,0,0" VerticalAlignment="Top" Width="82"/>
+        <Label x:Name="current_stutes" Content="current stutes:" HorizontalAlignment="Left" Height="28" Margin="288,277,0,0" VerticalAlignment="Top" Width="96" RenderTransformOrigin="0.526,1.529"/>
+        <TextBox x:Name="tb_id" HorizontalAlignment="Left" Margin="384,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_start_time" HorizontalAlignment="Left" Margin="384,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_end_time" HorizontalAlignment="Left" Margin="384,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_current" HorizontalAlignment="Left" Margin="384,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_next" HorizontalAlignment="Left" Margin="384,324,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

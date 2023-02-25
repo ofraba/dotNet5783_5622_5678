@@ -27,9 +27,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Grid x:Name="MainGrid_Copy" Grid.ColumnSpan="2" Margin="0,0,0,-578">
+            <Grid x:Name="MainGrid_Copy" Grid.ColumnSpan="2" Margin="10,10,-10,-588">
                 <Grid.Background>
-                    <ImageBrush ImageSource="/Product/אביזרי-אמבטיה.jpg"/>
+                    <ImageBrush/>
                 </Grid.Background>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="101*"/>
@@ -40,7 +40,7 @@
                     <RowDefinition Height="500*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid x:Name="UpGrid1" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2" Margin="0,0,0,524" Grid.RowSpan="2">
+                <Grid x:Name="UpGrid1" Height="auto" Grid.Row="0" Width="800" Grid.ColumnSpan="2" Margin="0,0,0,524" Grid.RowSpan="2" HorizontalAlignment="Left">
                     <Grid.Background>
                         <ImageBrush/>
                     </Grid.Background>
@@ -49,10 +49,14 @@
                         <ColumnDefinition Width="179*"/>
                         <ColumnDefinition Width="400*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="cb_CategoryFilter" Grid.Column="2" Width="120" Margin="140,0,140,0" SelectionChanged="cb_CategoryFilter_SelectionChanged"/>
-                    <Label x:Name="l_CategoryFilter" Content="Filter by category:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="54,0,0,0"/>
+                    <ComboBox x:Name="cb_CategoryFilter" Width="120" Margin="194,13,86,8" SelectionChanged="cb_CategoryFilter_SelectionChanged" Grid.ColumnSpan="2"/>
+                    <Label x:Name="l_CategoryFilter" Content="Filter by category:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="54,6,0,0"/>
+                    <Button x:Name="back" Grid.Column="2" Content="Go Back" HorizontalAlignment="Left" Height="16" Margin="250,16,0,0" VerticalAlignment="Top" Width="96" Click="back_Click"/>
                 </Grid>
-                <ListView x:Name="lv_ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="lv_ProductListView_MouseDoubleClick" Grid.ColumnSpan="2" >
+                <ListView x:Name="lv_ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="lv_ProductListView_MouseDoubleClick" Grid.ColumnSpan="2" Height="463" VerticalAlignment="Bottom" >
+                    <ListView.Background>
+                        <ImageBrush/>
+                    </ListView.Background>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn/>
@@ -60,7 +64,7 @@
                     </ListView.View>
                 </ListView>
                 <Button x:Name="b_AddNewProduct"  Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source, Converter={StaticResource convertAddProduct }}" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="479,15,0,15" Padding="5" Click="b_AddNewProduct_Click" Grid.Column="1"/>
-                <Button x:Name="b_forAllProducts" Content="for all products" HorizontalAlignment="Left" Margin="485,0,0,0" Padding="5" VerticalAlignment="Center" Click="forAllProducts_Click" Grid.Column="1"/>
+                <Button x:Name="b_forAllProducts" Content="for all products" HorizontalAlignment="Left" Margin="149,13,0,0" Padding="5" VerticalAlignment="Top" Click="forAllProducts_Click" Grid.Column="1"/>
                 <Button x:Name="GoToCart" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }, Path=source, Converter={StaticResource convertGoToCart}}" Content="Go To Cart" HorizontalAlignment="Left" Margin="479,0,0,0" VerticalAlignment="Center" Height="24" Width="104" Grid.Column="1" Grid.Row="2" Click="GoToCart_Click"/>
             </Grid>
         </Grid>

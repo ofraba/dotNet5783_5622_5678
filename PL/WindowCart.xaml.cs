@@ -43,6 +43,7 @@ namespace PL
         {
             ConfirmWindow cw = new ConfirmWindow(bl, cart);
             cw.Show();
+            this.Close();
         }
     }
 }

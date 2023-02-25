@@ -35,5 +35,12 @@ namespace PL
             OrderWindow orderWindow = new OrderWindow(bl,order.ID);
             orderWindow.Show();
         }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            ManagerMenu m=new ManagerMenu(bl);
+            m.Show();
+            Close();
+        }
     }
 }

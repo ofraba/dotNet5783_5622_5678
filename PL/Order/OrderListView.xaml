@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="OrderListView" Height="450" Width="800">
     <Grid>
-        <ListView x:Name="lv_OrderListView" Height="382" VerticalAlignment="Top" MouseDoubleClick="lv_OrderListView_MouseDoubleClick">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="203*"/>
+            <ColumnDefinition Width="197*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="lv_OrderListView" Height="324" VerticalAlignment="Top" MouseDoubleClick="lv_OrderListView_MouseDoubleClick" Grid.ColumnSpan="2" Margin="0,110,0,0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="120" DisplayMemberBinding="{Binding ID}" />
@@ -18,5 +22,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="back" Grid.Column="1" Content="Go Back" HorizontalAlignment="Left" Height="26" Margin="265,26,0,0" VerticalAlignment="Top" Width="79" Click="back_Click"/>
     </Grid>
 </Window>

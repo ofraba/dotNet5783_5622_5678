@@ -9,28 +9,12 @@
     <Amount>0</Amount>
   </Product>
   <Product>
-    <ID>787878</ID>
-    <Name>carpet</Name>
-    <Price>36</Price>
-    <Color>red</Color>
-    <Category>textile</Category>
-    <Amount>6</Amount>
-  </Product>
-  <Product>
     <ID>888888</ID>
     <Name>set of dishes</Name>
     <Price>4500</Price>
     <Color>green</Color>
     <Category>dinnerware</Category>
     <Amount>0</Amount>
-  </Product>
-  <Product>
-    <ID>666666</ID>
-    <Name>set of dishes</Name>
-    <Price>800</Price>
-    <Color>green</Color>
-    <Category>dinnerware</Category>
-    <Amount>1</Amount>
   </Product>
   <Product>
     <ID>919191</ID>
@@ -47,14 +31,6 @@
     <Color>green</Color>
     <Category>dinnerware</Category>
     <Amount>1</Amount>
-  </Product>
-  <Product>
-    <ID>555555</ID>
-    <Name>set of dishes</Name>
-    <Price>450</Price>
-    <Color>green</Color>
-    <Category>bathAccessories</Category>
-    <Amount>8</Amount>
   </Product>
   <Product>
     <ID>818181</ID>
@@ -95,5 +71,37 @@
     <Color>green</Color>
     <Category>dinnerware</Category>
     <Amount>2</Amount>
+  </Product>
+  <Product>
+    <ID>787878</ID>
+    <Name>carpet</Name>
+    <Price>36</Price>
+    <Color>green</Color>
+    <Category>textile</Category>
+    <Amount>6</Amount>
+  </Product>
+  <Product>
+    <ID>666666</ID>
+    <Name>set of dishes</Name>
+    <Price>80</Price>
+    <Color>green</Color>
+    <Category>dinnerware</Category>
+    <Amount>1</Amount>
+  </Product>
+  <Product>
+    <ID>555555</ID>
+    <Name>set of dishes</Name>
+    <Price>450</Price>
+    <Color>green</Color>
+    <Category>bathAccessories</Category>
+    <Amount>8</Amount>
+  </Product>
+  <Product>
+    <ID>525252</ID>
+    <Name>A pampering woolen blanket</Name>
+    <Price>100</Price>
+    <Color>pink</Color>
+    <Category>bathAccessories</Category>
+    <Amount>10</Amount>
   </Product>
 </products>

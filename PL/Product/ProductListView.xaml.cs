@@ -99,10 +99,17 @@ namespace PL
            WindowCart windowCart = new WindowCart(c,bl);
             windowCart.Show();
         }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            ManagerMenu m=new ManagerMenu(bl);
+            m.Show();
+            Close();
+        }
     }
 
 
-public class convertAddProduct : IValueConverter
+    public class convertAddProduct : IValueConverter
     {
         public object Convert(
  object value,

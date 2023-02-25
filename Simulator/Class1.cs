@@ -59,9 +59,10 @@ namespace Simulator
               
             }
         }
+        public static void Stop()
+        {
+            stopSimulator = true;
+        }
 
     }
-
-
-
 }

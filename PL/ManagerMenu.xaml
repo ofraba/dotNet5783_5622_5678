@@ -8,10 +8,11 @@
         Title="ManagerMenu" Height="450" Width="800">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/977fa3_f1b89a5930514b49b4338bd623185326_mv2.jpg" Stretch="UniformToFill"/>
+            <ImageBrush Stretch="UniformToFill" ImageSource="/81KNeSVkUqL.jpg"/>
         </Grid.Background>
-        <Button x:Name="Products" Content="Products" HorizontalAlignment="Left" Margin="289,141,0,0" VerticalAlignment="Top" Click="Products_Click"/>
-        <Button x:Name="Orders" Content="Orders" HorizontalAlignment="Left" Margin="496,141,0,0" VerticalAlignment="Top" Click="Orders_Click"/>
+        <Button x:Name="Products" Content="Products" HorizontalAlignment="Left" Margin="231,141,0,0" VerticalAlignment="Top" Click="Products_Click" Height="47" Width="108"/>
+        <Button x:Name="Orders" Content="Orders" HorizontalAlignment="Left" Margin="432,141,0,0" VerticalAlignment="Top" Click="Orders_Click" Height="47" Width="104"/>
+        <Button x:Name="Go_Back" Content="Go Back" HorizontalAlignment="Left" Height="29" Margin="652,43,0,0" VerticalAlignment="Top" Width="83" Click="Go_Back_Click"/>
 
     </Grid>
 </Window>

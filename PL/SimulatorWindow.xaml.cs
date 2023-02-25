@@ -26,26 +26,28 @@ namespace PL
         private bool isTimerRun;
         private Thread timerThread;
         BackgroundWorker worker = new();
-        
-
+        bool CancelEventArgs=false;
 
 
         public SimulatorWindow()
         {
             InitializeComponent();
-            //worker.DoWork += giveTheOrder;
             worker.WorkerReportsProgress = true;
             worker.RunWorkerAsync();
             isTimerRun = true;
             stopWatch = new Stopwatch();
             stopWatch.Restart();
+            worker.DoWork += giveTheOrder;
             timerThread = new Thread(runTimer);
             timerThread.Start();
         }
 
          void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = true;
+            if(CancelEventArgs==false)
+                e.Cancel = true;
+            else 
+                e.Cancel= false;
         }
         public void setTextInvok(string text)
         {
@@ -72,11 +74,12 @@ namespace PL
 
         private void Stop_Simulator_Click(object sender, RoutedEventArgs e)
         {
-
+            CancelEventArgs= true;
         }
-        public void giveTheOrder()
+        public void giveTheOrder(object? sender, DoWorkEventArgs e)
         {
 
         }
+
     }
 }
