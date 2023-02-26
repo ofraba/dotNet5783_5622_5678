@@ -3,18 +3,22 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
 
 internal class DalOrderItem : IOrderItem
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem orderItem)
     {
         orderItem.ID = DataSource.Config.ItemInOrder;
         DataSource.orderItems.Add(orderItem);
         return orderItem.ID;
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem Get(int id)
     {
         //int i = 0;
@@ -32,35 +36,23 @@ internal class DalOrderItem : IOrderItem
             return orderItem1;
         throw new ex1();
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(Predicate<OrderItem> func)
     {
         return DataSource.orderItems.Find(func);
     }
     public IEnumerable<DO.OrderItem> GetAll(Func<OrderItem, bool>? func = null)
     {
-        //List<DO.OrderItem> temp = new List<DO.OrderItem>();
-        //for (int i = 0; i < DataSource.orderItems.Count; i++)
-        //{
-        //    temp.Add(DataSource.orderItems[i]);
-        //}
-        //return (func == null) ? temp : temp.Where(func);
-
-
         var orderItems = (from item in DataSource.orderItems
                           select item).ToList();
         return (func == null) ? orderItems : orderItems.Where(func);//
     }
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
-        //int i = 0;
-        //while (DataSource.orderItems[i].ID != id && i < DataSource.orderItems.Count)
-        //{
-        //    DataSource.orderItems.RemoveAt(i);
-        //}
-        //if (i >= DataSource.orderItems.Count)
-        //    throw new ex1();
-
         bool check = false;
         DataSource.orderItems.ForEach(orderItem =>
         {
@@ -76,8 +68,9 @@ internal class DalOrderItem : IOrderItem
         {
             throw new ex1();
         }
-
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem ot)
     {
         int i;
@@ -109,6 +102,8 @@ internal class DalOrderItem : IOrderItem
     //        return DataSource.orderItems[i];
     //}
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem> FindAllOrderItem(int idOrder)
     {
         List<OrderItem> list = new List<OrderItem>();

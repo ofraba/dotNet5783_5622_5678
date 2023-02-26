@@ -4,6 +4,7 @@ using BlImplementation;
 using DalApi;
 using BL;
 using System.Threading;
+using System.Threading.Channels;
 
 namespace Simulator
 {
@@ -11,14 +12,15 @@ namespace Simulator
     public static class Simulator1
     {
         public delegate void StatusChanged(Order order, string status, string newStatus, DateTime prev, DateTime next);
-        public delegate void FinishSimulator(DateTime end, string reasonOfFinish = "");
+        public delegate void FinishSimulator(DateTime end, string reasonOfFinish);
         volatile private static bool stopSimulator = false;
         public static event StatusChanged? StatusChangedEvent = null;
         public static event FinishSimulator? FinishSimulatorEvent = null;
-       
+        public static bool IsAlive { get; set; } = false;
         public static void Run()
         {
-
+            IsAlive = true;
+            stopSimulator = false;
             Thread t = new Thread(DoTheSimulator);
             t.Start();
         }
@@ -74,6 +76,8 @@ namespace Simulator
         public static void Stop()
         {
             stopSimulator = true;
+
+            IsAlive= false;
         }
 
     }

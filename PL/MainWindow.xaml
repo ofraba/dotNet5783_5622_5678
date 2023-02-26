@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid Margin="0,-17,0,0">
         <Grid.Background>
-            <ImageBrush Stretch="UniformToFill" ImageSource="/צילום מסך 2023-02-22 003916.jpg"/>
+            <ImageBrush Stretch="UniformToFill" ImageSource="/81KNeSVkUqL.jpg" />
         </Grid.Background>
         <Button x:Name="Manager_Menu" Content="Admin" HorizontalAlignment="Left" Margin="369,165,0,0" VerticalAlignment="Top" Click="GoToThe_List_Click" Height="33" Width="57"/>
         <Button x:Name="New_Order" Content="New Order" HorizontalAlignment="Left" Margin="189,163,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.829,2.336" Height="33" Width="88" Click="New_Order_Click"/>

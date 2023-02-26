@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
@@ -16,11 +17,7 @@ internal class BlProduct : BLApi.IProduct
 {
     IDal? dal = DalApi.Factory.Get();
 
-
-
-
-
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetAll(Func<BO.ProductForList, bool>? func = null)
     {
         //List<BO.ProductForList> productList = new List<BO.ProductForList>();
@@ -51,36 +48,9 @@ internal class BlProduct : BLApi.IProduct
         return (func == null) ? productList : productList.Where(func);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> GetForCatalog(Func<BO.ProductItem, bool>? func = null)
     {
-        //List<BO.ProductItem> productList = new List<BO.ProductItem>();
-
-        //IEnumerable<DO.Product> products = Dal.Product.GetAll();
-        //foreach (DO.Product product in products)
-        //{
-        //    BO.ProductItem productItem = new BO.ProductItem();
-        //    productItem.ID = product.ID;
-        //    productItem.Name = product.Name;
-        //    productItem.Price = product.Price;
-        //    productItem.Amount = product.Amount;
-        //    productItem.Category = (BO.Category)product.Category;
-        //    productItem.Color = product.Color;
-        //    if (product.Amount > 0)
-        //    {
-        //        productItem.InStock = true;
-        //    }
-        //    else
-        //    {
-        //        productItem.InStock = false;
-        //    }
-        //    productList.Add(productItem);
-        //}
-        //return (func == null) ? productList : productList.Where(func);
-
-
-
-
-
         var productList = (from product in dal?.Product.GetAll() ?? throw new nullException()
                            select new BO.ProductItem()
                            {
@@ -96,6 +66,7 @@ internal class BlProduct : BLApi.IProduct
     }
 
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product GetForManegar(int idProduct)
     {
         BO.Product bproduct = new BO.Product();
@@ -122,7 +93,7 @@ internal class BlProduct : BLApi.IProduct
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem GetForClient(int idProduct, BO.Cart c)
     {
         BO.ProductItem bproductItem = new BO.ProductItem();
@@ -151,7 +122,7 @@ internal class BlProduct : BLApi.IProduct
         return bproductItem;
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(BO.Product p)
     {
         if (p.ID > 0 && p.Name != " " && p.Price > 0 && p.InStock > 0)
@@ -178,16 +149,10 @@ internal class BlProduct : BLApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int idProduct)
     {
         IEnumerable<DO.OrderItem> temp = dal?.OrderItem.GetAll() ?? throw new nullException();
-        //foreach (DO.OrderItem productInOrder in temp)
-        //{
-        //    if (productInOrder.ProductID == idProduct)
-        //    {
-        //        throw new BO.productExsistInOrder();
-        //    }
-        //}
         var orderItem = from item in temp
                         let productID = item.ProductID
                         where item.ProductID == idProduct
@@ -206,7 +171,7 @@ internal class BlProduct : BLApi.IProduct
         }
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(BO.Product p)
     {
         if (p.ID > 0 && p.Name != " " && p.Price > 0 && p.InStock > 0)
@@ -229,7 +194,7 @@ internal class BlProduct : BLApi.IProduct
         }
         else
         {
-            throw new InvalidDataException();
+            throw new BO.dataIsntInvalid();
         }
     }
 }

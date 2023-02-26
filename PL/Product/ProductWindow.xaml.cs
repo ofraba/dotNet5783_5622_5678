@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,40 +43,15 @@ namespace PL
             str1 = str;
             if (source2 == "add")//הוספת פריט
             {
-                tb_Id.Text = random.Next(100000, 999999).ToString();//לא מציג את ה-id
-                cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));//לעשות binding
-                //b_Add.Visibility = Visibility.Visible;
-                //b_UpDate.Visibility = Visibility.Hidden;
-                //b_addToCart.Visibility = Visibility.Hidden;
+                tb_Id.Text = random.Next(100000, 999999).ToString();
+                cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
             }
             else
             {
                 BO.ProductItem selectedItem = bl.Product.GetForClient(id, c);
                 DataContext=selectedItem;
-                //tb_Id.Text = selectedItem.ID.ToString();
-                cb_Category.SelectedItem = selectedItem.Category;//לעשות binding
-                cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));//לעשות binding
-                //tb_Name.Text = selectedItem.Name?.ToString();
-                //tb_Color.Text = selectedItem.Color?.ToString();
-                //tb_Price.Text = selectedItem.Price.ToString();
-                //tb_InStock.Text = selectedItem.Amount.ToString();
-                //b_Add.Visibility = Visibility.Hidden;
-                //if (source2 == "update")
-                //{
-                //b_UpDate.Visibility = Visibility.Visible;
-                //b_addToCart.Visibility = Visibility.Hidden;
-                //}
-                //else//show
-                //{
-                //    b_UpDate.Visibility = Visibility.Hidden;
-                //    b_addToCart.Visibility = Visibility.Visible;
-                //tb_Id.IsEnabled = false;
-                //cb_Category.IsEnabled = false;
-                //tb_Name.IsEnabled = false;
-                //tb_Color.IsEnabled = false;
-                //tb_Price.IsEnabled = false;
-                //tb_InStock.IsEnabled = false;
-                //}
+                cb_Category.SelectedItem = selectedItem.Category;
+                cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
             }
         }
 
@@ -86,8 +62,8 @@ namespace PL
             newProduct.Category = (BO.Category)cb_Category.SelectedItem;
             newProduct.Name = tb_Name.Text;
             newProduct.Color = tb_Color.Text;
-            newProduct.Price = Convert.ToInt32(tb_Price.Text);//אם מכניסים string נתקע...
-            newProduct.InStock = Convert.ToInt32(tb_InStock.Text);//אם מכניסים string נתקע...
+            newProduct.Price = Convert.ToInt32(tb_Price.Text);
+            newProduct.InStock = Convert.ToInt32(tb_InStock.Text);
             try
             {
                 int id = bl.Product.Add(newProduct);
@@ -120,6 +96,10 @@ namespace PL
                 this.Close();
             }
             catch (BO.ExceptionFromDal ex)
+            {
+                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
+            }
+            catch(dataIsntInvalid ex)
             {
                 MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }

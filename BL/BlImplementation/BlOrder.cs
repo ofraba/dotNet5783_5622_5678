@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
@@ -26,25 +27,26 @@ internal class BlOrder : BLApi.IOrder
     }
 
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList> GetAll(Func<BO.OrderForList, bool>? func = null)
     {
-    
-        
-         var orders=(from order in dal?.Order.GetAll()
-                let orderItems = dal?.OrderItem.FindAllOrderItem(order.ID)
-                select new BO.OrderForList()
-                {
-                    ID = order.ID,
-                    CustomerName = order.CustomerName,
-                    AmountOfItems = orderItems.Count(),
-                    TotalPrice = orderItems.Sum(order => order.Price),
-                    status = Status(order)
-                });
+
+
+        var orders = (from order in dal?.Order.GetAll()
+                      let orderItems = dal?.OrderItem.FindAllOrderItem(order.ID)
+                      select new BO.OrderForList()
+                      {
+                          ID = order.ID,
+                          CustomerName = order.CustomerName,
+                          AmountOfItems = orderItems.Count(),
+                          TotalPrice = orderItems.Sum(order => order.Price),
+                          status = Status(order)
+                      });
         return (func == null) ? orders : orders.Where(func);
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order GetForManegar(int idOrder)
     {
         BO.Order bOrder = new BO.Order();
@@ -65,20 +67,20 @@ internal class BlOrder : BLApi.IOrder
                 bOrder.Items = new List<BO.OrderItem>();
                 double totalPrice = 0;
                 var itemInOrderList1 = from itemInOrder in dal.OrderItem.GetAll()
-                                        where itemInOrder.OrderID == idOrder
-                                        select (new BO.OrderItem()
-                                        {
+                                       where itemInOrder.OrderID == idOrder
+                                       select (new BO.OrderItem()
+                                       {
                                            ID = itemInOrder.ID,
                                            Amount = itemInOrder.Amount,
                                            Price = itemInOrder.Price,
                                            ProductID = itemInOrder.ProductID,
                                            TotalPrice = itemInOrder.Price * itemInOrder.Amount,
-                                        });
-                    itemInOrderList1.ToList().ForEach(item =>
-                    {
-                        bOrder.Items.Add(item);
-                        totalPrice += item.Price * item.Amount;
-                    });
+                                       });
+                itemInOrderList1.ToList().ForEach(item =>
+                {
+                    bOrder.Items.Add(item);
+                    totalPrice += item.Price * item.Amount;
+                });
                 bOrder.TotalPrice = totalPrice;
             }
             catch (ex1 e)
@@ -94,6 +96,7 @@ internal class BlOrder : BLApi.IOrder
     }
 
     //עדכון שילוח הזמנה
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order OrderShippingUpdate(int idOrder)
     {
         try
@@ -105,7 +108,7 @@ internal class BlOrder : BLApi.IOrder
                 order.ShipDate = DateTime.Now;
                 dal.Order.Update(order);
                 updatedOrder = GetForManegar(idOrder);
-                updatedOrder.Status=BO.OrderStatus.sent;
+                updatedOrder.Status = BO.OrderStatus.sent;
                 return updatedOrder;
             }
             else
@@ -121,7 +124,7 @@ internal class BlOrder : BLApi.IOrder
     }
 
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     //עדכון אספקת הזמנה
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
@@ -148,7 +151,7 @@ internal class BlOrder : BLApi.IOrder
         }
     }
 
-    
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking OrderTracking(int idOrder)
     {
         try
@@ -158,13 +161,13 @@ internal class BlOrder : BLApi.IOrder
             List<(DateTime, string)> descriptionAndDate = new List<(DateTime, string)> { };
             if (status == BO.OrderStatus.provided)
             {
-                descriptionAndDate.Add((order.DeliveryDate,"the order provied"));
+                descriptionAndDate.Add((order.DeliveryDate, "the order provied"));
             }
-            if(status == BO.OrderStatus.sent)
+            if (status == BO.OrderStatus.sent)
             {
                 descriptionAndDate.Add((order.ShipDate, "the order sent"));
             }
-            if(status == BO.OrderStatus.confirmed)
+            if (status == BO.OrderStatus.confirmed)
             {
                 descriptionAndDate.Add((order.OrderDate, "the order confirmed"));
             }
@@ -182,34 +185,46 @@ internal class BlOrder : BLApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int? ChooseOrder()
     {
-        IEnumerable<DO.Orders> orderList = dal?.Order.GetAll() ?? throw new BO.nullException();
-        DateTime theMinDate= DateTime.Now;
-        int numberOfOrder = 0;
-        int temp = 0;
-        bool cheak = false;
-        orderList.ToList().ForEach(item =>
+        lock (dal ?? throw new BO.nullException())
         {
-            if (item.DeliveryDate == DateTime.MinValue)
-            { 
-               if(item.ShipDate<theMinDate && item.OrderDate<theMinDate)
+            IEnumerable<DO.Orders> orderList = dal?.Order.GetAll() ?? throw new BO.nullException();
+            DateTime theMinDate = DateTime.Now;
+            int numberOfOrder = 0;
+            int temp = 0;
+            bool cheak = false;
+            orderList.ToList().ForEach(item =>
+            {
+                if (item.DeliveryDate == DateTime.MinValue)
                 {
-                    numberOfOrder=temp;
-
-                    if(item.ShipDate!=DateTime.MinValue)
+                    cheak = true;
+                    if (item.ShipDate < theMinDate && item.OrderDate < theMinDate)
                     {
-                        theMinDate=item.ShipDate;
-                    }
-                    else
-                    {
-                        theMinDate = item.OrderDate;
+                        numberOfOrder = temp;
+                        if (item.ShipDate != DateTime.MinValue)
+                        {
+                            theMinDate = item.ShipDate;
+                        }
+                        else
+                        {
+                            theMinDate = item.OrderDate;
+                        }
                     }
                 }
-            }
-            temp++;
-        });
-        return cheak? numberOfOrder+1:null;
+                temp++;
+            });
+
+            return cheak ? numberOfOrder + 1 : null;
+        }
+        //lock (dal ?? throw new BO.nullException())
+        //{
+        //    IEnumerable<DO.Orders>? orderList = dal?.Order.GetAll();
+        //    orderList?.Where(order => order.DeliveryDate == DateTime.MinValue)
+        //    .OrderBy(order => order.ShipDate != DateTime.MinValue ? order.ShipDate : order.OrderDate);
+        //    return orderList?.Any() ?? false ? orderList?.First().ID : null;
+        //}
     }
 
 }

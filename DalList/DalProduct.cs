@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
 namespace Dal;
 
 internal class DalProduct : IProduct
 {
+
     public bool Exsist(int id)//פונקציית עזר לפונקציית add
     {
-        //int i = 0;
-        //while (i < DataSource.products.Count)
-        //{
-        //    if (DataSource.products[i].ID == id)
-        //        return true;
-        //    i++;
-        //}
-        //return false;
         bool cheak = false;
         DataSource.products.ForEach(product =>
         {
@@ -27,7 +21,7 @@ internal class DalProduct : IProduct
         return cheak;
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product p)
     {
         int id = p.ID;
@@ -40,6 +34,7 @@ internal class DalProduct : IProduct
         return id;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product Get(int id)
     {
         DO.Product product = (from item in DataSource.products
@@ -49,12 +44,14 @@ internal class DalProduct : IProduct
             return product;
         throw new ex1();
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(Predicate<Product> func)
     {
         return DataSource.products.Find(func);
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product> GetAll(Func<Product, bool>? func = null)
     {
         var products = (from item in DataSource.products
@@ -63,17 +60,9 @@ internal class DalProduct : IProduct
         return (func == null) ? products : products.Where(func);//
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
-        //int i = 0;
-        //while (i < DataSource.products.Count && DataSource.products[i].ID != id)
-        //{
-        //    i++;
-        //}
-        //if (i >= DataSource.products.Count)
-        //    throw new ex1();
-        //else
-        //    DataSource.products.RemoveAt(i);
         bool check = false;
         DataSource.products.ForEach(product =>
         {
@@ -91,7 +80,7 @@ internal class DalProduct : IProduct
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product p)
     {
         int i;

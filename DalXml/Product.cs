@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -12,6 +13,7 @@ namespace Dal
 {
     internal class Product : IProduct
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.Product item)
         {
             XElement? Products = XDocument.Load("../Product.xml").Root;
@@ -35,6 +37,8 @@ namespace Dal
             Products?.Save("../Product.xml");
             return item.ID;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Product Get(int id)
         {
             XElement? Products = XDocument.Load("../Product.xml").Root;
@@ -53,6 +57,7 @@ namespace Dal
             };
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Product Get(Predicate<DO.Product> func)
         {
             XElement? Products = XDocument.Load("../Product.xml").Root;
@@ -72,7 +77,7 @@ namespace Dal
             return allProduct.Find(func);
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.Product> GetAll(Func<DO.Product, bool>? func = null)
         {
             XElement? Products = XDocument.Load("../Product.xml").Root;
@@ -93,12 +98,15 @@ namespace Dal
             return func == null ? productsList : productsList.Where(func);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             XElement? Products = XDocument.Load("../Product.xml").Root;
             Products?.Elements().ToList().Find(product => Convert.ToInt32(product?.Element("ID")?.Value) == id)?.Remove();
             Products?.Save("../Product.xml");
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.Product updateProduct)
         {
             Delete(updateProduct.ID);

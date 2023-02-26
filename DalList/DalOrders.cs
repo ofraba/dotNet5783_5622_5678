@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
 namespace Dal;
 
 internal class DalOrders:IOrder
 {
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Orders o)
     {
         o.ID = DataSource.Config.Order;
@@ -13,17 +16,9 @@ internal class DalOrders:IOrder
         return o.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Orders Get(int id)
     {
-        //int i = 0;
-        //while (i < DataSource.orders.Count && DataSource.orders[i].ID != id)
-        //{
-        //    i++;
-        //}
-        //if (i < DataSource.orders.Count)
-        //    return DataSource.orders[i];
-        //throw new ex1();
-
         DO.Orders order1 = (from order in DataSource.orders
                               where order.ID == id
                               select order).FirstOrDefault();
@@ -31,36 +26,25 @@ internal class DalOrders:IOrder
             return order1;
         throw new ex1();
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Orders Get(Predicate<Orders> func)
     {
         return DataSource.orders.Find(func);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Orders> GetAll(Func<Orders, bool>? func = null)
     {
-        //List<Orders> temp = new List<Orders>();
-        //for (int i = 0; i < DataSource.orders.Count; i++)
-        //{
-        //    temp.Add(DataSource.orders[i]);
-        //}
-        //return (func == null) ? temp : temp.Where(func);
-
         var orders = (from item in DataSource.orders
                         orderby item.OrderDate
                         select item).ToList();
         return (func == null) ? orders : orders.Where(func);//
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
-        //int i = 0;
-        //while (DataSource.orders[i].ID != id && i < DataSource.orders.Count)
-        //{
-        //     DataSource.orders.RemoveAt(i);
-        //}
-        //if (i >= DataSource.orders.Count)
-        //    throw new ex1();
-
         bool check = false;
         DataSource.orders.ForEach(order =>
         {
@@ -79,7 +63,7 @@ internal class DalOrders:IOrder
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Orders o)
     {
         //int i;

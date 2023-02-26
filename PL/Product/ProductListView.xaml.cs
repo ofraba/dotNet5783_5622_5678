@@ -33,12 +33,10 @@ namespace PL
             if (str1 == "customer") 
             {
                 lv_ProductListView.ItemsSource = bl.Product.GetForCatalog(x => x.Amount != 0);
-                //b_AddNewProduct.Visibility = Visibility.Hidden;
             }
             else
             {
                 lv_ProductListView.ItemsSource = bl.Product.GetAll();
-                //GoToCart.Visibility = Visibility.Hidden;
             }
             cb_CategoryFilter.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }

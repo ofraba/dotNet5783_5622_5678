@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -12,6 +13,7 @@ namespace Dal
 {
     internal class OrderItems : IOrderItem
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.OrderItem ot)
         {
             XElement? config = XDocument.Load("../config.xml").Root;
@@ -29,17 +31,21 @@ namespace Dal
             return ot.ID;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem Get(int id)
         {
             List<DO.OrderItem> lst1 = GetAll().ToList();
             return lst1.Find(ot => ot.ID == id);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem Get(Predicate<DO.OrderItem> func)
         {
             List<DO.OrderItem> lst1 = GetAll().ToList();
             return lst1.Find(func);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.OrderItem> GetAll(Func<DO.OrderItem, bool>? func = null)
         {
             StreamReader r = new StreamReader("../OrderItem.xml");
@@ -50,6 +56,8 @@ namespace Dal
             return func == null ? lst : lst.Where(func);
 
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             List<DO.OrderItem> lst = GetAll().ToList();
@@ -60,13 +68,15 @@ namespace Dal
             ser.Serialize(w, lst);
             w.Close();
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.OrderItem ot)
         {
             Delete(ot.ID);
             Add(ot);
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<OrderItem> FindAllOrderItem(int idOrder)
         {
             List<DO.OrderItem> lst1 = GetAll().ToList();

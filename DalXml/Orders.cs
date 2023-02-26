@@ -3,6 +3,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Dal
 {
     internal class Orders : IOrder
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.Orders o)
         {
             if (o.ID == 0)
@@ -33,17 +35,21 @@ namespace Dal
             return o.ID;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Orders Get(int id)
         {
             List<DO.Orders> lst1 = GetAll().ToList();
             return lst1.Find(o => o.ID == id);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Orders Get(Predicate<DO.Orders> func)
         {
             List<DO.Orders> lst1 = GetAll().ToList();
             return lst1.Find(func);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.Orders> GetAll(Func<DO.Orders, bool>? func = null)
         {
             StreamReader r = new StreamReader("../Orders.xml");
@@ -53,6 +59,8 @@ namespace Dal
             r.Close();
             return func == null ? lst : lst.Where(func);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             List<DO.Orders> lst = GetAll().ToList();
@@ -63,6 +71,8 @@ namespace Dal
             ser.Serialize(w, lst);
             w.Close();
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.Orders o)
         {
             Delete(o.ID);

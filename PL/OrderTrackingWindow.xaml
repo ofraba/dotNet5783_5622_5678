@@ -8,7 +8,7 @@
         Title="OrderTrackingWindow" Height="450" Width="800">
     <Grid Margin="0,0,0,-6">
         <Grid.Background>
-            <ImageBrush ImageSource="/8.png" Opacity="0.8" TileMode="Tile" Stretch="UniformToFill">
+            <ImageBrush ImageSource="/81KNeSVkUqL.jpg" Opacity="0.8" TileMode="Tile" Stretch="UniformToFill">
                 <ImageBrush.RelativeTransform>
                     <TransformGroup>
                         <ScaleTransform CenterY="0.5" CenterX="0.5"/>
@@ -35,6 +35,7 @@
             </ListView.View>
         </ListView>
         <Button x:Name="b_details" Grid.Column="1" Content="for details click!" HorizontalAlignment="Left" Margin="128,381,0,0" VerticalAlignment="Top" Height="36" Width="103" Click="b_details_Click"/>
+        <Button x:Name="back" Grid.Column="1" Content="Go Back" HorizontalAlignment="Left" Margin="179,31,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="back_Click"/>
 
     </Grid>
 </Window>

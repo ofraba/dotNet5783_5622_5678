@@ -10,12 +10,15 @@ using BO;
 using System.Reflection;
 using DO;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
 internal class BlCart : ICart
 {
     IDal? dal = DalApi.Factory.Get();
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart AddProductToCart(BO.Cart c, int productId)
     {
 
@@ -60,8 +63,8 @@ internal class BlCart : ICart
         }
         return c;
     }
-    
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Update(BO.Cart c, int productId, int amount)
     {
         BO.OrderItem orderItem=c.Items?.Find(item => item.ProductID == productId)?? throw new nullException();
@@ -107,7 +110,7 @@ internal class BlCart : ICart
         return c;
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Confirm(BO.Cart c, string name, string email, string address)
     {
         if (address == "" || name == "" || email == "")//check if the data are valid

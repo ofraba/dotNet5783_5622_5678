@@ -52,7 +52,6 @@ namespace PL
         {
             SimulatorWindow s = new SimulatorWindow();
             s.Show();
-            Close();
         }
     }
 }

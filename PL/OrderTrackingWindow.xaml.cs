@@ -49,5 +49,12 @@ namespace PL
             OrderWindow orderWindow = new OrderWindow(bl, Convert.ToInt32(tb_id.Text), "orderTracking");
             orderWindow.Show();
         }
+
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow m=new MainWindow();
+            m.Show();
+            Close();
+        }
     }
 }

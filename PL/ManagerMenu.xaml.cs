@@ -31,12 +31,14 @@ namespace PL
         {
             ProductListView pl = new ProductListView(bl,"manager");
             pl.Show();
+            Close();
         }
 
         private void Orders_Click(object sender, RoutedEventArgs e)
         {
             OrderListView ol = new OrderListView(bl);
             ol.Show();
+            Close();
         }
 
         private void Go_Back_Click(object sender, RoutedEventArgs e)

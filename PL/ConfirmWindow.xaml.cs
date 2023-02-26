@@ -38,6 +38,8 @@ namespace PL
             try
             {
                 bl.Cart.Confirm(cart, name, email, address);
+                MainWindow m=new MainWindow();
+                m.Show();
             }
             catch (BO.dataIsntInvalid ex)
             {

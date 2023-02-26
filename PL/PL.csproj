@@ -14,9 +14,6 @@
 
 	<ItemGroup>
 	  <None Remove="81KNeSVkUqL.jpg" />
-	  <None Remove="Product\09a686f6-66ba-4f57-a161-119378229431.jpg" />
-	  <None Remove="Product\banner_winter_2-01-pjve0cg73axa5tkeljzr6930x3e3047oyb3ru2z8jk.jpg" />
-	  <None Remove="Product\אביזרי-אמבטיה.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,9 +23,6 @@
 
 	<ItemGroup>
 	  <Resource Include="81KNeSVkUqL.jpg" />
-	  <Resource Include="Product\09a686f6-66ba-4f57-a161-119378229431.jpg" />
-	  <Resource Include="Product\banner_winter_2-01-pjve0cg73axa5tkeljzr6930x3e3047oyb3ru2z8jk.jpg" />
-	  <Resource Include="Product\אביזרי-אמבטיה.jpg" />
 	</ItemGroup>
 
 </Project>
