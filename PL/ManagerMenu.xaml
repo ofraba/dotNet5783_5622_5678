@@ -8,7 +8,7 @@
         Title="ManagerMenu" Height="450" Width="800">
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="UniformToFill" ImageSource="/81KNeSVkUqL.jpg"/>
+            <ImageBrush ImageSource="/צילום מסך 2023-02-27 002525.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <Button x:Name="Products" Content="Products" HorizontalAlignment="Left" Margin="231,141,0,0" VerticalAlignment="Top" Click="Products_Click" Height="47" Width="108"/>
         <Button x:Name="Orders" Content="Orders" HorizontalAlignment="Left" Margin="432,141,0,0" VerticalAlignment="Top" Click="Orders_Click" Height="47" Width="104"/>

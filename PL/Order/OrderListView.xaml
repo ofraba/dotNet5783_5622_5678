@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="OrderListView" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/צילום מסך 2023-02-27 002525.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="203*"/>
             <ColumnDefinition Width="197*"/>
@@ -22,6 +25,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="back" Grid.Column="1" Content="Go Back" HorizontalAlignment="Left" Height="26" Margin="265,26,0,0" VerticalAlignment="Top" Width="79" Click="back_Click"/>
+        <Button x:Name="back" Grid.Column="1" Content="Go Back" HorizontalAlignment="Left" Height="26" Margin="265,26,0,0" VerticalAlignment="Top" Width="79" Click="back_Click" FontFamily="Yu Gothic UI Semibold" FontSize="14" FontWeight="Bold"/>
     </Grid>
 </Window>

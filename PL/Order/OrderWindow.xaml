@@ -7,27 +7,30 @@
         mc:Ignorable="d"
         Title="OrderWindow" Height="450" Width="800">
     <Window.Resources>
-        <local:DoItIsEnable x:Key="doItIsEnable" />
+        <local:DoItIsEnable x:Key="doItIsEnable"/>
     </Window.Resources>
     <Grid>
-        <TextBox x:Name="t_id" HorizontalAlignment="Left" Margin="181,40,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="t_name" HorizontalAlignment="Left" Margin="181,80,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="t_email" HorizontalAlignment="Left" Margin="181,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="t_address" HorizontalAlignment="Left" Margin="181,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="t_status" HorizontalAlignment="Left" Margin="181,200,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <Label x:Name="Id" Content="Id:" HorizontalAlignment="Left" Margin="47,40,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
-        <Label x:Name="CustomerName" Content="Customer Name:" HorizontalAlignment="Left" Margin="47,80,0,0" VerticalAlignment="Top" Width="109" Height="27"/>
-        <Label x:Name="CustomerEmail" Content="Customer Email:" HorizontalAlignment="Left" Margin="47,120,0,0" VerticalAlignment="Top" Width="109" Height="27"/>
-        <Label x:Name="CustomerAddress" Content="Customer Address:" HorizontalAlignment="Left" Margin="47,160,0,0" VerticalAlignment="Top" Width="120" Height="27" RenderTransformOrigin="0.554,-0.181"/>
-        <Label x:Name="Status" Content="Status:" HorizontalAlignment="Left" Margin="47,200,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
-        <TextBox x:Name="t_orderDate" HorizontalAlignment="Left" Margin="181,240,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="t_shipDate" HorizontalAlignment="Left" Margin="181,280,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/צילום מסך 2023-02-27 002525.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <TextBox x:Name="t_id" HorizontalAlignment="Left" Margin="181,40,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False" FontFamily="Yu Gothic UI Semibold"/>
+        <TextBox x:Name="t_name" HorizontalAlignment="Left" Margin="181,80,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False" FontFamily="Yu Gothic UI Semibold"/>
+        <TextBox x:Name="t_email" HorizontalAlignment="Left" Margin="181,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False" FontFamily="Yu Gothic UI Semibold"/>
+        <TextBox x:Name="t_address" HorizontalAlignment="Left" Margin="181,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False" FontFamily="Yu Gothic UI Semibold"/>
+        <TextBox x:Name="t_status" HorizontalAlignment="Left" Margin="181,200,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False" FontFamily="Yu Gothic UI Semibold"/>
+        <Label x:Name="Id" Content="Id:" HorizontalAlignment="Left" Margin="47,40,0,0" VerticalAlignment="Top" Width="77" Height="27" FontFamily="Yu Gothic UI Semibold" FontWeight="Bold" FontSize="14"/>
+        <Label x:Name="CustomerName" Content="Customer Name:" HorizontalAlignment="Left" Margin="47,80,0,0" VerticalAlignment="Top" Width="120" Height="27" FontFamily="Yu Gothic UI Semibold" FontWeight="Bold" FontSize="14"/>
+        <Label x:Name="CustomerEmail" Content="Customer Email:" HorizontalAlignment="Left" Margin="47,120,0,0" VerticalAlignment="Top" Width="109" Height="27" FontFamily="Yu Gothic UI Semibold" FontWeight="Bold" FontSize="14"/>
+        <Label x:Name="CustomerAddress" Content="Customer Address:" HorizontalAlignment="Left" Margin="47,160,0,0" VerticalAlignment="Top" Width="129" Height="27" RenderTransformOrigin="0.554,-0.181" FontFamily="Yu Gothic UI Semibold" FontWeight="Bold" FontSize="14"/>
+        <Label x:Name="Status" Content="Status:" HorizontalAlignment="Left" Margin="47,200,0,0" VerticalAlignment="Top" Width="77" Height="27" FontFamily="Yu Gothic UI Semibold" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="t_orderDate" HorizontalAlignment="Left" Margin="181,240,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False" FontFamily="Yu Gothic UI Semibold"/>
+        <TextBox x:Name="t_shipDate" HorizontalAlignment="Left" Margin="181,280,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False" FontFamily="Yu Gothic UI Semibold"/>
         <TextBox x:Name="t_deliveryDate" HorizontalAlignment="Left" Margin="181,320,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="t_toatalPrice" HorizontalAlignment="Left" Margin="181,360,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <Label x:Name="OrderDate" Content="Order Date:" HorizontalAlignment="Left" Margin="47,240,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
-        <Label x:Name="ShipDate" Content="Ship Date:" HorizontalAlignment="Left" Margin="47,280,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
-        <Label x:Name="DeliveryDate" Content="Delivery Date:" HorizontalAlignment="Left" Margin="47,320,0,0" VerticalAlignment="Top" Width="97" Height="27" RenderTransformOrigin="0.554,-0.181"/>
-        <Label x:Name="TotalPrice" Content="Total Price:" HorizontalAlignment="Left" Margin="47,360,0,0" VerticalAlignment="Top" Width="77" Height="27"/>
+        <TextBox x:Name="t_toatalPrice" HorizontalAlignment="Left" Margin="181,360,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="False" FontFamily="Yu Gothic UI Semibold"/>
+        <Label x:Name="OrderDate" Content="Order Date:" HorizontalAlignment="Left" Margin="47,240,0,0" VerticalAlignment="Top" Width="97" Height="27" FontFamily="Yu Gothic UI Semibold" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="ShipDate" Content="Ship Date:" HorizontalAlignment="Left" Margin="47,280,0,0" VerticalAlignment="Top" Width="77" Height="27" FontFamily="Yu Gothic UI Semibold" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="DeliveryDate" Content="Delivery Date:" HorizontalAlignment="Left" Margin="47,320,0,0" VerticalAlignment="Top" Width="97" Height="27" RenderTransformOrigin="0.554,-0.181" FontFamily="Yu Gothic UI Semibold" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="TotalPrice" Content="Total Price:" HorizontalAlignment="Left" Margin="47,360,0,0" VerticalAlignment="Top" Width="77" Height="27" FontFamily="Yu Gothic UI Semibold" FontSize="14" FontWeight="Bold"/>
         <ListView x:Name="lv_orderItems" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="421,93,57,106">
             <ListView.View>
                 <GridView>
@@ -35,8 +38,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="UpdateOrderShip" IsEnabled="{Binding ElementName=t_shipDate,Path=Text,Converter={StaticResource doItIsEnable}}" Content="Update Ship Date" HorizontalAlignment="Left" Margin="421,387,0,0" VerticalAlignment="Top" Width="127" Click="UpdateOrderShip_Click"/>
-        <Button x:Name="UpdateDeliveryDate" IsEnabled="{Binding ElementName=t_deliveryDate,Path=Text,Converter={StaticResource doItIsEnable}}" Content="Update Delivery Date" HorizontalAlignment="Left" Margin="619,387,0,0" VerticalAlignment="Top" Width="124" Click="UpdateDeliveryDate_Click"/>
+        <Button x:Name="UpdateOrderShip" IsEnabled="{Binding ElementName=t_shipDate,Path=Text,Converter={StaticResource doItIsEnable}}" Content="Update Ship Date" HorizontalAlignment="Left" Margin="421,387,0,0" VerticalAlignment="Top" Width="127" Click="UpdateOrderShip_Click" FontFamily="Yu Gothic UI Semibold" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="UpdateDeliveryDate" IsEnabled="{Binding ElementName=t_deliveryDate,Path=Text,Converter={StaticResource doItIsEnable}}" Content="Update Delivery Date" HorizontalAlignment="Left" Margin="602,387,0,0" VerticalAlignment="Top" Width="145" Click="UpdateDeliveryDate_Click" FontFamily="Yu Gothic UI Semibold" FontSize="14" FontWeight="Bold"/>
 
     </Grid>
 </Window>

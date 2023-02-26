@@ -9,7 +9,7 @@
         Closing="Window_Closing">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/81KNeSVkUqL.jpg" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="/צילום מסך 2023-02-27 002525.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="24*"/>

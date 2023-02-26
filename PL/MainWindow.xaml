@@ -8,12 +8,12 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid Margin="0,-17,0,0">
         <Grid.Background>
-            <ImageBrush Stretch="UniformToFill" ImageSource="/81KNeSVkUqL.jpg" />
+            <ImageBrush Stretch="UniformToFill" ImageSource="/צילום מסך 2023-02-27 002525.jpg" />
         </Grid.Background>
-        <Button x:Name="Manager_Menu" Content="Admin" HorizontalAlignment="Left" Margin="369,165,0,0" VerticalAlignment="Top" Click="GoToThe_List_Click" Height="33" Width="57"/>
-        <Button x:Name="New_Order" Content="New Order" HorizontalAlignment="Left" Margin="189,163,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.829,2.336" Height="33" Width="88" Click="New_Order_Click"/>
-        <Button x:Name="Order_Tracking" Content="Order Tracking" HorizontalAlignment="Left" Margin="525,163,0,0" VerticalAlignment="Top" Height="33" Width="101" Click="Order_Tracking_Click"/>
-        <Button x:Name="Run" Content="Running a simulation" HorizontalAlignment="Left" Margin="107,340,0,0" VerticalAlignment="Top" Height="51" Width="126" Click="Run_Click"/>
+        <Button x:Name="Manager_Menu" Content="Admin" HorizontalAlignment="Left" Margin="347,179,0,0" VerticalAlignment="Top" Click="GoToThe_List_Click" Height="47" Width="80" FontSize="14" FontFamily="Yu Gothic UI Semibold" FontWeight="Bold"/>
+        <Button x:Name="New_Order" Content="New Order" HorizontalAlignment="Left" Margin="178,177,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.829,2.336" Height="49" Width="99" Click="New_Order_Click" BorderBrush="Black" FontFamily="Yu Gothic UI Semibold" FontSize="14"/>
+        <Button x:Name="Order_Tracking" Content="Order Tracking" HorizontalAlignment="Left" Margin="511,179,0,0" VerticalAlignment="Top" Height="47" Width="115" Click="Order_Tracking_Click" FontFamily="Yu Gothic UI Semibold" FontWeight="Bold" FontSize="14" FontStyle="Italic" BorderBrush="#FF3E77A2"/>
+        <Button x:Name="Run" Content="Running a simulation" HorizontalAlignment="Left" Margin="107,340,0,0" VerticalAlignment="Top" Height="51" Width="142" Click="Run_Click" FontSize="14" FontFamily="Yu Gothic UI Semibold" FontWeight="Bold"/>
 
     </Grid>
 </Window>

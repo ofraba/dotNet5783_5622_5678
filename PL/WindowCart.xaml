@@ -8,9 +8,12 @@
         Title="WindowCart" Height="450" Width="800">
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="UniformToFill"/>
+            <ImageBrush Stretch="UniformToFill" ImageSource="/צילום מסך 2023-02-27 002525.jpg"/>
         </Grid.Background>
         <ListView x:Name="lv_itemInCart" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,478,76" MouseDoubleClick="lv_itemInCart_MouseDoubleClick">
+            <ListView.Background>
+                <ImageBrush/>
+            </ListView.Background>
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

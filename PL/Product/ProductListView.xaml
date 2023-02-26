@@ -56,9 +56,9 @@
                     <Label x:Name="l_CategoryFilter" Content="Filter by category:" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0" FontSize="16"/>
                     <Button x:Name="back" Grid.Column="2" Content="Go Back" HorizontalAlignment="Left" Height="28" Margin="243,10,0,0" VerticalAlignment="Top" Width="96" Click="back_Click" RenderTransformOrigin="0.472,1.351"/>
                 </Grid>
-                <ListView x:Name="lv_ProductListView" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="lv_ProductListView_MouseDoubleClick" Grid.ColumnSpan="2" Height="463" VerticalAlignment="Top" Margin="-9,72,9,0" Grid.RowSpan="2" >
+                <ListView x:Name="lv_ProductListView" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="lv_ProductListView_MouseDoubleClick" Grid.ColumnSpan="2" Height="463" VerticalAlignment="Top" Margin="-9,72,9,0" Grid.RowSpan="2" FontFamily="Yu Gothic UI Semibold" >
                     <ListView.Background>
-                        <ImageBrush/>
+                        <ImageBrush ImageSource="/צילום מסך 2023-02-27 002525.jpg" Stretch="UniformToFill"/>
                     </ListView.Background>
                     <ListView.View>
                         <GridView>

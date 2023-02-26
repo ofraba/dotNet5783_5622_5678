@@ -13,6 +13,9 @@
         <local:changeVisibilityForAddToCart x:Key="changeVisibilityForAddToCart" />
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/81KNeSVkUqL.jpg"/>
+        </Grid.Background>
         <Label x:Name="l_Id" Content="Id:" HorizontalAlignment="Left" Margin="110,70,0,0" VerticalAlignment="Top"/>
         <Label x:Name="l_Category" Content="Category:" HorizontalAlignment="Left" Margin="110,120,0,0" VerticalAlignment="Top"/>
         <Label x:Name="l_Name" Content="Name:" HorizontalAlignment="Left" Margin="110,170,0,0" VerticalAlignment="Top"/>
