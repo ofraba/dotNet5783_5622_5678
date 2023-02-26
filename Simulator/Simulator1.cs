@@ -7,12 +7,15 @@ using System.Threading;
 
 namespace Simulator
 {
-    public delegate void StatusChanged(Order order, DateTime prev, DateTime next);
-    public static class Class1
+    
+    public static class Simulator1
     {
-       
+        public delegate void StatusChanged(Order order, string status, string newStatus, DateTime prev, DateTime next);
+        public delegate void FinishSimulator(DateTime end, string reasonOfFinish = "");
         volatile private static bool stopSimulator = false;
         public static event StatusChanged? StatusChangedEvent = null;
+        public static event FinishSimulator? FinishSimulatorEvent = null;
+       
         public static void Run()
         {
 
@@ -21,6 +24,7 @@ namespace Simulator
         }
         public static void DoTheSimulator()
         {
+            string reasonOfFinish = "";
             IBl bl = BLApi.Factory.Get();
             Random rand = new Random();
             while (!stopSimulator)
@@ -29,6 +33,7 @@ namespace Simulator
                 if (id == null)
                 {
                     stopSimulator = true;
+                    reasonOfFinish = "There are no more treatment orders";
                     break;
                 }
                 int time = rand.Next(5000, 10000);
@@ -37,27 +42,34 @@ namespace Simulator
                 {
                     DateTime startChangeAt = DateTime.Now;
                     Order order = bl.Order.GetForManegar(id1);
+                    string currentStatus, newStatus;
+                    Thread.Sleep(time);
                     if (order.ShipDate == DateTime.MinValue)
                     {
+                        currentStatus = "confirmed";
+                        newStatus = "sent";
                         order.ShipDate = DateTime.Now;
                         bl.Order.OrderShippingUpdate(id1);
                     }
                     else
                     {
+                        currentStatus = "sent";
+                        newStatus = "provided";
                         order.DeliveryDate = DateTime.Now;
                         bl.Order.OrderDeliveryUpdate(id1);
                     }
-                    Thread.Sleep(time);
+                    
                     DateTime endChangeAt = DateTime.Now;
-                    if (StatusChangedEvent != null)
-                        StatusChangedEvent(order, startChangeAt, endChangeAt);
+                   
+                    StatusChangedEvent?.Invoke(order, currentStatus, newStatus, startChangeAt, endChangeAt);
+                    Thread.Sleep(1000);
                 }
                 catch (ex1 e)
                 {
                     throw new BO.ExceptionFromDal(e);
                 }
-              
             }
+            FinishSimulatorEvent?.Invoke(DateTime.Now, reasonOfFinish);
         }
         public static void Stop()
         {

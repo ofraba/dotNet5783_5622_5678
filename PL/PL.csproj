@@ -13,20 +13,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="09a686f6-66ba-4f57-a161-119378229431.jpg" />
-	  <None Remove="170203010LBLK-2.jpg" />
-	  <None Remove="436e414dae801cd7442dfb3cb848e4ac.png" />
-	  <None Remove="8.png" />
 	  <None Remove="81KNeSVkUqL.jpg" />
-	  <None Remove="977fa3_f1b89a5930514b49b4338bd623185326_mv2.jpg" />
-	  <None Remove="bad68d_570a7d2a56dc47dd9f9215f5911979e3_mv2.jpg" />
-	  <None Remove="banner_winter_2-01-pjve0cg73axa5tkeljzr6930x3e3047oyb3ru2z8jk.jpg" />
-	  <None Remove="pictureforproject.jpg" />
 	  <None Remove="Product\09a686f6-66ba-4f57-a161-119378229431.jpg" />
 	  <None Remove="Product\banner_winter_2-01-pjve0cg73axa5tkeljzr6930x3e3047oyb3ru2z8jk.jpg" />
 	  <None Remove="Product\אביזרי-אמבטיה.jpg" />
-	  <None Remove="אביזרי-אמבטיה.jpg" />
-	  <None Remove="צילום מסך 2023-02-22 003916.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -35,20 +25,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Resource Include="09a686f6-66ba-4f57-a161-119378229431.jpg" />
-	  <Resource Include="170203010LBLK-2.jpg" />
-	  <Resource Include="436e414dae801cd7442dfb3cb848e4ac.png" />
-	  <Resource Include="8.png" />
 	  <Resource Include="81KNeSVkUqL.jpg" />
-	  <Resource Include="977fa3_f1b89a5930514b49b4338bd623185326_mv2.jpg" />
-	  <Resource Include="bad68d_570a7d2a56dc47dd9f9215f5911979e3_mv2.jpg" />
-	  <Resource Include="banner_winter_2-01-pjve0cg73axa5tkeljzr6930x3e3047oyb3ru2z8jk.jpg" />
-	  <Resource Include="pictureforproject.jpg" />
 	  <Resource Include="Product\09a686f6-66ba-4f57-a161-119378229431.jpg" />
 	  <Resource Include="Product\banner_winter_2-01-pjve0cg73axa5tkeljzr6930x3e3047oyb3ru2z8jk.jpg" />
 	  <Resource Include="Product\אביזרי-אמבטיה.jpg" />
-	  <Resource Include="אביזרי-אמבטיה.jpg" />
-	  <Resource Include="צילום מסך 2023-02-22 003916.jpg" />
 	</ItemGroup>
 
 </Project>
