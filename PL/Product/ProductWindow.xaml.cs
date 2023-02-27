@@ -31,14 +31,14 @@ namespace PL
         string str1;
         public int source1 { get; set; }
         public string source2 { get; set; }
-        public ProductWindow(IBl bl2,ProductListView pv1,string str, Cart c1,int id = 0)
+        public ProductWindow(IBl bl2, ProductListView pv1, string str, Cart c1, int id = 0)
         {
             InitializeComponent();
             id1 = id;
             pv = pv1;
             bl = bl2;
             c = c1;
-            source1=id;
+            source1 = id;
             source2 = str;
             str1 = str;
             if (source2 == "add")//הוספת פריט
@@ -49,13 +49,13 @@ namespace PL
             else
             {
                 BO.ProductItem selectedItem = bl.Product.GetForClient(id, c);
-                DataContext=selectedItem;
+                DataContext = selectedItem;
                 cb_Category.SelectedItem = selectedItem.Category;
                 cb_Category.ItemsSource = Enum.GetValues(typeof(BO.Category));
             }
         }
 
-            private void b_Add_Click(object sender, RoutedEventArgs e)
+        private void b_Add_Click(object sender, RoutedEventArgs e)
         {
             BO.Product newProduct = new BO.Product();
             newProduct.ID = Convert.ToInt32(tb_Id.Text);
@@ -72,9 +72,11 @@ namespace PL
             }
             catch (BO.dataIsntInvalid ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error Occurred",
+                                MessageBoxButton.OKCancel,
+                                MessageBoxImage.Error);
             }
-            catch (BO.ExceptionFromDal ex)//
+            catch (BO.ExceptionFromDal ex)
             {
                 MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }
@@ -99,23 +101,27 @@ namespace PL
             {
                 MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }
-            catch(dataIsntInvalid ex)
+            catch (dataIsntInvalid ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
+                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message,"Error Occurred",
+                                MessageBoxButton.OKCancel,
+                                MessageBoxImage.Error);
             }
         }
 
         private void b_addToCart_Click(object sender, RoutedEventArgs e)
         {
-            if(c.Items==null)
+            if (c.Items == null)
                 c.Items = new List<OrderItem>();
-            try {
+            try
+            {
                 c = bl.Cart.AddProductToCart(c, id1);
             }
-            catch(BO.notEnoughAmount ex) {
-                MessageBox.Show(ex.Message);
+            catch (BO.notEnoughAmount ex)
+            {
+                MessageBox.Show(ex.Message, "Error Occurred", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
-                catch (BO.ExceptionFromDal ex)
+            catch (BO.ExceptionFromDal ex)
             {
                 MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }

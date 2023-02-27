@@ -27,7 +27,6 @@ namespace PL
     {
         private Stopwatch stopWatch;
         private bool isTimerRun;
-        private Thread timerThread;
         BackgroundWorker worker;
         bool CancelEventArgs = false;
 
@@ -118,7 +117,7 @@ namespace PL
                 Simulator1.FinishSimulatorEvent -= FinishSimulator;
                 if (reasonOfFinish != "")
                 {
-                    MessageBox.Show("Finishing the simulator: " + end.ToString() + "\n" + "Becouse: " + reasonOfFinish);
+                    MessageBox.Show("Finishing the simulator: " + end.ToString() + "\n" + "Becouse: " + reasonOfFinish, "simulator information",MessageBoxButton.OK,MessageBoxImage.Information);
                     CancelEventArgs = true;
                     this.Close();
                 }

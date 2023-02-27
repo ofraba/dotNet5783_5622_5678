@@ -41,9 +41,16 @@ namespace PL
 
         private void confirm_Click(object sender, RoutedEventArgs e)
         {
-            ConfirmWindow cw = new ConfirmWindow(bl, cart);
-            cw.Show();
-            Close();
+            if (lv_itemInCart.Items.Count > 0)
+            {
+                ConfirmWindow cw = new ConfirmWindow(bl, cart);
+                cw.Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("there are not items in cart for ordering");
+            }
         }
     }
 }

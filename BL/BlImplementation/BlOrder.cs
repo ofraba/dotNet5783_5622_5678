@@ -193,7 +193,6 @@ internal class BlOrder : BLApi.IOrder
             IEnumerable<DO.Orders> orderList = dal?.Order.GetAll() ?? throw new BO.nullException();
             DateTime theMinDate = DateTime.Now;
             int numberOfOrder = 0;
-            int temp = 0;
             bool cheak = false;
             orderList.ToList().ForEach(item =>
             {
@@ -202,7 +201,7 @@ internal class BlOrder : BLApi.IOrder
                     cheak = true;
                     if (item.ShipDate < theMinDate && item.OrderDate < theMinDate)
                     {
-                        numberOfOrder = temp;
+                        numberOfOrder = item.ID;
                         if (item.ShipDate != DateTime.MinValue)
                         {
                             theMinDate = item.ShipDate;
@@ -213,18 +212,10 @@ internal class BlOrder : BLApi.IOrder
                         }
                     }
                 }
-                temp++;
             });
 
-            return cheak ? numberOfOrder + 1 : null;
+            return cheak ? numberOfOrder : null;
         }
-        //lock (dal ?? throw new BO.nullException())
-        //{
-        //    IEnumerable<DO.Orders>? orderList = dal?.Order.GetAll();
-        //    orderList?.Where(order => order.DeliveryDate == DateTime.MinValue)
-        //    .OrderBy(order => order.ShipDate != DateTime.MinValue ? order.ShipDate : order.OrderDate);
-        //    return orderList?.Any() ?? false ? orderList?.First().ID : null;
-        //}
     }
 
 }

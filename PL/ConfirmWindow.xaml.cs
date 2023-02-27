@@ -40,6 +40,7 @@ namespace PL
                 bl.Cart.Confirm(cart, name, email, address);
                 MainWindow m=new MainWindow();
                 m.Show();
+                Close();
             }
             catch (BO.dataIsntInvalid ex)
             {
